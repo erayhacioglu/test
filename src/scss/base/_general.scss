@@ -39,7 +39,8 @@ a{
     border-radius: 5px;
     border:1px solid var(--linkBackgroundColor);
     display: flex;
-    width: 362px;
+    max-width: 362px;
+    width: 100%;
     overflow: hidden;
     &:last-child{
         margin-bottom: 0;
@@ -79,7 +80,8 @@ a{
         border:1px solid var(--linkBackgroundColor);
         display: flex;
         align-items: center;
-        width: 362px;
+        max-width: 362px;
+        width: 100%;
         overflow: hidden;
         padding: 0 10px;
         margin-right: 10px;
