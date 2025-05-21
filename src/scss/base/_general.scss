@@ -33,6 +33,89 @@ a{
     padding: 30px 0;
 }
 
+.profile_input_group{
+    height:33px;
+    margin-bottom: 12px;
+    border-radius: 5px;
+    border:1px solid var(--linkBackgroundColor);
+    display: flex;
+    width: 362px;
+    overflow: hidden;
+    &:last-child{
+        margin-bottom: 0;
+    }
+    .profile_input_label{
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--labelColor);
+        width:82px;
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        border-right: 1px solid var(--linkBackgroundColor);
+    }
+    .profile_input{
+        font-size: 14px;
+        font-weight: 400;
+        color: var(--textColor);
+        width: 100%;
+        height: 100%;
+        border: none;
+        background:none;
+        padding: 0 10px;
+    }
+}
+
+.editable_container{
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    &:last-child{
+        margin-bottom: 0;
+    }
+    .editable_input_group{
+        height:33px;
+        border-radius: 5px;
+        border:1px solid var(--linkBackgroundColor);
+        display: flex;
+        align-items: center;
+        width: 362px;
+        overflow: hidden;
+        padding: 0 10px;
+        margin-right: 10px;
+        .editable_input_icon{
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+        }
+        .editable_input{
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: none;
+            padding-left: 10px;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--textColor);
+        }
+    }
+    .editable_input_delete_button{
+        width:33px;
+        height: 33px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        border: 1px solid var(--linkBackgroundColor);
+        margin: 0;
+        &:active{
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+    }
+}
+
+
 @media only screen and (max-width:768px){
     .page_container{
         padding: 40px 0 80px 0;

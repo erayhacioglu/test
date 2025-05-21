@@ -28,3 +28,26 @@ export const generateProfileIcon = (type) => {
         return findIcon?.icon
     }
 }
+
+export const linkData = [
+    {
+        link: "Mobil",
+        type: "phone"
+    },
+    {
+        link: "Whatsapp",
+        type: "whatsapp"
+    },
+    {
+        link: "Mail",
+        type: "email"
+    },
+    {
+        link: "Konum",
+        type: "location"
+    },
+    {
+        link: "Fax",
+        type: "fax"
+    }
+];

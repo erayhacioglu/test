@@ -51,11 +51,11 @@ const Profile = () => {
     return(
         <div className="page_container">
             <div className="row">
-                <PersonalInfo profileData={profileData}/>
-                <Links profileData={profileData}/>
+                <PersonalInfo profileData={profileData} setProfileData={setProfileData}/>
+                <Links profileData={profileData} setProfileData={setProfileData}/>
                 {
                     pathname === updatedPage && 
-                <ContactInfo profileData={profileData}/>
+                <ContactInfo profileData={profileData} setProfileData={setProfileData}/>
                 }
             </div>
             {
