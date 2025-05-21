@@ -1,0 +1,28 @@
+/*Add Info*/
+
+@use '../abstracts/variables' as *;
+
+.add_info_container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    .add_info{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 33px;
+        border-radius: 5px;
+        background-color: var(--linkBackgroundColor);
+        color: var(--textColor);
+        padding: 0 10px;
+        font-size: 16px;
+        font-weight: 400;
+        &:active{
+            transform: scale(0.9);
+            transition:  transform 0.3s ease;
+        }
+    }
+}
+
+@media only screen and (max-width:768px){
+}

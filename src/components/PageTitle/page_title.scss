@@ -1,0 +1,29 @@
+/*Page Title*/
+
+@use '../../scss/abstracts/variables' as *;
+
+.page_title_container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 166px;
+    border-radius: 0 29px 29px 0;
+    .page_title{
+        font-size: 20px !important;
+        font-weight: 500;
+        color: var(--textColor);
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@media only screen and (max-width:768px){
+    .page_title_container{
+        height: 42px;
+        background: var(--titleBackground);
+        justify-content: center;
+        .page_title{
+            font-size: 16px !important;
+        }
+    }
+}
