@@ -6,7 +6,7 @@
     left: 0;
     min-width: 280px;
     max-width: 280px;
-    height: 100vh;
+    height: 100dvh !important;
     background-color: var(--primaryColor);
     z-index: 1000;
     transition: transform 0.3s ease-in-out;
@@ -27,8 +27,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100% !important;
+    height: 100dvh !important;
     background-color: rgba(0, 0, 0, 0.43);
     z-index: 1000;
 }
@@ -38,7 +38,7 @@
     .side_menu{
         min-width: 192px;
         max-width: 192px;
-        height: calc(100vh - 73px);
+        // height: calc(100vh - 73px);
         &.active .side_menu_mobile_button > img{
             transform: rotate(0);
         }
@@ -64,6 +64,6 @@
         }
     }
     .side_menu_backdrop{
-        height: calc(100vh - 73px);
+        // height: calc(100vh - 73px);
     }
 }

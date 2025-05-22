@@ -13,7 +13,8 @@ body{
     background-color: var(--backgroundColor) !important;
     color: var(--textColor) !important;
     height: 100%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 button{
     background: none;
@@ -24,13 +25,17 @@ a{
     text-decoration: none !important;
     color: inherit !important;
 }
-
+  
 .page_container{
     padding: 40px 0;
 }
 
 .section_container{
     padding: 30px 0;
+}
+
+.col-md-6 > div{
+    align-self: flex-start !important;
 }
 
 .profile_input_group{

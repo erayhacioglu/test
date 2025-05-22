@@ -50,7 +50,7 @@ const Profile = () => {
 
     return(
         <div className="page_container">
-            <div className="row">
+            <div className="row align-items-start">
                 <PersonalInfo profileData={profileData} setProfileData={setProfileData}/>
                 <Links profileData={profileData} setProfileData={setProfileData}/>
                 {
