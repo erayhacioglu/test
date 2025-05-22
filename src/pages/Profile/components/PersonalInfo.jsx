@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 
 
-const PersonalInfo = ({profileData}) => {
+const PersonalInfo = ({profileData,setProfileData}) => {
     const [copied, setCopied] = useState(false);
     const location = useLocation();
     const pathname = location?.pathname?.split("/")[1];
@@ -25,23 +25,34 @@ const PersonalInfo = ({profileData}) => {
     }
   };
 
+  const handleChangePersonalInfo = (e) => {
+    const {name,value} = e.target;
+    setProfileData((prev) => ({
+      ...prev,
+      personalInfo:{
+        ...prev.personalInfo,
+        [name]:value
+      }
+    }))
+  }
+
     return(
-       <div className="col-md-6">
+       <>
             <PageTitle title="Kişisel Bilgiler"/>
             <div className="section_container">
             {
               pathname === updatedPage ? <>
               <div className="profile_input_group">
                 <label className="profile_input_label">Ad</label>
-                <input type="text" className="profile_input" value="Eray"/>
+                <input type="text" className="profile_input" value={profileData?.personalInfo?.name} name="name" onChange={handleChangePersonalInfo}/>
               </div>
               <div className="profile_input_group">
                 <label className="profile_input_label">Soyad</label>
-                <input type="text" className="profile_input" value="Hacıoğlu"/>
+                <input type="text" className="profile_input" value={profileData?.personalInfo?.surname} name="surname" onChange={handleChangePersonalInfo}/>
               </div>
               <div className="profile_input_group">
                 <label className="profile_input_label">Ünvan</label>
-                <input type="text" className="profile_input" value="Frontend Developer"/>
+                <input type="text" className="profile_input" value={profileData?.personalInfo?.title} name="title" onChange={handleChangePersonalInfo}/>
               </div>
               </> :
                 profileData && profileData?.contactInfo?.map((item,idx) => (
@@ -52,7 +63,7 @@ const PersonalInfo = ({profileData}) => {
                 ))
             }
             </div>
-        </div>
+        </>
     );
 }
 

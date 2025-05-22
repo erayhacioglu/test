@@ -38,7 +38,7 @@ const UserHeader = () => {
                 </div>
                 <div className="user_actions">
                     {
-                        pathname && updatedPage && pathname === updatedPage  ? <button className='user_action_submit_button'>Kaydet</button> : <>
+                        pathname && updatedPage && pathname === updatedPage  ? <><button className='user_action_submit_button'>Kaydet</button><button className='user_action_submit_button cancel'>İptal</button></> : <>
                     <button className="user_action_button" onClick={handleClickUpdate}>
                         <img src={editIcon} alt="" className="user_action_button_icon"/>
                         <span className="user_action_button_text">Düzenle</span>

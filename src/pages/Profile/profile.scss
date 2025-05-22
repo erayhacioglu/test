@@ -13,10 +13,12 @@
         flex:4;
         display: flex;
         align-items: center;
+        & > img {
+            margin-right: 10px;
+        }
         .info_line_content_text{
             font-size: 14px;
             font-weight: 400;
-            margin-left: 10px;
         }
     }
     .info_line_copy_button{

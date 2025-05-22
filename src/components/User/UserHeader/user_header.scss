@@ -98,6 +98,9 @@
         justify-content: center;
         text-align: center;
         margin-top: 20px;
+        &.cancel{
+          background-color: #D97C7C;
+        }
         &.mobile{
           width: 73px;
           display: none;
@@ -107,6 +110,8 @@
           transition: transform 0.3s ease;
         }
       }
+
+    
 
 
 @media only screen and (max-width: 768px) {
