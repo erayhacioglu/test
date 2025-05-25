@@ -1,100 +1,156 @@
-import { useEffect } from "react";
-import { Routes,Route, Navigate } from "react-router";
-//pages
+import { Routes, Route, Navigate } from 'react-router';
+// pages
 import UserLayout from "./layouts/UserLayout";
-import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import SocialMedia from "./pages/SocialMedia";
 import Company from "./pages/Company";
-//import { useTheme } from "./hooks/useTheme";
+import MarketingAssests from "./pages/MarketingAssets";
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
+//import {useTheme} from "./hooks/useTheme";
 
 const App = () => {
-  //useTheme(themes[0])
+  //useTheme(themes["mintBreeze"]);
 
+  const {i18n} = useTranslation();
 
   useEffect(() => {
-    const localStorageLanguage = localStorage.getItem("language");
-    if(!localStorageLanguage){
+    if(!localStorage.getItem("language")){
       localStorage.setItem("language","tr")
+      i18n.changeLanguage("tr")
     }
-  },[]);
+  },[i18n]);
 
-  return(
+  return (
     <Routes>
       <Route path="/" element={<UserLayout />}>
-        <Route index element={<Navigate to="profile" replace/>} />
+        <Route index element={<Navigate to="profile" replace />} />
         <Route path="profile" element={<Profile />} />
         <Route path="social-media" element={<SocialMedia />} />
         <Route path="company" element={<Company />} />
+        <Route path="marketing-assets" element={<MarketingAssests />} />
       </Route>
-      <Route path="/login" element={<Login />}/>
     </Routes>
   );
-}
+};
 
 export default App;
 
-
-const themes = [
-  // Tema 1 – Canlı Turkuaz ve Koyu Mavi
-  {
-    primaryColor: '#1ABC9C',               // Canlı turkuaz
-    backgroundColor: '#E0F7FA',            // Çok açık cam göbeği
-    headerBackgroundColor: '#4DB6AC',      // Açık deniz yeşili
-    textColor: '#004D40',                  // Koyu yeşil-mavi
-    menuBackgroundColor: '#B2DFDB',        // Pastel deniz yeşili
-    activeMenuBackgroundColor: '#26A69A',  // Orta turkuaz
-    activeMenuColor: '#004D40',            // Koyu yeşil-mavi
-    titleBackground: '#B2EBF2',            // Soluk turkuaz
-    submitButtonBackgroundColor: '#009688',// Koyu turkuaz
-    linkBackgroundColor: '#80CBC4',        // Yumuşak deniz yeşili
-    labelColor: '#00695C',                 // Koyu deniz yeşili
+const themes = {
+  forest: {
+    primaryColor: "#2F4F4F",
+    backgroundColor: "#1B2A1B",
+    headerBackgroundColor: "#304030",
+    textColor: "#E0E8D8",
+    menuBackgroundColor: "#223322",
+    activeMenuBackgroundColor: "#1A261A",
+    activeMenuColor: "#7BB661",
+    titleBackground: "#324832",
+    submitButtonBackgroundColor: "#6FAF70",
+    linkBackgroundColor: "#425B42",
+    labelColor: "#A3B18A",
+    jobColor: "#8F9779"
   },
-
-  // Tema 2 – Mor ve Lavanta
-  {
-    primaryColor: '#9C27B0',               // Canlı mor
-    backgroundColor: '#F3E5F5',            // Açık lavanta
-    headerBackgroundColor: '#BA68C8',      // Pastel mor
-    textColor: '#4A148C',                  // Koyu mor
-    menuBackgroundColor: '#E1BEE7',        // Soluk lavanta
-    activeMenuBackgroundColor: '#AB47BC',  // Orta mor
-    activeMenuColor: '#4A148C',            // Koyu mor
-    titleBackground: '#EDE7F6',            // Lavanta çok açık
-    submitButtonBackgroundColor: '#8E24AA',// Koyu lavanta
-    linkBackgroundColor: '#CE93D8',        // Yumuşak mor
-    labelColor: '#6A1B9A',                 // Morun koyusu
+  ocean: {
+    primaryColor: "#176C8D",
+    backgroundColor: "#0B1D2B",
+    headerBackgroundColor: "#194F6F",
+    textColor: "#D1E8F2",
+    menuBackgroundColor: "#123B57",
+    activeMenuBackgroundColor: "#0A2A43",
+    activeMenuColor: "#59A7D3",
+    titleBackground: "#165B7D",
+    submitButtonBackgroundColor: "#3BB0D6",
+    linkBackgroundColor: "#256A87",
+    labelColor: "#7AAAC0",
+    jobColor: "#5B7D8A"
   },
-
-  // Tema 3 – Canlı Turuncu ve Koyu Kırmızı
-  {
-    primaryColor: '#FF5722',               // Canlı turuncu
-    backgroundColor: '#FBE9E7',            // Çok açık şeftali
-    headerBackgroundColor: '#FF8A65',      // Pastel turuncu
-    textColor: '#BF360C',                  // Koyu kırmızı-turuncu
-    menuBackgroundColor: '#FFCCBC',        // Soluk turuncu
-    activeMenuBackgroundColor: '#FF7043',  // Orta turuncu
-    activeMenuColor: '#BF360C',            // Koyu kırmızı-turuncu
-    titleBackground: '#FFEBEE',            // Çok açık kırmızı
-    submitButtonBackgroundColor: '#E64A19',// Koyu turuncu
-    linkBackgroundColor: '#FFAB91',        // Yumuşak turuncu
-    labelColor: '#D84315',                 // Turuncu-kırmızı koyu
+  sunset: {
+    primaryColor: "#D35400",
+    backgroundColor: "#2C1A0A",
+    headerBackgroundColor: "#7E3814",
+    textColor: "#FAD7A0",
+    menuBackgroundColor: "#4E2A0A",
+    activeMenuBackgroundColor: "#3B1F07",
+    activeMenuColor: "#F39C12",
+    titleBackground: "#5A2E0B",
+    submitButtonBackgroundColor: "#E67E22",
+    linkBackgroundColor: "#7B3F00",
+    labelColor: "#C2B280",
+    jobColor: "#A57C3B"
   },
-
-  // Tema 4 – Nötr Gri ve Soğuk Mavi
-  {
-    primaryColor: '#607D8B',               // Soğuk gri-mavi
-    backgroundColor: '#ECEFF1',            // Çok açık gri
-    headerBackgroundColor: '#B0BEC5',      // Pastel gri-mavi
-    textColor: '#263238',                  // Koyu mavi-gri
-    menuBackgroundColor: '#CFD8DC',        // Açık gri-mavi
-    activeMenuBackgroundColor: '#78909C',  // Orta gri-mavi
-    activeMenuColor: '#263238',            // Koyu mavi-gri
-    titleBackground: '#CFD8DC',            // Açık gri-mavi
-    submitButtonBackgroundColor: '#546E7A',// Koyu gri-mavi
-    linkBackgroundColor: '#90A4AE',        // Yumuşak gri-mavi
-    labelColor: '#37474F',                 // Koyu gri-mavi
+  lavender: {
+    primaryColor: "#6A5ACD",
+    backgroundColor: "#1E1B2A",
+    headerBackgroundColor: "#483D8B",
+    textColor: "#DCD6F7",
+    menuBackgroundColor: "#2C2754",
+    activeMenuBackgroundColor: "#211E3E",
+    activeMenuColor: "#B39EB5",
+    titleBackground: "#3B3475",
+    submitButtonBackgroundColor: "#8A79AF",
+    linkBackgroundColor: "#564F7A",
+    labelColor: "#A99BBE",
+    jobColor: "#7D73A3"
   },
-];
+  desert: {
+    primaryColor: "#C19A6B",
+    backgroundColor: "#3E2F1C",
+    headerBackgroundColor: "#8B6D5C",
+    textColor: "#F5F1E3",
+    menuBackgroundColor: "#5C4A3C",
+    activeMenuBackgroundColor: "#4A3B2B",
+    activeMenuColor: "#D2B48C",
+    titleBackground: "#7A5F46",
+    submitButtonBackgroundColor: "#B38B59",
+    linkBackgroundColor: "#927B63",
+    labelColor: "#C1A57B",
+    jobColor: "#A7885E"
+  },
+  aurora: {
+    primaryColor: "#4ECDC4",
+    backgroundColor: "#1A374D",
+    headerBackgroundColor: "#406882",
+    textColor: "#F1F6F9",
+    menuBackgroundColor: "#33658A",
+    activeMenuBackgroundColor: "#2F4858",
+    activeMenuColor: "#72EFDD",
+    titleBackground: "#274C77",
+    submitButtonBackgroundColor: "#3FC1C9",
+    linkBackgroundColor: "#2A6F97",
+    labelColor: "#91A6FF",
+    jobColor: "#5C7AEA"
+  },
+  coralReef: {
+    primaryColor: "#FF6F61",
+    backgroundColor: "#3B1F2B",
+    headerBackgroundColor: "#7F4F4F",
+    textColor: "#FFF5E1",
+    menuBackgroundColor: "#613F3F",
+    activeMenuBackgroundColor: "#4A2C2E",
+    activeMenuColor: "#FFA07A",
+    titleBackground: "#6E3B3B",
+    submitButtonBackgroundColor: "#FF826E",
+    linkBackgroundColor: "#98514E",
+    labelColor: "#D9B08C",
+    jobColor: "#B27666"
+  },
+  mintBreeze: {
+    primaryColor: "#3EB489",
+    backgroundColor: "#1C3F2D",
+    headerBackgroundColor: "#2E6647",
+    textColor: "#E6F2F0",
+    menuBackgroundColor: "#2D5C42",
+    activeMenuBackgroundColor: "#244733",
+    activeMenuColor: "#70C1B3",
+    titleBackground: "#3A6B4F",
+    submitButtonBackgroundColor: "#5DD39E",
+    linkBackgroundColor: "#2E7D54",
+    labelColor: "#9AD3BC",
+    jobColor: "#76B39D"
+  }
+};
+
+
 

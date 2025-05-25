@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import updateDataReducer from "./slices/UpdateDataSlice";
+import updatePageReducer from "./slices/UpdatePageSlice";
+import profileReducer from "./slices/ProfileSlice";
+import companyReducer from "./slices/CompanySlice";
 
 const store = configureStore({
   reducer: {
-    updateData:updateDataReducer
+    updatePage:updatePageReducer,
+    profile:profileReducer,
+    company:companyReducer
   },
 })
 

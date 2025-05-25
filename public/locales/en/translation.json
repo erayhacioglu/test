@@ -1,0 +1,60 @@
+{
+    "profilePage":{
+        "metaTitle":"Profile",
+        "metaDescription":"Profile Test",
+        "metaKeywords":"test1 test2 test3",
+        "personalInfo":{
+            "pageTitle":"Personal Info",
+            "name":"Name",
+            "surname":"Surname",
+            "title":"Title"
+        },
+        "contactInfo":{
+            "pageTitle":"Contact Info"
+        },
+        "links":{
+            "pageTitle":"Links"
+        }
+    },
+    "socialMediaPage":{},
+    "companyPage":{
+        "metaTitle":"Company",
+        "metaDescription":"Company Test",
+        "metaKeywords":"test1 test2 test3",
+        "companyInfo":{
+            "pageTitle":"Company Info",
+            "name":"Company Name",
+            "taxNo":"Tax No",
+            "taxBody":"Tax Address",
+            "address":"Address",
+            "addCompanyInfoButton":"Add Company"
+        },
+        "bankInfo":{
+            "pageTitle":"Bank Info",
+            "bankName":"Bank Name",
+            "iban":"Iban",
+            "accountHolder":"Account Holder",
+            "addBankInfoButton":"Add Bank"
+        }
+    },
+    "marketingAssetsPage":{
+        "metaTitle":"Marketing Assets",
+        "metaDescription":"Marketing Assets Test",
+        "metaKeywords":"test1 test2 test3",
+        "pageTitle":"Marketing Assets",
+        "addMarketingAssetsButton":"Add Document"
+    },
+    "menu":{
+        "profile":"Profile",
+        "socialMedia":"Social Media",
+        "company":"Company",
+        "marketingAssets":"Marketing Assets",
+        "pageTitle":"Marketing Assets"
+    },
+    "buttons":{
+        "editButtonText":"Edit",
+        "createQrButtonText":"Create QR",
+        "submitButtonText":"Save",
+        "cancelButtonText":"Cancel"
+    }
+}

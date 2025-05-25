@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  updatedPage:""
+  updatedPage:null
 }
 
-const UpdateDataSlice = createSlice({
-  name: 'updateData',
+const UpdatePageSlice = createSlice({
+  name: 'updatePage',
   initialState,
   reducers: {
     setUpdatedPage(state,action){
@@ -14,5 +14,5 @@ const UpdateDataSlice = createSlice({
   },
 })
 
-export const {setUpdatedPage} = UpdateDataSlice.actions
-export default UpdateDataSlice.reducer
+export const {setUpdatedPage} = UpdatePageSlice.actions
+export default UpdatePageSlice.reducer

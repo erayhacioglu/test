@@ -1,69 +1,68 @@
-/*Side Menu*/
+// /*Side Menu*/
 
 .side_menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    min-width: 280px;
-    max-width: 280px;
-    height: 100dvh !important;
-    background-color: var(--primaryColor);
-    z-index: 1000;
-    transition: transform 0.3s ease-in-out;
-    .side_menu_mobile_button{
-        display: none;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 280px;
+  max-width: 280px;
+  height: 100dvh;
+  background-color: var(--primaryColor);
+  z-index: 1100;
+  transition: transform 0.3s ease-in-out;
 
-    &.hidden {
-        transform: translateX(-100%);
-    }
+  &.hidden {
+    transform: translateX(-100%);
+  }
 
-    &.active {
-        transform: translateX(0);
-    }
+  &.active {
+    transform: translateX(0);
+  }
+
+  .side_menu_mobile_button {
+    display: none;
+  }
 }
 
 .side_menu_backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100dvh !important;
-    background-color: rgba(0, 0, 0, 0.43);
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.43);
+  z-index: 1000;
 }
 
+@media only screen and (max-width: 768px) {
+  .side_menu {
+    min-width: 192px;
+    max-width: 192px;
 
-@media only screen and (max-width:768px){
-    .side_menu{
-        min-width: 192px;
-        max-width: 192px;
-        // height: calc(100vh - 73px);
-        &.active .side_menu_mobile_button > img{
-            transform: rotate(0);
-        }
-        .side_menu_mobile_button{
-            display: block;
-            position: absolute;
-            top: 129px;
-            right: -47px;
-            width: 47px;
-            height: 47px;
-            background-color: var(--primaryColor);
-            border-radius: 0 10px 10px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            & > img{
-                transform: rotate(180deg);
-                transition: transform 0.3s ease;
+    .side_menu_mobile_button {
+      display: flex;
+      position: absolute;
+      top: 129px;
+      right: -47px;
+      width: 47px;
+      height: 47px;
+      background-color: var(--primaryColor);
+      border-radius: 0 10px 10px 0;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1150;
 
-            }
-        }
+      > img {
+        transform: rotate(180deg);
+        transition: transform 0.3s ease;
+      }
     }
-    .side_menu_backdrop{
-        // height: calc(100vh - 73px);
+
+    &.active {
+      .side_menu_mobile_button > img {
+        transform: rotate(0);
+      }
     }
+  }
 }

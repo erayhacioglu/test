@@ -1,7 +1,6 @@
 //abstracts
 @use "./abstracts/variables" as *;
 //base
-@use "./base/reset" as *;
 @use "./base/general" as *;
 //components
-@use "./components/add_info.scss" as *;
+@use "./components/form" as *;

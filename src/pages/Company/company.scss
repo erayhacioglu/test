@@ -1,2 +1,16 @@
 /*Company*/
 
+.add_company_button{
+    width: 100%;
+    max-width: 362px;
+    height:33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--addCompanyButton);
+    color: var(--textColor);
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 5px;
+    cursor: pointer;
+}

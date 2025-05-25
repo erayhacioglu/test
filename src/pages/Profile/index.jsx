@@ -1,77 +1,51 @@
-import {useState} from "react";
+//components
 import PersonalInfo from "./components/PersonalInfo";
-import Links from "./components/Links";
 import ContactInfo from "./components/ContactInfo";
-import "./profile.scss";
+import Links from "./components/Links";
+import SEO from "../../SEO";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { setUpdatedPage } from "../../redux/slices/UpdateDataSlice";
-
+import { updatePageChecker } from "../../helpers";
+import { useSelector } from "react-redux";
 const Profile = () => {
-    const dispatch = useDispatch();
-    const location = useLocation();
-    const pathname = location?.pathname?.split("/")[1];
-    const {updatedPage} = useSelector(state => state?.updateData);
+  const location = useLocation();
+  const { t } = useTranslation();
+  const { updatedPage } = useSelector((state) => state.updatePage);
 
-    const [profileData,setProfileData] = useState({
-        personalInfo:
-            {
-                name:"Eray",
-                surname:"Hacıoğlu",
-                title:"Frontend Developer"
-            },
-        links:[
-            "sedanursahintas.com.tr",
-            "kavio.com.tr",
-            "loremipsum.com.tr"
-        ],
-        contactInfo:[
-            {
-                type:"phone",
-                info:"+90 545 678 90 02"
-            },
-            {
-                type:"phone",
-                info:"+90 545 678 90 02"
-            },
-            {
-                type:"whatsapp",
-                info:"+90 545 678 90 02"
-            },
-            {
-                type:"email",
-                info:"eray.hacioglu@ibb.gov.tr"
-            },
-            {
-                type:"location",
-                info:"Gaziosmanpaşa - İstanbul"
-            }
-        ]
-        
-    });
+  const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
-    return(
-        <div className="page_container">
-            <div className="row">
-                <div className="col-md-6">
-                <PersonalInfo profileData={profileData} setProfileData={setProfileData}/>
-                {
-                    pathname === updatedPage && 
-                <ContactInfo profileData={profileData} setProfileData={setProfileData}/>
-                }
-                </div>
-                <div className="col-md-6">
-                <Links profileData={profileData} setProfileData={setProfileData}/>
-                </div>
-            </div>
-            {
-                pathname === updatedPage && 
-            <div className="section_container">
-                <div className="d-flex align-items-center justify-content-end"><button className="user_action_submit_button cancel mobile" onClick={() => dispatch(setUpdatedPage(""))}>İptal</button><button className="user_action_submit_button mobile ms-3">Kaydet</button></div>
-            </div>
-            }
+  return (
+    <>
+      <SEO
+        title={t("profilePage.metaTitle")}
+        description={t("profilePage.metaDescription")}
+        keywords={t("profilePage.metaKeywords")}
+      />
+      <div className="page_container">
+        <div className="row">
+          <div className="col-md-6">
+            <PersonalInfo isUpdated={isUpdated} />
+            {isUpdated && <ContactInfo />}
+          </div>
+          <div className="col-md-6">
+            <Links isUpdated={isUpdated} />
+          </div>
         </div>
-    );
-}
+        {isUpdated && (
+          <div className="section_container">
+            <div className="d-flex align-items-center">
+              <button className="user_action_submit_button mobile me-3">
+                Kaydet
+              </button>
+              <button className="user_action_submit_button cancel mobile">
+                İptal
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
 
 export default Profile;

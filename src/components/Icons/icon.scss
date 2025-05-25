@@ -1,0 +1,14 @@
+.svg_icon {
+  color: var(--textColor);
+  transition: color 0.3s ease;
+  width: 24px;
+  height: 24px;
+  &.active {
+    color: var(--activeMenuColor);
+  }
+
+  @media (max-width: 768px) {
+    width: 22px !important;
+    height: 22px !important;
+  }
+}

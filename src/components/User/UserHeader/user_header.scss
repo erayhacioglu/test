@@ -1,151 +1,176 @@
 /*User Header*/
 
-@use "../../../scss/abstracts/variables" as *;
+.user_header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 61px;
+  min-height: auto;
+  margin-bottom: 35px;
 
-  .user_header {
+  .user_profile_info {
     position: relative;
     display: flex;
-    justify-content: space-between;
-    padding-left: 61px;
-    min-height: auto;
+    flex-direction: column;
+    align-items: flex-start;
 
-    .user_profile_info {
-      position: relative;
+    .avatar {
+      position: absolute;
+      width: 136px;
+      height: 136px;
+      padding: 7.5px;
+      border: 1px solid var(--backgroundColor);
+      background-color: var(--backgroundColor);
+      border-radius: 50%;
+      overflow: hidden;
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      transform: translateY(-50%);
+      z-index: 10;
 
-      .avatar {
-        position: absolute;
-        width: 136px;
-        height: 136px;
-        padding: 7.5px;
-        border: 1px solid var(--backgroundColor);
-        background-color: var(--backgroundColor);
+      .avatar_img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         border-radius: 50%;
-        overflow: hidden;
+      }
+      .avatar_overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.43);
+        border-radius: 50%;
         display: flex;
-        align-items: center;
         justify-content: center;
-        box-sizing: border-box;
-        transform: translateY(-50%);
-        z-index: 10;
-
-        .avatar_img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border-radius: 50%;
-        }
+        align-items: center;
+        z-index: 20;
       }
 
-      .user_info {
-        color: var(--textColor);
-        margin-top: 80px;
-        .fullname {
-          font-size: 20px;
-          font-weight: 700;
-          margin: 0;
-          padding: 0;
-        }
+      .change_avatar_button {
+        background-color: #fff;
+        color: #333;
+        border: none;
+        font-size: 14px;
+        width:40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+       transition: background-color 0.2s ease;
 
-        .job {
-          font-size: 12px;
-          font-weight: 300;
-          color: var(--jobColor);
-          margin: 0;
-          padding: 0;
+        &:hover {
+          background-color: #f0f0f0;
         }
       }
     }
 
-    .user_actions {
-      .user_action_button{
-        border-radius: 5px;
-        height: 36px;
-        width:149px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        background-color: var(--primaryColor);
-        padding-left: 15px;
-        &:active{
-          transform: scale(0.9);
-          transition: transform 0.3s ease;
-        }
-        &:first-child{
-          margin: 10px 0 ;
-        }
-        .user_action_button_icon{}
-        .user_action_button_text{
-          font-size: 16px;
-          font-weight: 500;
-          color: var(--textColor);
-          margin-left: 10px;
-        }
+    .user_info {
+      color: var(--textColor);
+      margin-top: 80px;
+      .fullname {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+        padding: 0;
+      }
+
+      .job {
+        font-size: 12px;
+        font-weight: 300;
+        color: var(--jobColor);
+        margin: 0;
+        padding: 0;
       }
     }
   }
 
-  .user_action_submit_button{
-        background-color: var(--submitButtonBackgroundColor);
+  .user_actions {
+    .user_action_button {
+      border-radius: 5px;
+      height: 36px;
+      width: 149px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background-color: var(--primaryColor);
+      padding-left: 15px;
+      &:active {
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+      }
+      &:first-child {
+        margin: 10px 0;
+      }
+      .user_action_button_icon {}
+      .user_action_button_text {
+        font-size: 16px;
+        font-weight: 500;
         color: var(--textColor);
-        border-radius: 5px;
-        height: 33px;
-        width: 147px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.user_action_submit_button {
+  background-color: var(--submitButtonBackgroundColor);
+  color: var(--textColor);
+  border-radius: 5px;
+  height: 33px;
+  width: 147px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 10px 0;
+  &.cancel {
+    background-color: #d97c7c;
+    margin: 0;
+  }
+  &.mobile {
+    width: 73px;
+    display: none;
+  }
+  &:active {
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .user_header {
+    padding-left: 45px;
+    .user_actions {
+      display: flex;
+      margin-top: 10px;
+      gap: 10px;
+      padding-right: 15px;
+      .user_action_button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
-        margin-top: 20px;
-        &.cancel{
-          background-color: #D97C7C;
-        }
-        &.mobile{
-          width: 73px;
+        padding: 0;
+        background-color: var(--titleBackground);
+        .user_action_button_text {
           display: none;
         }
-        &:active{
-          transform: scale(0.9);
-          transition: transform 0.3s ease;
-        }
-      }
-
-    
-
-
-@media only screen and (max-width: 768px) {
-    .user_header{
-      padding-left: 45px;
-      .user_actions{
-        display: flex;
-        margin-top: 10px;
-        gap: 10px;
-        padding-right: 15px;
-        .user_action_button{
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0;
-          background-color: var(--titleBackground);
-          .user_action_button_text{
-            display: none;
-          }
-          &:first-child{
-            margin: 0;
-          }
+        &:first-child {
+          margin: 0;
         }
       }
     }
-    .user_action_submit_button{
-      display: none;
-      &.mobile{
-        display: flex;
-      }
+  }
+  .user_action_submit_button {
+    display: none;
+    &.mobile {
+      display: flex;
     }
-  
+  }
 }
 

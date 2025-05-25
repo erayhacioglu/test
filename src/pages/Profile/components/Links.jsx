@@ -1,112 +1,77 @@
-import {useState} from "react";
-import {FaCheck} from "react-icons/fa6";
-import {useLocation} from "react-router";
-import {useSelector} from "react-redux";
-import PageTitle from "../../../components/PageTitle";
-import plusIcon from "../../../assets/img/icons/plus.svg";
-import linkIcon from "../../../assets/img/icons/link.svg";
-import copyIcon from "../../../assets/img/icons/copy.svg";
-import deleteIcon from "../../../assets/img/icons/trash.svg";
+import { useTranslation } from "react-i18next";
+import PageTitle from "../../../../../../../Documents/GitHub/kavio-profile/src/components/PageTitle";
+import trash from "../../../assets/img/icons/trash.svg";
+import plus from "../../../assets/img/icons/plus.svg";
+import copy from "../../../assets/img/icons/copy.svg";
+import link from "../../../assets/img/icons/link.svg";
+import { setLinks } from "../../../redux/slices/ProfileSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { FaCheck } from "react-icons/fa6";
 
-const Links = ({profileData, setProfileData}) => {
-    const location = useLocation();
-    const pathname = location?.pathname?.split("/")[1];
-    const {updatedPage} = useSelector(state => state?.updateData);
+const Links = ({isUpdated}) => {
+  const dispatch = useDispatch();
+  const {links} = useSelector(state => state.profile);
+  const {t} = useTranslation();
 
-    const [copied, setCopied] = useState(false);
+  const [copied,setCopied] = useState(false);
 
-    const handleCopy = async (idx, textToCopy) => {
-        try {
-            await navigator.clipboard.writeText(textToCopy);
-            setCopied(idx);
-            setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
-            console.error('Kopyalama hatası:', err);
-        }
-    };
+  const handleCopy = async (idx,textToCopy) => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setCopied(idx);
+      setTimeout(() => setCopied(false), 2000); 
+    } catch (err) {
+      console.error('Kopyalama hatası:', err);
+    }
+  };
 
-    const handleAddLink = () => {
-        setProfileData((prev) => ({
-            ...prev,
-            links: [...prev.links, ""]
-        }));
-    };
+  const handleAddFormItem = () => {
+    dispatch(setLinks([
+      ...links,
+      {
+        title:"",
+        url:""
+      }
+    ]));
+  }
 
-    const handleClickDeleteItem = (index) => {
-        setProfileData((prev) => ({
-            ...prev,
-            links: prev.links?.filter((_, idx) => idx !== index)
-        }));
-    };
+  const handleClickDeleteItem = (index) => {
+    dispatch(setLinks(links?.filter((_,i) => i !== index )));
+  }
+  
 
-    const handleUpdateLink = (index, newValue) => {
-        setProfileData((prev) => {
-            const updatedLinks = [...prev.links];
-            updatedLinks[index] = newValue;
-            return {
-                ...prev,
-                links: updatedLinks
-            };
-        });
-    };
-
-    return (
-        <>
-            <PageTitle title="Linkler" />
-            <div className="section_container">
-                {pathname === updatedPage ? (
-                    <>
-                        <div className="add_info_container">
-                            <button className="add_info" onClick={handleAddLink}>
-                                Link&nbsp;<img src={plusIcon} alt="" />
-                            </button>
-                        </div>
-
-                        <div style={{marginTop: profileData?.links?.length > 0 ? "30px" : "0"}}>
-                            {profileData?.links?.map((item, idx) => (
-                                <div className="editable_container" key={idx}>
-                                    <div className="editable_input_group">
-                                        <img src={linkIcon} alt="" className="editable_input_icon" />
-                                        <input
-                                            type="text"
-                                            className="editable_input"
-                                            value={item}
-                                            onChange={(e) => handleUpdateLink(idx, e.target.value)}
-                                        />
-                                    </div>
-                                    <button
-                                        className="editable_input_delete_button"
-                                        onClick={() => handleClickDeleteItem(idx)}
-                                    >
-                                        <img src={deleteIcon} alt="" />
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                ) : (
-                    profileData?.links?.map((item, idx) => (
-                        <div className="info_line" key={idx}>
-                            <div className="info_line_content">
-                                <img src={linkIcon} alt="" />
-                                <span className="info_line_content_text">{item}</span>
+  return (
+    <>
+      <PageTitle title={t("profilePage.links.pageTitle")} />
+      <div className="section_container right">
+                {
+                  isUpdated ? <> <div className="add_form_item_container">
+                      <button className="add_form_item" onClick={handleAddFormItem}>
+                        Link&nbsp;<img src={plus} alt=""/>
+                      </button>
+                   
+                </div> {links && links?.length > 0 && links?.map((item,idx) => (
+                            <div className="form_group_with_delete" key={idx}>
+                              <div className="form_group">
+                              <img src={link} alt={item?.value} className="form_icon" />
+                              <input type="text" className="form_input" value={item?.url}/>
+                              </div>
+                              <button className="form_group_delete_btn" onClick={() => handleClickDeleteItem(idx)}><img src={trash} alt="" /></button>
                             </div>
-                            <button
-                                className="info_line_copy_button"
-                                onClick={() => handleCopy(idx, item)}
-                            >
-                                {copied === idx ? (
-                                    <FaCheck color="#70C094" />
-                                ) : (
-                                    <img src={copyIcon} alt="" />
-                                )}
-                            </button>
-                        </div>
-                    ))
-                )}
-            </div>
-        </>
-    );
-};
+                          ))}</> : links && links?.length > 0 && links?.map((item,idx) => (
+                    <div className="copied_line_container" key={idx}>
+                                  <div className="copied_line_group">
+                                    <img src={link} alt="" className="copied_line_icon"/>
+                                    <span className="copied_line_text">{item?.url}</span>
+                                  </div>
+                                  <button className="copied_button" onClick={() => handleCopy(idx,item?.url)}>{copied  && copied === idx ? <FaCheck color="#70C094"/> : <img src={copy} alt=""/>}</button>
+                                </div>
+                  ))
+                }
+      </div>
+    </>
+  )
+}
 
-export default Links;
+export default Links

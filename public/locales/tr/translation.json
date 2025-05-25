@@ -1,0 +1,59 @@
+{
+    "profilePage":{
+        "metaTitle":"Profil",
+        "metaDescription":"Profil Test",
+        "metaKeywords":"test1 test2 test3",
+        "personalInfo":{
+            "pageTitle":"Kişisel Bilgiler",
+            "name":"Ad",
+            "surname":"Soyad",
+            "title":"Ünvan"
+        },
+        "contactInfo":{
+            "pageTitle":"İletişim Bilgileri"
+        },
+        "links":{
+            "pageTitle":"Linkler"
+        }
+    },
+    "socialMediaPage":{},
+    "companyPage":{
+        "metaTitle":"Şirket",
+        "metaDescription":"Şirket Test",
+        "metaKeywords":"test1 test2 test3",
+        "companyInfo":{
+            "pageTitle":"Şirket Bilgileri",
+            "name":"Şirket Adı",
+            "taxNo":"Vergi Numarası",
+            "taxBody":"Vergi Adresi",
+            "address":"Adres",
+            "addCompanyInfoButton":"Şirket Ekle"
+        },
+        "bankInfo":{
+            "pageTitle":"Banka Bilgileri",
+            "bankName":"Banka Adı",
+            "iban":"İban",
+            "accountHolder":"Hesap Sahibi",
+            "addBankInfoButton":"Banka Ekle"
+        }
+    },
+    "marketingAssetsPage":{
+        "metaTitle":"Kataloglar",
+        "metaDescription":"Kataloglar Test",
+        "metaKeywords":"test1 test2 test3",
+        "pageTitle":"Kataloglar",
+        "addMarketingAssetsButton":"Döküman Ekle"
+    },
+    "menu":{
+        "profile":"Profil",
+        "socialMedia":"Sosyal Medya",
+        "company":"Şirket",
+        "marketingAssets":"Katalog"
+    },
+    "buttons":{
+        "editButtonText":"Düzenle",
+        "createQrButtonText":"QR Oluştur",
+        "submitButtonText":"Kaydet",
+        "cancelButtonText":"İptal"
+    }
+}

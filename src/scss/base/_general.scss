@@ -1,8 +1,8 @@
-@use "../abstracts/variables" as *;
+/*General*/
 
 *{
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     list-style: none;
     text-decoration: none;
@@ -12,122 +12,46 @@
 body{
     background-color: var(--backgroundColor) !important;
     color: var(--textColor) !important;
-    height: 100%;
+    width:100%;
+    height:100%;
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 button{
     background: none;
     border: none;
     outline: none;
+    cursor: pointer;
 }
 a{
     text-decoration: none !important;
-    color: inherit !important;
+    color: var(--textColor);
 }
-  
+
 .page_container{
-    padding: 40px 0;
+    // margin: 10px 0 40px 0 !important;
+    &:last-child{
+         margin-bottom: 65px;
+    }
 }
-
 .section_container{
-    padding: 30px 0;
+    // padding: 0 30px 0 45px;
+    // padding: 0 35px 0 35px;
+    padding: 35px 70px 35px 0;
 }
 
-.col-md-6 > div{
-    align-self: flex-start !important;
+.row,.col-md-6,.col-md-3,.col-md-4{
+    margin:0 !important;
+    padding: 0 !important;
 }
-
-.profile_input_group{
-    height:33px;
-    margin-bottom: 12px;
-    border-radius: 5px;
-    border:1px solid var(--linkBackgroundColor);
-    display: flex;
-    max-width: 362px;
-    width: 100%;
-    overflow: hidden;
-    &:last-child{
-        margin-bottom: 0;
-    }
-    .profile_input_label{
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--labelColor);
-        width:82px;
-        display: flex;
-        align-items: center;
-        padding-left: 10px;
-        border-right: 1px solid var(--linkBackgroundColor);
-    }
-    .profile_input{
-        font-size: 14px;
-        font-weight: 400;
-        color: var(--textColor);
-        width: 100%;
-        height: 100%;
-        border: none;
-        background:none;
-        padding: 0 10px;
-    }
-}
-
-.editable_container{
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    &:last-child{
-        margin-bottom: 0;
-    }
-    .editable_input_group{
-        height:33px;
-        border-radius: 5px;
-        border:1px solid var(--linkBackgroundColor);
-        display: flex;
-        align-items: center;
-        max-width: 362px;
-        width: 100%;
-        overflow: hidden;
-        padding: 0 10px;
-        margin-right: 10px;
-        .editable_input_icon{
-            margin-right: 5px;
-            width: 16px;
-            height: 16px;
-        }
-        .editable_input{
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: none;
-            padding-left: 10px;
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--textColor);
-        }
-    }
-    .editable_input_delete_button{
-        width:33px;
-        height: 33px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 5px;
-        border: 1px solid var(--linkBackgroundColor);
-        margin: 0;
-        &:active{
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-    }
-}
-
 
 @media only screen and (max-width:768px){
     .page_container{
-        padding: 40px 0 80px 0;
+        // margin: 30px 0 40px 0 !important;
     }
     .section_container{
-        padding: 30px 20px 30px 45px;
+        // padding: 0 30px 0 0 !important;
+        padding: 35px;
     }
 }

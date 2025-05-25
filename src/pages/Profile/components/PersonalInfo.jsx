@@ -1,21 +1,20 @@
-import {useState} from "react";
-import PageTitle from "../../../components/PageTitle";
-import copyIcon from "../../../assets/img/icons/copy.svg";
+import { useTranslation } from "react-i18next";
+import PageTitle from "../../../../../../../Documents/GitHub/kavio-profile/src/components/PageTitle";
+import { useDispatch, useSelector } from "react-redux";
+import { setPersonalInfo } from "../../../redux/slices/ProfileSlice";
+import { generateProfileIcon } from "../../../helpers";
+import copy from "../../../assets/img/icons/copy.svg";
+import {FaCheck} from "react-icons/fa6"
+import { useState } from "react";
 
-import { FaCheck } from "react-icons/fa6";
-import {generateProfileIcon} from "../helper";
-import { useLocation } from "react-router";
-import { useSelector } from "react-redux";
+const PersonalInfo = ({ isUpdated }) => {
+  const dispatch = useDispatch();
+  const { personalInfo,contactInfo } = useSelector((state) => state.profile);
+  const { t } = useTranslation();
 
+  const [copied,setCopied] = useState(false);
 
-
-const PersonalInfo = ({profileData,setProfileData}) => {
-    const [copied, setCopied] = useState(false);
-    const location = useLocation();
-    const pathname = location?.pathname?.split("/")[1];
-    const {updatedPage} = useSelector(state => state.updateData);
-
-    const handleCopy = async (idx,textToCopy) => {
+  const handleCopy = async (idx,textToCopy) => {
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopied(idx);
@@ -25,46 +24,51 @@ const PersonalInfo = ({profileData,setProfileData}) => {
     }
   };
 
-  const handleChangePersonalInfo = (e) => {
+  const handleChange = (e) => {
     const {name,value} = e.target;
-    setProfileData((prev) => ({
-      ...prev,
-      personalInfo:{
-        ...prev.personalInfo,
-        [name]:value
-      }
-    }))
+    dispatch(setPersonalInfo({
+      ...personalInfo,
+      [name]:value
+    }));
   }
 
-    return(
-       <>
-            <PageTitle title="Kişisel Bilgiler"/>
-            <div className="section_container">
-            {
-              pathname === updatedPage ? <>
-              <div className="profile_input_group">
-                <label className="profile_input_label">Ad</label>
-                <input type="text" className="profile_input" value={profileData?.personalInfo?.name} name="name" onChange={handleChangePersonalInfo}/>
-              </div>
-              <div className="profile_input_group">
-                <label className="profile_input_label">Soyad</label>
-                <input type="text" className="profile_input" value={profileData?.personalInfo?.surname} name="surname" onChange={handleChangePersonalInfo}/>
-              </div>
-              <div className="profile_input_group">
-                <label className="profile_input_label">Ünvan</label>
-                <input type="text" className="profile_input" value={profileData?.personalInfo?.title} name="title" onChange={handleChangePersonalInfo}/>
-              </div>
-              </> :
-                profileData && profileData?.contactInfo?.map((item,idx) => (
-                    <div className="info_line" key={idx}>
-                        <div className="info_line_content"><img src={generateProfileIcon(item?.type)} alt=""/><span className="info_line_content_text">{item?.info}</span></div>
-                        <button className="info_line_copy_button" onClick={() => handleCopy(idx + 1,item?.info)}>{copied && copied === idx + 1 ? <FaCheck color="#70C094"/>:<img src={copyIcon} alt=""/>}</button>
-                    </div>
-                ))
-            }
-            </div>
+  return(
+    <>
+      <PageTitle title={t("profilePage.personalInfo.pageTitle")} />
+      <div className="section_container">
+        {isUpdated ? (
+        <>
+          <div className="form_group marginBottom">
+            <label className="form_label">{t("profilePage.personalInfo.name")}</label>
+            <input type="text" className="form_input" name="name" value={personalInfo?.name} onChange={handleChange}/>
+          </div>
+
+          <div className="form_group marginBottom">
+            <label className="form_label">{t("profilePage.personalInfo.surname")}</label>
+            <input type="text" className="form_input" name="surname" value={personalInfo?.surname} onChange={handleChange}/>
+          </div>
+
+          <div className="form_group marginBottom">
+            <label className="form_label">{t("profilePage.personalInfo.title")}</label>
+            <input type="text" className="form_input" name="title" value={personalInfo?.title} onChange={handleChange}/>
+          </div>
         </>
-    );
-}
+      ) : 
+        (
+          contactInfo && contactInfo?.map((item,idx) => (
+            <div className="copied_line_container" key={idx}>
+              <div className="copied_line_group">
+                <img src={generateProfileIcon(item?.contactType)} alt="" className="copied_line_icon"/>
+                <span className="copied_line_text">{item?.value}</span>
+              </div>
+              <button className="copied_button" onClick={() => handleCopy(idx,item?.value)}>{copied  && copied === idx ? <FaCheck color="#70C094"/> : <img src={copy} alt=""/>}</button>
+            </div>
+          ))
+  )
+      }
+      </div>
+    </>
+  );
+};
 
 export default PersonalInfo;
