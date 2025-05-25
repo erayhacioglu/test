@@ -1,7 +1,7 @@
 import "./marketing_assets.scss";
 import { useTranslation } from "react-i18next"
 import SEO from "../../SEO"
-import PageTitle from "../../../../../../Documents/GitHub/kavio-profile/src/components/PageTitle";
+import PageTitle from "../../components/PageTitle";
 import MarketingAssetCard from "./components/MarketingAssetCard";
 import plus from "../../assets/img/icons/plus.svg";
 
