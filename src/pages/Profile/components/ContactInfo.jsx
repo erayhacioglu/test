@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import PageTitle from "../../../../../../../Documents/GitHub/kavio-profile/src/components/PageTitle";
+import PageTitle from "../../../components/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import { generateProfileIcon, linkData } from "../../../helpers";
 import trash from "../../../assets/img/icons/trash.svg";

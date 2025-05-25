@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import PageTitle from "../../../../../../../Documents/GitHub/kavio-profile/src/components/PageTitle";
+import PageTitle from "../../../components/PageTitle";
 import trash from "../../../assets/img/icons/trash.svg";
 import plus from "../../../assets/img/icons/plus.svg";
 import copy from "../../../assets/img/icons/copy.svg";

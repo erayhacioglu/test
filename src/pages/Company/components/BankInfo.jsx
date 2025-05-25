@@ -1,6 +1,6 @@
-import { Fragment, useState } from "react";
+import {  useState } from "react";
 import { useTranslation } from "react-i18next";
-import PageTitle from "../../../../../../../Documents/GitHub/kavio-profile/src/components/PageTitle";
+import PageTitle from "../../../components/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import copy from "../../../assets/img/icons/copy.svg";
 import { FaCheck } from "react-icons/fa6";
