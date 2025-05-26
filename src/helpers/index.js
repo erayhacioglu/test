@@ -55,3 +55,74 @@ export const linkData = [
         contactType: "fax"
     }
 ];
+
+import linkedin from "../assets/img/icons/linkedin.svg";
+import facebook from "../assets/img/icons/facebook.svg";
+import github from "../assets/img/icons/github.svg";
+import twitter from "../assets/img/icons/twitter.svg";
+import youtube from "../assets/img/icons/youtube.svg";
+import instagram from "../assets/img/icons/instagram.svg";
+import pinterest from "../assets/img/icons/pinterest.svg";
+import behance from "../assets/img/icons/behance.svg";
+import dribbble from "../assets/img/icons/dribbble.svg";
+import snapchat from "../assets/img/icons/snapchat.svg";
+import spotify from "../assets/img/icons/spotify.svg";
+
+
+export const socialMediaPlatforms = [
+    {
+        platform:"LINKEDIN",
+        icon:linkedin,
+        value:"Linkedin"
+    },
+    {
+        platform:"FACEBOOK",
+        icon:facebook,
+        value:"Facebook"
+    },
+    {
+        platform:"GITHUB",
+        icon:github,
+        value:"Github"
+    },
+    {
+        platform:"TWITTER",
+        icon:twitter,
+        value:"Twitter"
+    },
+    {
+        platform:"YOUTUBE",
+        icon:youtube,
+        value:"Youtube"
+    },
+    {
+        platform:"INSTAGRAM",
+        icon:instagram,
+        value:"Instagram"
+    },
+    {
+        platform:"PINTEREST",
+        icon:pinterest,
+        value:"Pinterest"
+    },
+    {
+        platform:"BEHANCE",
+        icon:behance,
+        value:"Behance"
+    },
+    {
+        platform:"DRIBBBLE",
+        icon:dribbble,
+        value:"Dribbble"
+    },
+    {
+        platform:"SNAPCHAT",
+        icon:snapchat,
+        value:"Snapchat"
+    },
+    {
+        platform:"SPOTIFY",
+        icon:spotify,
+        value:"Spotify"
+    },
+]

@@ -16,7 +16,12 @@
             "pageTitle":"Linkler"
         }
     },
-    "socialMediaPage":{},
+    "socialMediaPage":{
+        "metaTitle":"Sosyal Medya",
+        "metaDescription":"Sosyal Medya Test",
+        "metaKeywords":"test1 test2 test3",
+        "pageTitle":"Sosyal Medya"
+    },
     "companyPage":{
         "metaTitle":"Şirket",
         "metaDescription":"Şirket Test",

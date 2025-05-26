@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 //import {useTheme} from "./hooks/useTheme";
 
 const App = () => {
-   //useTheme(themes["mintBreeze"]);
+  //useTheme(themes["mintBreeze"]);
 
   const {i18n} = useTranslation();
 

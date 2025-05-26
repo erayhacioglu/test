@@ -16,7 +16,12 @@
             "pageTitle":"Links"
         }
     },
-    "socialMediaPage":{},
+    "socialMediaPage":{
+        "metaTitle":"Social Media",
+        "metaDescription":"Social Media Test",
+        "metaKeywords":"test1 test2 test3",
+        "pageTitle":"Social Media"
+    },
     "companyPage":{
         "metaTitle":"Company",
         "metaDescription":"Company Test",

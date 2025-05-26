@@ -1,4 +1,3 @@
-import React from 'react'
 import trash from "../../../assets/img/icons/trash.svg";
 import cardBackground from "../../../assets/img/marketing_assets_background.jpg"
 
