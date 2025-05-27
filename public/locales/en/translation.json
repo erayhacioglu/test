@@ -47,7 +47,11 @@
         "metaDescription":"Marketing Assets Test",
         "metaKeywords":"test1 test2 test3",
         "pageTitle":"Marketing Assets",
-        "addMarketingAssetsButton":"Add Document"
+        "addMarketingAssetsButton":"Add Document",
+        "marketingAssetsModalCoverPhotoButtonText":"Add Cover Photo",
+        "marketingAssetsModalPdfButtonText":"Add Pdf",
+        "marketingAssetsModalTitle":"Enter the information to create a document",
+        "marketingAssetsModalLabel":"Title"
     },
     "menu":{
         "profile":"Profile",

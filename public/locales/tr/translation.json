@@ -47,7 +47,11 @@
         "metaDescription":"Kataloglar Test",
         "metaKeywords":"test1 test2 test3",
         "pageTitle":"Kataloglar",
-        "addMarketingAssetsButton":"Döküman Ekle"
+        "addMarketingAssetsButton":"Döküman Ekle",
+        "marketingAssetsModalCoverPhotoButtonText":"Kapak Fotoğrafı Ekle",
+        "marketingAssetsModalPdfButtonText":"Pdf Ekle",
+        "marketingAssetsModalTitle":"Döküman Oluşturmak İçin Bilgileri Giriniz",
+        "marketingAssetsModalLabel":"Başlık"
     },
     "menu":{
         "profile":"Profil",

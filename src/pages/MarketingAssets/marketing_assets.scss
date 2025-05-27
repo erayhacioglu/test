@@ -1,74 +1,289 @@
 /*Marketin Assets*/
 
-.marketing_assets_card_container{
+.marketing_assets_container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px 20px;
+  width: 100%;
+  .marketing_assets_card_container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    .marketing_assets_card{
-        width:191px;
-        height: 282px;
-        border-radius: 17px;
-        overflow: hidden;
-        .marketing_assets_card_header{
-            height: 228px;
-            display: flex;
-            align-items: center;
-            justify-content:center;
-            .marketing_assets_card_header_img{
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
-        .marketing_assets_card_content{
-            height: 54px;
-            background: var(--addCompanyButton);
-            color: var(--textColor);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 500;
-        }
-    }
-    .marketing_assets_card_delete{
-        margin-top: 10px;
-    }
-}
-
-
-.marketing_assets_add_button{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: max-content;
-    .marketing_assets_add_circle{
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
+    .marketing_assets_card {
+      height: 282px;
+      border-radius: 17px;
+      overflow: hidden;
+      width: 100%;
+      .marketing_assets_card_header {
+        width: 100%;
+        height: 228px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid var(--textColor);
-        cursor: pointer;
-        & > img{
-            width: 20px;
-            height: 20px;
+        .marketing_assets_card_header_img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
+      }
+      .marketing_assets_card_content {
+        width: 100%;
+        height: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--addCompanyButton);
+        color: var(--textColor);
+        .marketing_assets_card_content_text {
+          text-align: center;
+          font-size: 14px;
+          font-weight: 500;
+          margin: 0;
+          padding: 0;
+        }
+      }
     }
-    .marketing_assets_add_text{
-        text-align: center;
-        font-size: 14px;
-        font-weight: 500;
-        margin-top: 15px;
+    &.update .marketing_assets_card_delete_button {
+      display: flex;
     }
+    .marketing_assets_card_delete_button {
+      margin-top: 10px;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--linkBackgroundColor);
+      &:active {
+        transform: scale(0.9);
+        transition: transform 0.3 ease;
+      }
+      .marketing_assets_card_delete_button_img {
+        width: 17.5px;
+        height: 17.5px;
+      }
+    }
+  }
 }
 
-@media only screen and (max-width:768px){
-    .marketing_assets_add_button{
-        width: 100%;
+.marketing_assets_button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  margin-top: 50px;
+  cursor: pointer;
+  &:active {
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+  }
+  .marketing_assets_circle {
+    border: 3px solid var(--textColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    .marketing_assets_circle_img {
+      width: 20px;
+      height: 20px;
     }
+  }
+  .marketing_assets_text {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--textColor);
+  }
+}
+
+.modal-content {
+  background-color: var(--menuBackgroundColor) !important;
+  border-radius: 2px !important;
+}
+.modal-header {
+  border-bottom: none !important;
+}
+.modal-body {
+  // background-color: red !important;
+}
+.modal-title {
+  line-height: 0 !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  color: var(--textColor) !important;
+  padding: 20px 0 20px 10px !important;
+}
+.btn-close {
+  color: var(--textColor) !important;
+}
+.modal-footer {
+  padding: 5px !important;
+  border-top: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px;
+}
+.marketing_asset_cancel_btn,
+.marketing_asset_submit_btn {
+  width: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  height: 40px;
+  background-color: var(--submitButtonBackgroundColor);
+  color: var(--textColor);
+}
+.marketing_asset_cancel_btn {
+  background-color: crimson;
+}
+
+.marketing_asset_body {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  .marketing_asset_configure {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    // grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    .configure_input_group {
+      grid-area: 1 / 1 / 2 / 5;
+      display: flex;
+      overflow: hidden;
+      border-radius: 5px;
+      height: 55px;
+      border: 1px solid var(--linkBackgroundColor);
+      position: relative;
+      .configure_input_group_size {
+        position: absolute;
+        right: 5px;
+        bottom: 0;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--labelColor);
+        &.max_size {
+          color: crimson;
+        }
+      }
+      .configure_label {
+        border-right: 1px solid var(--linkBackgroundColor);
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--labelColor);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 10px;
+      }
+      .configure_input {
+        background: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+        padding: 0 10px;
+        caret-color: var(--labelColor);
+        color: var(--labelColor);
+      }
+    }
+    .configure_add_btn {
+      border: 1px solid var(--linkBackgroundColor);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      width: 100%;
+      height: 275px;
+      &.photo-button {
+        grid-area: 2 / 1 / 4 / 3;
+      }
+      &.pdf-button {
+        grid-area: 2 / 3 / 4 / 5;
+      }
+    }
+  }
+  .preview_card {
+    width: 90%;
+    height: 100%;
+    margin-left: auto;
+    border-radius: 7px;
+    overflow: hidden;
+    .preview_card_header {
+      height: 80%;
+      & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .preview_card_content {
+      height: 20%;
+      background-color: var(--addCompanyButton);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--textColor);
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .marketing_assets_container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .marketing_assets_button {
+    width: auto;
+  }
+  .marketing_asset_cancel_btn,
+  .marketing_asset_submit_btn {
+    height: 32px;
+    flex: 1;
+  }
+  .modal-title {
+    font-size: 15px !important;
+  }
+  .modal-content {
+    height: 85vh;
+  }
+  .modal-body {
+    max-height: 600px;
+    overflow: auto;
+  }
+  .marketing_asset_body {
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto !important;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    .marketing_asset_configure {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .preview_card {
+      height: 100%;
+      width: 100%;
+      max-width: 275px;
+      margin: auto;
+    }
+  }
+  .mobile_configure_add_btn {
+    width: 100%;
+    height: 55px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--linkBackgroundColor);
+    color: var(--textColor);
+  }
 }

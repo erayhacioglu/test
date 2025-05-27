@@ -1,36 +1,60 @@
+import { Fragment, useState } from "react";
 import "./marketing_assets.scss";
-import { useTranslation } from "react-i18next"
-import SEO from "../../SEO"
+import { useTranslation } from "react-i18next";
+import SEO from "../../SEO";
 import PageTitle from "../../components/PageTitle";
 import MarketingAssetCard from "./components/MarketingAssetCard";
 import plus from "../../assets/img/icons/plus.svg";
+import { useLocation } from "react-router";
+import { useSelector } from "react-redux";
+import { updatePageChecker } from "../../helpers";
+import MarketingAssetModal from "./components/MarketingAssetModal";
 
 const MarketingAssests = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
+  const location = useLocation();
+   const { updatedPage } = useSelector((state) => state.updatePage);
+   const { marketingAssetsData } = useSelector((state) => state.marketingAssets);
+
+  const isUpdated = updatePageChecker(location.pathname, updatedPage);
+
+  const [showModal,setShowModal] = useState(false);
+
   return (
     <>
-        <SEO title={t("marketingAssetsPage.metaTitle")}
+      <SEO
+        title={t("marketingAssetsPage.metaTitle")}
         description={t("marketingAssetsPage.metaDescription")}
-        keywords={t("marketingAssetsPage.metaKeywords")}/>
-        <div className="page_container">
-          <PageTitle title={t("marketingAssetsPage.pageTitle")}/>
-          <div className="section_container" style={{paddingRight:"0"}}>
-          <div className="row">
-            <MarketingAssetCard />
-            <MarketingAssetCard />
-            <MarketingAssetCard />
-            <MarketingAssetCard />
+        keywords={t("marketingAssetsPage.metaKeywords")}
+      />
+      <div className="page_container">
+        <PageTitle title={t("marketingAssetsPage.pageTitle")} />
+        <div className="section_container">
+          <div className="marketing_assets_container">
+            {
+              marketingAssetsData && marketingAssetsData?.length > 0 && marketingAssetsData?.map((item,idx) => (
+                <Fragment key={idx}>
+                  <MarketingAssetCard isUpdated={isUpdated} data={item}/>
+                </Fragment>
+              ))
+            }
           </div>
-          </div>
-          <div className="section_container">
-            <div className="marketing_assets_add_button">
-              <div className="marketing_assets_add_circle"><img src={plus} alt=""/></div>
-              <p className="marketing_assets_add_text">{t("marketingAssetsPage.addMarketingAssetsButton")}</p>
+          {
+            isUpdated && 
+          <div className="marketing_assets_button" onClick={() => setShowModal(true)}>
+            <div className="marketing_assets_circle">
+              <img src={plus} alt="" className="marketing_assets_circle_img"/>
             </div>
+            <span className="marketing_assets_text">
+              {t("marketingAssetsPage.addMarketingAssetsButton")}
+            </span>
           </div>
+          }
         </div>
+      </div>
+      <MarketingAssetModal showModal={showModal} setShowModal={setShowModal}/>
     </>
-  )
-}
+  );
+};
 
-export default MarketingAssests
+export default MarketingAssests;
