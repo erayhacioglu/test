@@ -1,4 +1,4 @@
-// /*Side Menu*/
+/*Side Menu*/
 
 .side_menu {
   position: fixed;
@@ -10,6 +10,117 @@
   background-color: var(--primaryColor);
   z-index: 1100;
   transition: transform 0.3s ease-in-out;
+  overflow: auto;
+
+  .side_menu_logo {
+    display: flex;
+    justify-content: center;
+    padding: 35px 0 50px;
+
+    .side_menu_logo_img {
+      max-width: 127px;
+      max-height: 27px;
+    }
+  }
+
+  .side_menu_user {
+    padding: 0 15px 20px;
+    .side_menu_avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 1px solid var(--avatarBorderColor);
+      overflow: hidden;
+      margin-bottom: 15px;
+
+      .side_menu_avatar_img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .side_menu_info {
+      p {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--textColor);
+        padding: 0;
+        margin: 0;
+      }
+
+      span {
+        font-size: 10px;
+        font-weight: 300;
+        color: var(--avatarBorderColor);
+      }
+    }
+  }
+
+  .side_menu_body {
+    padding: 0 15px;
+
+    .menu_item {
+      .menu_label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+        cursor: pointer;
+
+        .menu_icon img {
+          width: 22px;
+          height: 22px;
+        }
+
+        .menu_text {
+          flex-grow: 1;
+          margin-left: 15px;
+          font-size: 14px;
+          font-weight: 700;
+          color: var(--textColor);
+        }
+      }
+
+      .menu_children {
+        padding-left: 25px;
+        margin-top: 5px;
+
+        .theme_option {
+          display: flex;
+          align-items: center;
+          height: 35px;
+          cursor: pointer;
+
+          .color_circle {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 1px solid black;
+            margin:0 10px;
+          }
+
+          &.selected {
+            background-color: var(--selectedMenuItem);
+            border-radius: 20px;
+            color: var(--addCompanyButton);
+          }
+        }
+
+        .submenu_link {
+          padding: 8px 10px;
+          border-radius: 8px;
+          color: var(--textColor);
+          font-size: 13px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: var(--linkBackgroundColor);
+          }
+        }
+      }
+    }
+  }
 
   &.hidden {
     transform: translateX(-100%);
@@ -39,6 +150,20 @@
     min-width: 192px;
     max-width: 192px;
 
+    .side_menu_logo {
+      padding: 25px 0 40px;
+
+      .side_menu_logo_img {
+        max-width: 85px;
+        max-height: 19px;
+      }
+    }
+
+    .side_menu_avatar {
+      width: 54px;
+      height: 54px;
+    }
+
     .side_menu_mobile_button {
       display: flex;
       position: absolute;
@@ -59,10 +184,10 @@
       }
     }
 
-    &.active {
-      .side_menu_mobile_button > img {
-        transform: rotate(0);
-      }
+    &.active .side_menu_mobile_button > img {
+      transform: rotate(0);
     }
   }
 }
+
+

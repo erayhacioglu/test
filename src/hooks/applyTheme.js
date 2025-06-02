@@ -1,5 +1,7 @@
-export function useTheme(theme) {
+export function applyTheme(theme) {
   const root = document.documentElement;
+
+  if(!theme) return;
 
   root.style.setProperty('--primaryColor', theme.primaryColor);
   root.style.setProperty('--backgroundColor', theme.backgroundColor);
