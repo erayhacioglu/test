@@ -100,7 +100,7 @@ const themes = {
     labelColor: "#91A6FF",
     jobColor: "#5C7AEA"
   },
-  coralReef: {
+  coral: {
     primaryColor: "#FF6F61",
     backgroundColor: "#3B1F2B",
     headerBackgroundColor: "#7F4F4F",
@@ -114,7 +114,7 @@ const themes = {
     labelColor: "#D9B08C",
     jobColor: "#B27666"
   },
-  mintBreeze: {
+  mint: {
     primaryColor: "#3EB489",
     backgroundColor: "#1C3F2D",
     headerBackgroundColor: "#2E6647",
