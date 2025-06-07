@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import {applyTheme} from "./hooks/applyTheme";
 import {  useSelector } from 'react-redux';
 import themesData from "./constants/themes";
+import ProfileLayout from './layouts/ProfileLayout';
 
 const App = () => {
   const {theme} = useSelector(state => state.theme);
@@ -44,6 +45,14 @@ const App = () => {
         <Route path="company" element={<Company />} />
         <Route path="marketing-assets" element={<MarketingAssests />} />
       </Route>
+
+      <Route path="/user/:id" element={<ProfileLayout />}>
+        <Route index path='profile' element={<Profile />}/>
+        <Route path="social-media" element={<SocialMedia />} />
+        <Route path="company" element={<Company />} />
+        <Route path="marketing-assets" element={<MarketingAssests />} />
+      </Route>
+
     </Routes>
   );
 };

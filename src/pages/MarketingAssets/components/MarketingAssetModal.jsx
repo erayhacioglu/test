@@ -17,6 +17,9 @@ import { FaCheck } from "react-icons/fa6";
 const MarketingAssetModal = ({ showModal, setShowModal }) => {
   const { t, i18n } = useTranslation();
   const { width } = useWindowSize();
+
+    console.log('width', width)
+
   const dispatch = useDispatch();
   const { marketingAssetsData } = useSelector((state) => state.marketingAssets);
   const [modalData, setModalData] = useState({
@@ -70,153 +73,81 @@ const MarketingAssetModal = ({ showModal, setShowModal }) => {
         </ModalTitle>
       </ModalHeader>
       <ModalBody>
-        <div className="marketing_asset_body">
-          <div className="marketing_asset_configure">
-            <div className="configure_input_group">
-              <label className="configure_label">
-                {t("marketingAssetsPage.marketingAssetsModalLabel")}
-              </label>
-              <input
-                type="text"
-                className="configure_input"
-                maxLength={54}
-                value={modalData?.title}
-                onChange={(e) =>
-                  setModalData((prev) => ({ ...prev, title: e.target.value }))
-                }
-              />
-              <span
-                className={`configure_input_group_size ${
-                  modalData?.title?.length === 54 ? "max_size" : ""
-                }`}
-              >
-                {modalData?.title?.length > 0 ? modalData?.title?.length : 0}/54
-              </span>
-            </div>
-            {width > 768 ? (
-              <>
-                <div className="configure_add_btn photo-button">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="photo-button"
-                    className="d-none"
-                    onChange={handleChangePhoto}
-                  />
-                  <label
-                    htmlFor="photo-button"
-                    className="marketing_assets_button"
-                    onClick={() => setShowModal(true)}
-                  >
-                    <div className="marketing_assets_circle">
-                      <img
-                        src={plus}
-                        alt=""
-                        className="marketing_assets_circle_img"
-                      />
-                    </div>
-                    <span className="marketing_assets_text">
-                      {t(
+        <div className="marketing_assets_modal_body">
+            <div className="configure">
+                <div className="configure_input_group">
+                    <div className="configure_label">{t("marketingAssetsPage.marketingAssetsModalLabel")}</div>
+                    <input type="text" className="configure_input" value={modalData?.title} maxLength={50} onChange={(e) => setModalData((prev) => ({...prev,title:e.target.value}))}/>
+                    <span className={`configure_size ${modalData?.title?.length === 50 ? "max_size":""}`}>{modalData?.title?.length ?? 0}/50</span>
+                </div>
+                <div className="configure_documents">
+                    <label htmlFor="coverPhoto" className="document">
+                        <input type="file" accept="*" className="d-none" id="coverPhoto" onChange={handleChangePhoto}/>
+                        {
+                            width > 768 ? <div className="add_document_desktop_body">
+                                <div className="add_document_button">
+                                    <div className="circle_plus">
+                                        <img src={plus} alt="" />
+                                    </div>
+                                    <span>{t(
                         "marketingAssetsPage.marketingAssetsModalCoverPhotoButtonText"
-                      )}
-                    </span>
-                  </label>
-                </div>
-                <div className="configure_add_btn pdf-button">
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    id="pdf-button"
-                    className="d-none"
-                    onChange={handleChangePdf}
-                  />
-                  <label
-                    htmlFor="pdf-button"
-                    className="marketing_assets_button"
-                  >
-                    <div className="marketing_assets_circle">
-                      <img
-                        src={plus}
-                        alt=""
-                        className="marketing_assets_circle_img"
-                      />
-                    </div>
-                    <span className="marketing_assets_text">
-                      {t(
-                        "marketingAssetsPage.marketingAssetsModalPdfButtonText"
-                      )}
-                    </span>
-                  </label>
-                </div>
-              </>
-            ) : (
-              <>
-                <label
-                  htmlFor="photo-button"
-                  className="mobile_configure_add_btn photo-btn"
-                >
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="photo-button"
-                    className="d-none"
-                    onChange={handleChangePhoto}
-                  />
-                  <div className="mobile_configure_add_btn_text">
-                    {modalData?.coverPhoto ? (
-                      <span>
-                        {modalData?.coverPhoto?.name}&nbsp;
-                        <FaCheck color="#70C094" />
-                      </span>
-                    ) : (
-                      <span>
-                        {t(
+                      )}</span>
+                                </div>
+                            </div>:
+                        <div className="add_document_mobile_body">
+                            {
+                                modalData?.coverPhoto ? <><span>{modalData?.coverPhoto?.name}&nbsp;
+                                                    </span>
+                            <FaCheck color="#70C094" size={18}/></> : <span>{t(
                           "marketingAssetsPage.marketingAssetsModalCoverPhotoButtonText"
-                        )}
-                      </span>
-                    )}
-                  </div>
-                </label>
-                <label
-                  htmlFor="pdf-button"
-                  className="mobile_configure_add_btn pdf-btn"
-                >
-                  <input
-                    type="file"
-                    accept=".pdf"
-                    id="pdf-button"
-                    className="d-none"
-                    onChange={handleChangePhoto}
-                  />
-                  {modalData?.pdf ? (
-                    <span>
-                      {modalData?.pdf?.name}&nbsp;
-                      <FaCheck color="#70C094" />
-                    </span>
-                  ) : (
-                    <span>
-                      {t(
+                        )}</span>
+                            }
+                            
+                        </div>
+                        }
+                    </label>
+                    <label htmlFor="pdf" className="document">
+                        <input type="file" accept="*" className="d-none" id="pdf" onChange={handleChangePdf}/>
+                        {
+                            width > 768 ? <div className="add_document_desktop_body">
+                                <div className="add_document_button">
+                                    <div className="circle_plus">
+                                        <img src={plus} alt="" />
+                                    </div>
+                                    <span>{t(
                         "marketingAssetsPage.marketingAssetsModalPdfButtonText"
-                      )}
-                    </span>
-                  )}
-                </label>
-              </>
-            )}
-          </div>
-          <div className="preview_card">
-            <div className="preview_card_header">
-              <img
-                src={
-                  modalData?.coverPhoto
-                    ? URL.createObjectURL(modalData?.coverPhoto)
-                    : cardBackground
-                }
-                alt=""
-              />
+                      )}</span>
+                                </div>
+                            </div>:
+                        <div className="add_document_mobile_body">
+                            {
+                                modalData?.pdf ? <><span>{modalData?.pdf?.name}&nbsp;
+                                                    </span>
+                            <FaCheck color="#70C094" size={18}/></> : <span>{t(
+                        "marketingAssetsPage.marketingAssetsModalPdfButtonText"
+                      )}</span>
+                            }
+                            
+                        </div>
+                        }
+                    </label>
+                </div>
             </div>
-            <div className="preview_card_content">{modalData?.title}</div>
-          </div>
+            <div className="preview">
+                <div className="preview_card">
+                            <div className="preview_card_header">
+                              <img
+                                src={
+                                  modalData?.coverPhoto
+                                    ? URL.createObjectURL(modalData?.coverPhoto)
+                                    : cardBackground
+                                }
+                                alt=""
+                              />
+                            </div>
+                            <div className="preview_card_content">{modalData?.title}</div>
+                          </div>
+            </div>
         </div>
       </ModalBody>
       <ModalFooter>

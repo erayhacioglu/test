@@ -1,44 +1,42 @@
-// Menu.jsx
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 import "./menu.scss";
-import menuData from "./menuData";
+import { userMenuData, profileMenuData } from "./menuData";
 
-// Icon imports
 import UserSvg from "../Icons/UserSvg";
 import SocialMediaSvg from "../Icons/SocialMediaSvg";
 import CompanySvg from "../Icons/CompanySvg";
 import MarketingAssetsSvg from "../Icons/MarketingAssetsSvg";
 import { useTranslation } from "react-i18next";
 
-// Icon lookup
 const iconData = {
   UserSvg,
   SocialMediaSvg,
   CompanySvg,
-  MarketingAssetsSvg
+  MarketingAssetsSvg,
 };
 
 const Menu = () => {
   const location = useLocation();
+  const params = useParams();
+  const { t } = useTranslation();
 
-  const isActive = (pathname) => {
-    return location?.pathname === pathname ? "active" : "";
-  };
+  const isPublicProfile = location.pathname.startsWith("/user/");
 
-  const {t} = useTranslation();
-
-  console.log('t', t("menu.profile"))
+  const isActive = (fullPath) => location.pathname === fullPath ? "active" : "";
 
   return (
     <nav className="menu_container">
-      {menuData.map(({ path, iconName, label }) => {
+      {(isPublicProfile ? profileMenuData : userMenuData).map(({ path, iconName, label }) => {
         const IconComponent = iconData[iconName];
-        console.log(label, t(`menu.${label}`));
 
+        // Public profilde dinamik path oluştur
+        const fullPath = isPublicProfile
+          ? `/user/${params.id}/${path}`
+          : path;
 
         return (
-          <Link key={path} to={path} className={`menu_item ${isActive(path)}`}>
-            {IconComponent && <IconComponent isActive={isActive(path)} />}
+          <Link key={fullPath} to={fullPath} className={`menu_item ${isActive(fullPath)}`}>
+            {IconComponent && <IconComponent isActive={isActive(fullPath)} />}
             <span className="menu_text">{t(`menu.${label}`)}</span>
           </Link>
         );

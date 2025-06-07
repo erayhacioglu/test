@@ -1,4 +1,4 @@
-/*Marketin Assets*/
+/*Marketing Assets*/
 
 .marketing_assets_container {
   display: grid;
@@ -119,10 +119,13 @@
   color: var(--textColor) !important;
   padding: 20px 0 20px 10px !important;
 }
-.btn-close {
-  color: var(--textColor) !important;
+.modal-header .btn-close {
+  filter: invert(1); 
+  
 }
+
 .modal-footer {
+  height: 65px !important;
   padding: 5px !important;
   border-top: 0 !important;
   display: flex !important;
@@ -137,7 +140,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  height: 40px;
+  height: 35px;
   background-color: var(--submitButtonBackgroundColor);
   color: var(--textColor);
 }
@@ -145,37 +148,27 @@
   background-color: crimson;
 }
 
-.marketing_asset_body {
-  display: grid;
-  grid-template-columns: 65% 35%;
-  .marketing_asset_configure {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    // grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    .configure_input_group {
-      grid-area: 1 / 1 / 2 / 5;
+
+
+.marketing_assets_modal_body{
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  .configure{
+    width:65%;
+    .configure_input_group{
+      margin-bottom: 21px;
       display: flex;
-      overflow: hidden;
-      border-radius: 5px;
-      height: 55px;
+      align-items: center;
+      justify-content: center;
       border: 1px solid var(--linkBackgroundColor);
+      border-radius: 5px;
+      height: 45px;
       position: relative;
-      .configure_input_group_size {
-        position: absolute;
-        right: 5px;
-        bottom: 0;
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--labelColor);
-        &.max_size {
-          color: crimson;
-        }
-      }
-      .configure_label {
+      .configure_label{
         border-right: 1px solid var(--linkBackgroundColor);
-        font-size: 16px;
+                font-size: 16px;
         font-weight: 500;
         color: var(--labelColor);
         display: flex;
@@ -183,8 +176,8 @@
         justify-content: center;
         padding: 0 10px;
       }
-      .configure_input {
-        background: none;
+      .configure_input{
+                background: none;
         border: none;
         width: 100%;
         height: 100%;
@@ -192,25 +185,67 @@
         caret-color: var(--labelColor);
         color: var(--labelColor);
       }
-    }
-    .configure_add_btn {
-      border: 1px solid var(--linkBackgroundColor);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 5px;
-      width: 100%;
-      height: 275px;
-      &.photo-button {
-        grid-area: 2 / 1 / 4 / 3;
+      .configure_size{
+                position: absolute;
+        right: 5px;
+        bottom: 0;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--labelColor);
+        &.max_size {
+          color: crimson;
+         }
       }
-      &.pdf-button {
-        grid-area: 2 / 3 / 4 / 5;
+    }
+    .configure_documents{
+      display: flex;
+      gap: 20px;
+      .document{
+        flex: 1;
+        height:300px;
+        border-radius: 5px;
+        border: 1px solid var(--linkBackgroundColor);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .add_document_button{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          & > span{
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--textColor);
+            margin-top: 10px;
+            text-align: center;
+          }
+          .circle_plus{
+            width:65px;
+            height:65px;
+            border-radius: 50%;
+            border: 1px solid var(--textColor);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            &:active{
+              transform: scale(0.9);
+              transition: 0.3s transform ease-in-out;
+            }
+            & > img {
+              width:30px;
+              height: 30px;
+            }
+          }
+        }
       }
     }
   }
-  .preview_card {
-    width: 90%;
+  .preview{
+    width:35%;
+    height: 360px;
+      .preview_card {
     height: 100%;
     margin-left: auto;
     border-radius: 7px;
@@ -229,11 +264,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-wrap: wrap;
       text-align: center;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 500;
       color: var(--textColor);
     }
+  }
   }
 }
 
@@ -246,7 +283,7 @@
   }
   .marketing_asset_cancel_btn,
   .marketing_asset_submit_btn {
-    height: 32px;
+    height: 28px;
     flex: 1;
   }
   .modal-title {
@@ -259,31 +296,39 @@
     max-height: 600px;
     overflow: auto;
   }
-  .marketing_asset_body {
-    grid-template-columns: 100%;
-    grid-template-rows: auto auto !important;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    .marketing_asset_configure {
-      display: flex;
+  .marketing_assets_modal_body{
+  flex-direction: column;
+  .configure{
+    width:100%;
+    margin-bottom: 10px;
+    .configure_documents{
       flex-direction: column;
       gap: 20px;
-    }
-    .preview_card {
-      height: 100%;
-      width: 100%;
-      max-width: 275px;
-      margin: auto;
+      .document{
+        min-height: 50px;
+        .add_document_mobile_body{
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-right: 10px;
+          cursor: pointer;
+          & > span{
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--textColor);
+            font-size: 14px;
+            font-weight: 500;
+          }
+        }
+      }
     }
   }
-  .mobile_configure_add_btn {
-    width: 100%;
-    height: 55px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--linkBackgroundColor);
-    color: var(--textColor);
+  .preview{
+    width:222px;
+    height: 320px;
   }
+}
 }

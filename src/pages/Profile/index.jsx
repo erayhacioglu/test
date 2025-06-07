@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
 import { updatePageChecker } from "../../helpers";
 import { useSelector } from "react-redux";
+
 const Profile = () => {
   const location = useLocation();
   const { t } = useTranslation();

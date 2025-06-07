@@ -17,6 +17,8 @@ const UserHeader = () => {
   const { updatedPage } = useSelector((state) => state.updatePage);
   const {avatarImage} = useSelector(state => state.profile);
 
+  const isPublicProfile = location.pathname.startsWith("/user/");
+
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
   const fileInputRef = useRef(null);
@@ -85,7 +87,18 @@ const UserHeader = () => {
         </div>
       </div>
       <div className="user_actions">
-        {isUpdated ? (
+        {
+          isPublicProfile ? <>
+             <button className="user_action_button">
+              <img src={editIcon} alt="Düzenle ikon" />
+              <span className="user_action_button_text">Bağlantı</span>
+            </button>
+            <button className="user_action_button">
+              <img src={qrIcon} alt="QR ikon" />
+              <span className="user_action_button_text">İndir</span>
+            </button>
+          </> :
+        isUpdated ? (
           <>
             <button className="user_action_submit_button">{t("buttons.submitButtonText")}</button>
             <button

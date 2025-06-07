@@ -9,6 +9,7 @@ import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
 import { updatePageChecker } from "../../helpers";
 import MarketingAssetModal from "./components/MarketingAssetModal";
+import useWindowSize from "../../hooks/useWindow";
 
 const MarketingAssests = () => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ const MarketingAssests = () => {
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
   const [showModal,setShowModal] = useState(false);
+  const windowSize = useWindowSize();
 
   return (
     <>
@@ -29,7 +31,7 @@ const MarketingAssests = () => {
       />
       <div className="page_container">
         <PageTitle title={t("marketingAssetsPage.pageTitle")} />
-        <div className="section_container">
+        <div className="section_container" style={{paddingRight:`${windowSize?.width > 768 ? 0 : "35px"}`}}>
           <div className="marketing_assets_container">
             {
               marketingAssetsData && marketingAssetsData?.length > 0 && marketingAssetsData?.map((item,idx) => (

@@ -16,7 +16,6 @@ const useWindowSize = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // İlk render'da da doğru değerleri almak için tekrar çağır
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
