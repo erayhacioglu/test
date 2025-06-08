@@ -47,7 +47,8 @@ const App = () => {
       </Route>
 
       <Route path="/user/:id" element={<ProfileLayout />}>
-        <Route index path='profile' element={<Profile />}/>
+        <Route index element={<Navigate to="profile" replace />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="social-media" element={<SocialMedia />} />
         <Route path="company" element={<Company />} />
         <Route path="marketing-assets" element={<MarketingAssests />} />

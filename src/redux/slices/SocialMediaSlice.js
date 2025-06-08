@@ -4,8 +4,56 @@ const initialState = {
   socialMediaData:[
     {
         platform:"INSTAGRAM",
-        link:""
-    }
+        link:"erayhacioglu"
+    },
+    {
+        platform:"INSTAGRAM",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"INSTAGRAM",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"FACEBOOK",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"FACEBOOK",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"LINKEDIN",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"LINKEDIN",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"BEHANCE",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"YOUTUBE",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"DRIBBLE",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"PINTEREST",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"SNAPCHAT",
+        link:"erayhacioglu"
+    },
+    {
+        platform:"TWITTER",
+        link:"erayhacioglu"
+    },
   ]
 };
 
