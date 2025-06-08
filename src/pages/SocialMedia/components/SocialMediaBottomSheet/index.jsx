@@ -51,6 +51,7 @@ const SocialMediaBottomSheet = ({
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          overflow:"hidden"
         }}
       >
         {

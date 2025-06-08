@@ -59,11 +59,11 @@ const SelectedSocialMedia = ({isUpdated,selectedSocialMedia}) => {
         
 
         {
-          isUpdated && 
+          isUpdated ?
             idx === updateSocialMedia ? <>
             <span className="selected_social_media_button trash">
             <FaCheck color="#70C094"/>
-        </span> <span className="selected_social_media_button trash" onClick={() => setUpdateSocialMedia(false)}>
+        </span> <span className="selected_social_media_button trash ms-1" onClick={() => setUpdateSocialMedia(false)}>
             <FaTimes />
         </span>
             </> : <>
@@ -73,7 +73,7 @@ const SelectedSocialMedia = ({isUpdated,selectedSocialMedia}) => {
         <span className="selected_social_media_button trash ms-1" >
           <img src={trashIcon} alt="" />
         </span>
-            </>
+            </>:null
           
         }
         

@@ -5,3 +5,6 @@
 [data-rsbs-header]:before{
     background-color: var(--labelColor) !important;
 }
+[data-rsbs-scroll]{
+    overflow: hidden !important;
+}
