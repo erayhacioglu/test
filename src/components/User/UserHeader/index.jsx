@@ -11,7 +11,7 @@ import { FaImage } from "react-icons/fa6";
 import { resetProfile, setAvatarImage } from "../../../redux/slices/ProfileSlice";
 import { useTranslation } from "react-i18next";
 
-const UserHeader = () => {
+const UserHeader = ({setQrCodeModal}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { updatedPage } = useSelector((state) => state.updatePage);
@@ -114,7 +114,7 @@ const UserHeader = () => {
               <img src={editIcon} alt="Düzenle ikon" />
               <span className="user_action_button_text">{t("buttons.editButtonText")}</span>
             </button>
-            <button className="user_action_button">
+            <button className="user_action_button" onClick={() => setQrCodeModal(true)}>
               <img src={qrIcon} alt="QR ikon" />
               <span className="user_action_button_text">{t("buttons.createQrButtonText")}</span>
             </button>

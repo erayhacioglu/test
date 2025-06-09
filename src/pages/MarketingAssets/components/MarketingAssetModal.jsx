@@ -66,6 +66,7 @@ const MarketingAssetModal = ({ showModal, setShowModal }) => {
       size="lg"
       show={showModal}
       onHide={() => setShowModal(false)}
+      className="marketing_asset_modal"
     >
       <ModalHeader closeButton>
         <ModalTitle>

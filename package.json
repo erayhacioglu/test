@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
+    "@uiw/color-convert": "^2.5.5",
+    "@uiw/react-color-shade-slider": "^2.5.5",
+    "@uiw/react-color-wheel": "^2.5.5",
     "axios": "^1.9.0",
     "bootstrap": "^5.3.6",
     "i18next": "^25.2.0",
