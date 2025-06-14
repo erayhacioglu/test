@@ -13,6 +13,8 @@ import {  useSelector } from 'react-redux';
 import themesData from "./constants/themes";
 import ProfileLayout from './layouts/ProfileLayout';
 
+import Login from "./pages/Auth/Login";
+
 const App = () => {
   const {theme} = useSelector(state => state.theme);
 
@@ -53,6 +55,8 @@ const App = () => {
         <Route path="company" element={<Company />} />
         <Route path="marketing-assets" element={<MarketingAssests />} />
       </Route>
+
+      <Route path="/login" element={<Login />}/>
 
     </Routes>
   );

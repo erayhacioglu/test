@@ -2,7 +2,7 @@ import "./user_background.scss";
 import defaultBackground from "../../../assets/img/kavio_background.jpg";
 import { FaImage } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import {setBackgroundImage} from "../../../redux/slices/ProfileSlice";
+// import {setBackgroundImage} from "../../../redux/slices/ProfileSlice";
 import { updatePageChecker } from "../../../helpers";
 import { useLocation } from "react-router";
 
@@ -18,7 +18,7 @@ const UserBackground = () => {
     const file = event.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      dispatch(setBackgroundImage(imageUrl));
+      // dispatch(setBackgroundImage(imageUrl));
     }
   };
 

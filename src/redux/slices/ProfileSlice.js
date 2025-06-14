@@ -1,124 +1,136 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import Axios from "../../api/axiosInstance";
+
+export const getProfileData = createAsyncThunk(
+  "profile-management/get-profile/${cardId}",
+  async ({ cardId, signal }, { rejectWithValue }) => {
+    try {
+      const response = await Axios.get(
+        `/profile-management/get-profile/${cardId}`,
+        {
+          signal,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.code === "ERR_CANCELED" || error.name === "CanceledError") {
+        return rejectWithValue("İstek iptal edildi");
+      }
+
+      if (!error.response) throw error;
+
+      return rejectWithValue(error.response.data?.message || "Bir hata oluştu");
+    }
+  }
+);
+
+export const updateProfileData = createAsyncThunk(
+  "profile-management/update-personel-information",
+  async (updatedData , { rejectWithValue }) => {
+    try {
+      const response = await Axios.post(
+        `/profile-management/update-personel-information`,
+        updatedData,
+      );
+      return response.data;
+    } catch (error) {
+      if (!error.response) throw error;
+
+      return rejectWithValue(error.response.data?.message || "Bir hata oluştu");
+    }
+  }
+);
 
 const initialState = {
-  backgroundImage: null,
-  avatarImage: null,
-  personalInfo: {
-    name: "Eray",
-    surname: "Hacıoğlu",
-    title: "Frontend Developer",
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
+  message: "",
+  data: {
+    cardId: 1,
+    userInfo: {
+      firstName: "Baran",
+      lastName: "Sarıtaş",
+      bio: "Yazılım geliştirici",
+    },
+    contactInfos: [
+      {
+        id: 5,
+        contactType: "email",
+        value: "baran@example.com",
+      },
+      {
+        id: 6,
+        contactType: "phone",
+        value: "+905551112233",
+      },
+    ],
+    links: [
+      {
+        id: 8,
+        value: "https://linkedin.com/in/baransaritas",
+        title: "LinkedIn",
+        position: 1,
+      },
+      {
+        id: 9,
+        value: "https://github.com/baransaritas",
+        title: "GitHub",
+        position: 2,
+      },
+    ],
   },
-  contactInfo: [
-    {
-      contactType: "phone",
-      value: "+90 537 882 33 87",
-    },
-    {
-      contactType: "phone",
-      value: "+90 537 882 33 87",
-    },
-    {
-      contactType: "whatsapp",
-      value: "+90 537 882 33 87",
-    },
-    {
-      contactType: "email",
-      value: "eray.hacioglu@ibbgov.tr",
-    },
-    {
-      contactType: "location",
-      value: "Gaziosmanpaşa - İstanbul",
-    },
-  ],
-  links: [
-    {
-      title: "",
-      url: "erayhacioglu.com.tr",
-    },
-    {
-      title: "",
-      url: "kavio.com.tr",
-    },
-    {
-      title: "",
-      url: "loremipsum.com.tr",
-    },
-  ],
 };
 
 const ProfileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    setBackgroundImage(state, action) {
-      state.backgroundImage = action.payload;
-    },
-    setAvatarImage(state, action) {
-      state.avatarImage = action.payload;
-    },
-    setPersonalInfo(state, action) {
-      state.personalInfo = action.payload;
-    },
-    setContactInfo(state, action) {
-      state.contactInfo = action.payload;
-    },
-    setLinks(state, action) {
-      state.links = action.payload;
+    setProfileData(state,action){
+      state.data = action.payload;
     },
     resetProfile(state) {
-      (state.backgroundImage = null),
-        (state.avatarImage = null),
-        (state.personalInfo = {
-          name: "Eray",
-          surname: "Hacıoğlu",
-          title: "Frontend Developer",
-        }),
-        (state.contactInfo = [
-          {
-            contactType: "phone",
-            value: "+90 537 882 33 87",
-          },
-          {
-            contactType: "phone",
-            value: "+90 537 882 33 87",
-          },
-          {
-            contactType: "whatsapp",
-            value: "+90 537 882 33 87",
-          },
-          {
-            contactType: "email",
-            value: "eray.hacioglu@ibbgov.tr",
-          },
-          {
-            contactType: "location",
-            value: "Gaziosmanpaşa - İstanbul",
-          },
-        ]),
-        (state.links = [
-          {
-            title: "",
-            url: "erayhacioglu.com.tr",
-          },
-          {
-            title: "",
-            url: "kavio.com.tr",
-          },
-          {
-            title: "",
-            url: "loremipsum.com.tr",
-          },
-        ]);
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.isError = false;
+      state.message = "";
+      state.data = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getProfileData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProfileData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.data = action.payload;
+      })
+      .addCase(getProfileData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.payload || "Beklenmeyen Bir Hata Oluştu";
+        state.data = null;
+      })
+      .addCase(updateProfileData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProfileData.fulfilled, (state,action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = action.payload;
+      })
+      .addCase(updateProfileData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.payload || "Beklenmeyen Bir Hata Oluştu";
+        state.data = null;
+      })
   },
 });
 
-export const {
-  setBackgroundImage,
-  setAvatarImage,
-  setPersonalInfo,
-  setContactInfo,
-  setLinks,
-  resetProfile
-} = ProfileSlice.actions;
+export const { setProfileData,resetProfile } = ProfileSlice.actions;
 export default ProfileSlice.reducer;

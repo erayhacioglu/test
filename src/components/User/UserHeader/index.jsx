@@ -8,14 +8,14 @@ import { setUpdatedPage } from "../../../redux/slices/UpdatePageSlice";
 import { useEffect, useRef } from "react";
 import { updatePageChecker } from "../../../helpers";
 import { FaImage } from "react-icons/fa6";
-import { resetProfile, setAvatarImage } from "../../../redux/slices/ProfileSlice";
+import { resetProfile } from "../../../redux/slices/ProfileSlice";
 import { useTranslation } from "react-i18next";
 
 const UserHeader = ({setQrCodeModal}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { updatedPage } = useSelector((state) => state.updatePage);
-  const {avatarImage} = useSelector(state => state.profile);
+  const {avatarImage,data} = useSelector(state => state.profile);
 
   const isPublicProfile = location.pathname.startsWith("/user/");
 
@@ -53,7 +53,7 @@ const UserHeader = ({setQrCodeModal}) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        dispatch(setAvatarImage(reader?.result));
+        // dispatch(setAvatarImage(reader?.result));
       };
       reader.readAsDataURL(file);
     }
@@ -82,8 +82,8 @@ const UserHeader = ({setQrCodeModal}) => {
           )}
         </div>
         <div className="user_info">
-          <h2 className="fullname">Eray Hacıoğlu</h2>
-          <p className="job">Frontend Developer</p>
+          <h2 className="fullname">{data?.userInfo?.firstName + " " + data?.userInfo?.lastName}</h2>
+          <p className="job">{data?.userInfo?.bio}</p>
         </div>
       </div>
       <div className="user_actions">

@@ -4,13 +4,13 @@ import PageTitle from "../../../components/PageTitle";
 import { useDispatch, useSelector } from "react-redux";
 import copy from "../../../assets/img/icons/copy.svg";
 import { FaCheck } from "react-icons/fa6";
-import { setBankInfo } from "../../../redux/slices/CompanySlice";
 import plus from "../../../assets/img/icons/plus.svg";
 import trash from "../../../assets/img/icons/trash.svg";
+import { setCompanyData } from "../../../redux/slices/CompanySlice";
 
 const BankInfo = ({ isUpdated }) => {
   const dispatch = useDispatch();
-  const { bankInfo } = useSelector((state) => state.company);
+  const { isLoading,data } = useSelector((state) => state.company);
   const { t } = useTranslation();
 
   const [copied, setCopied] = useState(false);
@@ -25,20 +25,34 @@ const BankInfo = ({ isUpdated }) => {
     }
   };
 
-  const handleDeleteItem = (index) => {
-    dispatch(setBankInfo(bankInfo?.filter((_, i) => i !== index)));
-  };
 
+const handleBankInfoChange = (idx, field, value) => {
+  const updated = data.bankAccounts.map((item, i) =>
+    i === idx ? { ...item, [field]: value } : item
+  );
+
+  dispatch(setCompanyData({ ...data, bankAccounts: updated }));
+};
+
+
+  const handleDeleteItem = (index) => {
+    const updated = [...data.bankAccounts];
+    updated.splice(index, 1);
+    dispatch(setCompanyData({ ...data, bankAccounts: updated }));
+  };
+  
   const handleAddItem = () => {
+    const newItem = {
+      iban: "",
+      holderName: "",
+      bankName: "",
+    };
+  
     dispatch(
-      setBankInfo([
-        ...bankInfo,
-        {
-          bankName: "",
-          iban: "",
-          accountHolder: "",
-        },
-      ])
+      setCompanyData({
+        ...data,
+        bankAccounts: [...(data.bankAccounts || []), newItem],
+      })
     );
   };
 
@@ -48,9 +62,9 @@ const BankInfo = ({ isUpdated }) => {
       <div className="section_container">
         {isUpdated ? (
           <>
-            {bankInfo &&
-              bankInfo?.length > 0 &&
-              bankInfo?.map((item, idx) => (
+            {data?.bankAccounts &&
+              data?.bankAccounts?.length > 0 &&
+              data?.bankAccounts?.map((item, idx) => (
                 <>
                   <div className="item_margin_bottom" key={idx}>
                     <div className="form_group">
@@ -59,6 +73,9 @@ const BankInfo = ({ isUpdated }) => {
                         type="text"
                         className="form_input"
                         value={item?.bankName}
+                        onChange={(e) =>
+          handleBankInfoChange(idx, "bankName", e.target.value)
+        }
                       />
                     </div>
                     <div className="form_group">
@@ -67,6 +84,9 @@ const BankInfo = ({ isUpdated }) => {
                         type="text"
                         className="form_input"
                         value={item?.iban}
+                        onChange={(e) =>
+          handleBankInfoChange(idx, "iban", e.target.value)
+        }
                       />
                     </div>
                     <div className="form_group">
@@ -74,7 +94,10 @@ const BankInfo = ({ isUpdated }) => {
                       <input
                         type="text"
                         className="form_input"
-                        value={item?.accountHolder}
+                        value={item?.holderName}
+                        onChange={(e) =>
+          handleBankInfoChange(idx, "holderName", e.target.value)
+        }
                       />
                     </div>
                     <div className="form_delete_button_container">
@@ -94,9 +117,9 @@ const BankInfo = ({ isUpdated }) => {
             </div>
           </>
         ) : (
-          bankInfo &&
-          bankInfo?.length > 0 &&
-          bankInfo?.map((item, idx) => (
+          data?.bankAccounts &&
+          data?.bankAccounts?.length > 0 &&
+          data?.bankAccounts?.map((item, idx) => (
             <div key={idx} className="item_margin_bottom">
               <div className="copied_line_container">
                 <div className="copied_line_group">
@@ -131,16 +154,16 @@ const BankInfo = ({ isUpdated }) => {
               <div className="copied_line_container">
                 <div className="copied_line_group">
                   <span className="copied_line_text">
-                    {item?.accountHolder}
+                    {item?.holderName}
                   </span>
                 </div>
                 <button
                   className="copied_button"
                   onClick={() =>
-                    handleCopy(item?.accountHolder, item?.accountHolder)
+                    handleCopy(item?.holderName, item?.holderName)
                   }
                 >
-                  {copied && copied === item?.accountHolder ? (
+                  {copied && copied === item?.holderName ? (
                     <FaCheck color="#70C094" />
                   ) : (
                     <img src={copy} alt="" />
