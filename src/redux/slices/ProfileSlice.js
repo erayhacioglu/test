@@ -46,40 +46,7 @@ const initialState = {
   isSuccess: false,
   isError: false,
   message: "",
-  data: {
-    cardId: 1,
-    userInfo: {
-      firstName: "Baran",
-      lastName: "Sarıtaş",
-      bio: "Yazılım geliştirici",
-    },
-    contactInfos: [
-      {
-        id: 5,
-        contactType: "email",
-        value: "baran@example.com",
-      },
-      {
-        id: 6,
-        contactType: "phone",
-        value: "+905551112233",
-      },
-    ],
-    links: [
-      {
-        id: 8,
-        value: "https://linkedin.com/in/baransaritas",
-        title: "LinkedIn",
-        position: 1,
-      },
-      {
-        id: 9,
-        value: "https://github.com/baransaritas",
-        title: "GitHub",
-        position: 2,
-      },
-    ],
-  },
+  data: null
 };
 
 const ProfileSlice = createSlice({

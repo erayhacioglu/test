@@ -8,14 +8,20 @@ import { setUpdatedPage } from "../../../redux/slices/UpdatePageSlice";
 import { useEffect, useRef } from "react";
 import { updatePageChecker } from "../../../helpers";
 import { FaImage } from "react-icons/fa6";
-import { resetProfile } from "../../../redux/slices/ProfileSlice";
+import { resetProfile,updateProfileData,getProfileData } from "../../../redux/slices/ProfileSlice";
+import { resetCompany,updateCompanyData,getCompanyData } from "../../../redux/slices/CompanySlice";
+import { resetSocialMedia,updateSocialMedia,getSocialMediaPlatformsData,getSocialMediaData } from "../../../redux/slices/SocialMediaSlice";
 import { useTranslation } from "react-i18next";
 
 const UserHeader = ({setQrCodeModal}) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { updatedPage } = useSelector((state) => state.updatePage);
-  const {avatarImage,data} = useSelector(state => state.profile);
+  const profileState = useSelector(state => state.profile);
+  const companyState = useSelector(state => state.company);
+  const socialMediaState = useSelector(state => state.socialMedia);
+
+  const cardId = "1";
 
   const isPublicProfile = location.pathname.startsWith("/user/");
 
@@ -59,11 +65,50 @@ const UserHeader = ({setQrCodeModal}) => {
     }
   };
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    dispatch(getProfileData({ cardId, signal: controller.signal }));
+
+    return () => {
+      controller.abort();
+    };
+  }, [cardId, dispatch]);
+
+  const handleUpdateData = async () => {
+    if(location?.pathname === "/profile"){
+      const res = await dispatch(updateProfileData(profileState?.data))
+    if(res?.meta?.requestStatus === "fulfilled"){
+      dispatch(getProfileData({ cardId }));
+      dispatch(setUpdatedPage(null));
+      dispatch(resetProfile())
+    }
+    }
+    else if(location?.pathname === "/company"){
+      const res = await dispatch(updateCompanyData({cardId,updatedData:companyState?.data}))
+      if(res?.meta?.requestStatus === "fulfilled"){
+        dispatch(getCompanyData({ cardId }));
+        dispatch(setUpdatedPage(null));
+        dispatch(resetCompany())
+      }
+    }
+    else if(location?.pathname === "/social-media"){
+      const mergedData = [...socialMediaState.data, ...socialMediaState.addedSocialMediaPlatforms];
+    const res = await dispatch(updateSocialMedia({ cardId, updatedData:mergedData }));
+    if (res?.meta?.requestStatus === "fulfilled") {
+      dispatch(getSocialMediaData({ cardId }));
+      dispatch(getSocialMediaPlatformsData({ cardId }));
+      dispatch(setUpdatedPage(null));
+      dispatch(resetSocialMedia());
+    }
+    }
+  }
+
   return (
     <div className="user_header">
       <div className="user_profile_info">
         <div className="avatar">
-          <img src={avatarImage ?? defaultAvatar} alt="" className="avatar_img" />
+          <img src={defaultAvatar} alt="" className="avatar_img" />
           {isUpdated && (
             <>
               <div className="avatar_overlay">
@@ -82,8 +127,8 @@ const UserHeader = ({setQrCodeModal}) => {
           )}
         </div>
         <div className="user_info">
-          <h2 className="fullname">{data?.userInfo?.firstName + " " + data?.userInfo?.lastName}</h2>
-          <p className="job">{data?.userInfo?.bio}</p>
+          <h2 className="fullname">{profileState?.data?.userInfo?.firstName + " " + profileState?.data?.userInfo?.lastName}</h2>
+          <p className="job">{profileState?.data?.userInfo?.bio}</p>
         </div>
       </div>
       <div className="user_actions">
@@ -100,7 +145,7 @@ const UserHeader = ({setQrCodeModal}) => {
           </> :
         isUpdated ? (
           <>
-            <button className="user_action_submit_button">{t("buttons.submitButtonText")}</button>
+            <button className="user_action_submit_button" onClick={handleUpdateData}>{t("buttons.submitButtonText")}</button>
             <button
               className="user_action_submit_button cancel"
               onClick={handleCancelUpdatePage}

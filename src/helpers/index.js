@@ -59,7 +59,7 @@ export const linkData = [
 import linkedin from "../assets/img/icons/linkedin.svg";
 import facebook from "../assets/img/icons/facebook.svg";
 import github from "../assets/img/icons/github.svg";
-import twitter from "../assets/img/icons/twitter.svg";
+import x from "../assets/img/icons/twitter.svg";
 import youtube from "../assets/img/icons/youtube.svg";
 import instagram from "../assets/img/icons/instagram.svg";
 import pinterest from "../assets/img/icons/pinterest.svg";
@@ -67,6 +67,24 @@ import behance from "../assets/img/icons/behance.svg";
 import dribbble from "../assets/img/icons/dribbble.svg";
 import snapchat from "../assets/img/icons/snapchat.svg";
 import spotify from "../assets/img/icons/spotify.svg";
+
+const socialMediaIcons = {
+    linkedin,
+    facebook,
+    github,
+    x,
+    youtube,
+    instagram,
+    pinterest,
+    behance,
+    dribbble,
+    snapchat,
+    spotify
+}
+
+export const generateSocialMediaIcon = (platform) => {
+    return socialMediaIcons[platform]
+}
 
 
 export const socialMediaPlatforms = [
@@ -86,9 +104,9 @@ export const socialMediaPlatforms = [
         value:"Github"
     },
     {
-        platform:"TWITTER",
-        icon:twitter,
-        value:"Twitter"
+        platform:"X",
+        icon:x,
+        value:"X"
     },
     {
         platform:"YOUTUBE",

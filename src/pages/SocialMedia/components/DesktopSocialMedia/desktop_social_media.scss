@@ -31,7 +31,7 @@
       background-color: var(--socialMediaDropdown);
       border-radius: 7px;
       padding: 7.5px 5px;
-      height: 165px;
+      height: auto;
       position: absolute;
       top: 125%;
       z-index: 100;
@@ -45,7 +45,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        height: 50px;
+        color: var(--textColor);
         padding: 0 7.5px;
         &:last-child {
           border-bottom: 0;
@@ -58,11 +58,23 @@
           display: flex;
           align-items: center;
           flex: 1;
+          .social_media_dropdown_menu_icon {
+    flex-shrink: 0;
+    width: 15px;    /* ikonun sabit kalması için genişlik belirleniyor */
+    height: 15px;   /* yüksekliği de istersen sabitle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
           .social_media_dropdown_menu_text {
             margin-left: 10px;
             font-size: 16px;
             font-weight: 500;
             color: var(--textColor);
+            text-wrap: wrap;
+            overflow-wrap: anywhere;
+  word-break: break-all;  
+  flex: 1;
           }
         }
       }
