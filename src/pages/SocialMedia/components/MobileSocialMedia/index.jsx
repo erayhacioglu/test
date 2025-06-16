@@ -1,15 +1,21 @@
 import "./mobile_social_media.scss";
-import { socialMediaPlatforms } from "../../../../helpers";
 import plus from "../../../../assets/img/icons/plus.svg";
 import addPlus from "../../../../assets/img/icons/add_plus.svg";
+import { useSelector } from "react-redux";
+import { generateSocialMediaIcon } from "../../../../helpers";
 
 const MobileSocialMedia = ({ isUpdated, setIsOpen, setSelectedSocialMedia }) => {
   const handleOpen = () => setIsOpen(true);
+  const {data,socialMediaPlatforms} = useSelector(state => state.socialMedia);
 
   const handleSelect = (item) => {
     setIsOpen(true);
     setSelectedSocialMedia(item);
   };
+
+  const filteredPlatforms = data && socialMediaPlatforms && socialMediaPlatforms.filter((item) =>
+  data?.some((d) => d.platform === item.name)
+);
 
   return (
     <div className="social_icon_container">
@@ -23,16 +29,16 @@ const MobileSocialMedia = ({ isUpdated, setIsOpen, setSelectedSocialMedia }) => 
         </button>
       )}
 
-      {socialMediaPlatforms?.map((item) => (
+      {filteredPlatforms && filteredPlatforms?.map((item) => (
         <button
           className="social_icon"
-          key={item.value}
+          key={item?.displayName}
           onClick={() => handleSelect(item)}
-          aria-label={`Select ${item.label}`}
+          aria-label={`Select ${item?.displayName}`}
         >
           <img
-            src={item.icon}
-            alt={item.label}
+            src={generateSocialMediaIcon(item?.name?.toLowerCase())}
+            alt={item?.displayName}
             className="social_icon_img"
           />
           {isUpdated && (

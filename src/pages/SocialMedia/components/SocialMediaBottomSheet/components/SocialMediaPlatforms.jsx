@@ -32,7 +32,7 @@ const SocialMediaPlatforms = ({
               key={idx}
               onClick={() => setSelectedSocialMedia(item)}
             >
-              <span className="bottom_sheet_text">{item?.value}</span>
+              <span className="bottom_sheet_text">{item?.displayName}</span>
               <span>
                 <img src={plusIcon} alt="" />
               </span>

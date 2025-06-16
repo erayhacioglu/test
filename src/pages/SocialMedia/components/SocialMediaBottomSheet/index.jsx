@@ -1,43 +1,46 @@
 import { BottomSheet } from "react-spring-bottom-sheet";
-import searchIcon from "../../../../assets/img/icons/search.svg";
-import plus from "../../../../assets/img/icons/plus.svg";
-import addPlus from "../../../../assets/img/icons/add_plus.svg";
-import { socialMediaPlatforms } from "../../../../helpers";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import SelectedSocialMedia from "./components/SelectedSocialMedia";
 import SocialMediaPlatforms from "./components/SocialMediaPlatforms";
 import "./social_media_bottom_sheet.scss";
+import { useSelector } from "react-redux";
 
 const SocialMediaBottomSheet = ({
   isOpen,
   setIsOpen,
   selectedSocialMedia,
   setSelectedSocialMedia,
-  isUpdated
+  isUpdated,
 }) => {
   const [search, setSearch] = useState("");
-    const [filteredData, setFilteredData] = useState(socialMediaPlatforms);
+  const { socialMediaPlatforms } = useSelector((state) => state.socialMedia);
+  const [filteredSocialMediaPlatforms, setFilteredSocialMediaPlatforms] =
+    useState(socialMediaPlatforms);
 
-    console.log('selectedSocialMedia', selectedSocialMedia)
-  
-    const filteredSearchChange = (searchText) => {
-        if (searchText) {
-          const lowerSearch = searchText.toLowerCase();
-          const filtered = socialMediaPlatforms?.filter((el) =>
-            el?.value.toLowerCase().includes(lowerSearch)
-          );
-          setFilteredData(filtered);
-        } else {
-          setFilteredData(socialMediaPlatforms);
-        }
-      };
+  useEffect(() => {
+    if (socialMediaPlatforms && socialMediaPlatforms?.length > 0) {
+      setFilteredSocialMediaPlatforms(socialMediaPlatforms);
+    }
+  }, [socialMediaPlatforms]);
+
+  const filteredSearchChange = (searchText) => {
+    if (searchText) {
+      const lowerSearch = searchText.toLowerCase();
+      const filtered = socialMediaPlatforms?.filter((el) =>
+        el?.name.toLowerCase().includes(lowerSearch)
+      );
+      setFilteredSocialMediaPlatforms(filtered);
+    } else {
+      setFilteredSocialMediaPlatforms(socialMediaPlatforms);
+    }
+  };
 
   return (
     <BottomSheet
       open={isOpen}
       onDismiss={() => {
         setIsOpen(false);
-        setFilteredData(socialMediaPlatforms);
+        setFilteredSocialMediaPlatforms(socialMediaPlatforms);
         setSearch("");
         setSelectedSocialMedia(false);
       }}
@@ -51,12 +54,25 @@ const SocialMediaBottomSheet = ({
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          overflow:"hidden"
+          overflow: "hidden",
         }}
       >
-        {
-            selectedSocialMedia ? <SelectedSocialMedia isUpdated={isUpdated} selectedSocialMedia={selectedSocialMedia}/> : <SocialMediaPlatforms setSelectedSocialMedia={setSelectedSocialMedia} search={search} setSearch={setSearch} filteredData={filteredData} filteredSearchChange={filteredSearchChange}/>
-        }
+        {selectedSocialMedia ? (
+          <SelectedSocialMedia
+            isUpdated={isUpdated}
+            selectedSocialMedia={selectedSocialMedia}
+            setSelectedSocialMedia={setSelectedSocialMedia}
+            setIsOpen={setIsOpen}
+          />
+        ) : (
+          <SocialMediaPlatforms
+            setSelectedSocialMedia={setSelectedSocialMedia}
+            search={search}
+            setSearch={setSearch}
+            filteredData={filteredSocialMediaPlatforms}
+            filteredSearchChange={filteredSearchChange}
+          />
+        )}
       </div>
     </BottomSheet>
   );

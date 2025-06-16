@@ -3,11 +3,8 @@ import SEO from "../../SEO";
 import PageTitle from "../../components/PageTitle";
 import useWindowSize from "../../hooks/useWindow";
 import "./social_media.scss";
-import { socialMediaPlatforms, updatePageChecker } from "../../helpers";
-import addPlus from "../../assets/img/icons/add_plus.svg";
-import plus from "../../assets/img/icons/plus.svg";
+import { updatePageChecker } from "../../helpers";
 import { useEffect, useState } from "react";
-// import SocialMediaBottomSheet from "./components/SocialMediaBottomSheet";
 import SocialMediaBottomSheet from "./components/SocialMediaBottomSheet";
 import DesktopSocialMedia from "./components/DesktopSocialMedia";
 import MobileSocialMedia from "./components/MobileSocialMedia";
@@ -32,16 +29,8 @@ const SocialMedia = () => {
   const dispatch = useDispatch();
   const { updatedPage } = useSelector((state) => state.updatePage);
 
-  const {
-    isSuccess,
-    isError,
-    message,
-    data,
-    addedSocialMediaPlatforms,
-  } = useSelector((state) => state.socialMedia);
-
-  console.log("data", data);
-  console.log("addedSocialMediaPlatforms", addedSocialMediaPlatforms);
+  const { isSuccess, isError, message, data, addedSocialMediaPlatforms } =
+    useSelector((state) => state.socialMedia);
 
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
@@ -102,7 +91,7 @@ const SocialMedia = () => {
             />
           )}
         </div>
-        {isUpdated && (
+        {isUpdated && width > 768 && (
           <div className="section_container">
             <div className="d-flex align-items-center">
               <button
