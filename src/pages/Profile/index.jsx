@@ -4,11 +4,11 @@ import ContactInfo from "./components/ContactInfo";
 import Links from "./components/Links";
 import SEO from "../../SEO";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { updatePageChecker } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getProfileData, resetProfile, updateProfileData } from "../../redux/slices/ProfileSlice";
+import { useEffect, useState } from "react";
+import { getProfileData, resetProfile, updateProfileData,getOtherProfileData } from "../../redux/slices/ProfileSlice";
 import toast from "react-hot-toast";
 import { setUpdatedPage } from "../../redux/slices/UpdatePageSlice";
 
@@ -22,17 +22,34 @@ const Profile = () => {
 
   
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
+  
   const cardId = "1";
+  
+  const isPublicProfile = location.pathname.startsWith("/user/");
+  const [userCardId,setCardId] = useState(null);
+
+  const {id} = useParams();
 
   useEffect(() => {
+    if(isPublicProfile && id){
+      setCardId(id);
+    }
+  },[isPublicProfile,id]);
+
+  useEffect(() => {
+    if (isPublicProfile && !userCardId) return;
     const controller = new AbortController();
 
-    dispatch(getProfileData({ cardId, signal: controller.signal }));
+    if(isPublicProfile){
+      dispatch(getOtherProfileData({ cardId:userCardId, signal: controller.signal }));
+    }else{
+      dispatch(getProfileData({ cardId, signal: controller.signal }));
+    }
 
     return () => {
       controller.abort();
     };
-  }, [cardId, dispatch]);
+  }, [cardId, dispatch,userCardId,isPublicProfile]);
 
   const handleProfileDataUpdate = async (updatedData) => {
     const res = await dispatch(updateProfileData(updatedData))

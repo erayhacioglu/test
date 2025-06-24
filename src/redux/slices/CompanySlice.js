@@ -24,6 +24,29 @@ export const getCompanyData = createAsyncThunk(
   }
 );
 
+export const getOtherCompanyData = createAsyncThunk(
+  "other-profile-management/get-company-page/${cardId}",
+  async ({ cardId, signal }, { rejectWithValue }) => {
+    try {
+      const response = await Axios.get(
+        `/other-profile-management/get-company-page/${cardId}`,
+        {
+          signal,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.code === "ERR_CANCELED" || error.name === "CanceledError") {
+        return rejectWithValue("İstek iptal edildi");
+      }
+
+      if (!error.response) throw error;
+
+      return rejectWithValue(error.response.data?.message || "Bir hata oluştu");
+    }
+  }
+);
+
 export const updateCompanyData = createAsyncThunk(
   "profile-management/update-company-information/${cardId}",
   async ({cardId,updatedData} , { rejectWithValue }) => {
@@ -75,6 +98,21 @@ const CompanySlice = createSlice({
           state.data = action.payload;
         })
         .addCase(getCompanyData.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isSuccess = false;
+          state.isError = true;
+          state.message = action.payload || "Beklenmeyen Bir Hata Oluştu";
+          state.data = null;
+        })
+        .addCase(getOtherCompanyData.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(getOtherCompanyData.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isSuccess = true;
+          state.data = action.payload;
+        })
+        .addCase(getOtherCompanyData.rejected, (state, action) => {
           state.isLoading = false;
           state.isSuccess = false;
           state.isError = true;

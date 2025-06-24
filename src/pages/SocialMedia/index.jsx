@@ -8,10 +8,11 @@ import { useEffect, useState } from "react";
 import SocialMediaBottomSheet from "./components/SocialMediaBottomSheet";
 import DesktopSocialMedia from "./components/DesktopSocialMedia";
 import MobileSocialMedia from "./components/MobileSocialMedia";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getSocialMediaData,
+  getOtherSocialMediaData,
   getSocialMediaPlatformsData,
   resetSocialMedia,
   updateSocialMedia,
@@ -35,17 +36,34 @@ const SocialMedia = () => {
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
   const cardId = "1";
+  
+  const isPublicProfile = location.pathname.startsWith("/user/");
+  const [userCardId,setCardId] = useState(null);
+
+  const {id} = useParams();
 
   useEffect(() => {
+    if(isPublicProfile && id){
+      setCardId(id);
+    }
+  },[isPublicProfile,id]);
+
+  useEffect(() => {
+    if (isPublicProfile && !userCardId) return;
     const controller = new AbortController();
 
-    dispatch(getSocialMediaData({ cardId, signal: controller.signal }));
-    dispatch(getSocialMediaPlatformsData({ signal: controller.signal }));
+    if(isPublicProfile){
+      dispatch(getSocialMediaPlatformsData({ signal: controller.signal }));
+      dispatch(getOtherSocialMediaData({ cardId:userCardId, signal: controller.signal }));
+    }else{
+      dispatch(getSocialMediaData({ cardId, signal: controller.signal }));
+      dispatch(getSocialMediaPlatformsData({ signal: controller.signal }));
+    }
 
     return () => {
       controller.abort();
     };
-  }, [cardId, dispatch]);
+  }, [cardId, dispatch,userCardId,isPublicProfile]);
 
   const handleUpdateSocialMedia = async (cardId, updatedData, draftData) => {
     const mergedData = [...updatedData, ...draftData];

@@ -2,16 +2,19 @@ import "./user_header.scss";
 import defaultAvatar from "../../../assets/img/avatar.png";
 import editIcon from "../../../assets/img/icons/edit.svg";
 import qrIcon from "../../../assets/img/icons/qr.svg";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setUpdatedPage } from "../../../redux/slices/UpdatePageSlice";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { updatePageChecker } from "../../../helpers";
 import { FaImage } from "react-icons/fa6";
-import { resetProfile,updateProfileData,getProfileData } from "../../../redux/slices/ProfileSlice";
+import { resetProfile,updateProfileData,getProfileData, getOtherProfileData } from "../../../redux/slices/ProfileSlice";
 import { resetCompany,updateCompanyData,getCompanyData } from "../../../redux/slices/CompanySlice";
 import { resetSocialMedia,updateSocialMedia,getSocialMediaPlatformsData,getSocialMediaData } from "../../../redux/slices/SocialMediaSlice";
 import { useTranslation } from "react-i18next";
+import { getUserImages } from "../../../redux/slices/UserImagesSlice";
+import Axios from "../../../api/axiosInstance";
+import toast from "react-hot-toast";
 
 const UserHeader = ({setQrCodeModal}) => {
   const dispatch = useDispatch();
@@ -20,16 +23,32 @@ const UserHeader = ({setQrCodeModal}) => {
   const profileState = useSelector(state => state.profile);
   const companyState = useSelector(state => state.company);
   const socialMediaState = useSelector(state => state.socialMedia);
+  const userImagesState = useSelector(state => state.userImages);
 
-  const cardId = "1";
-
-  const isPublicProfile = location.pathname.startsWith("/user/");
+  console.log('userImagesState', userImagesState)
 
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
   const fileInputRef = useRef(null);
 
   const {t} = useTranslation();
+
+  const cardId = "1";
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    dispatch(getUserImages({ cardId, signal: controller.signal }));
+
+    return () => {
+      controller.abort();
+    };
+  },[dispatch,cardId]);
+  
+  const isPublicProfile = location.pathname.startsWith("/user/");
+  const [userCardId,setCardId] = useState(null);
+
+  const {id} = useParams();
 
   const handleClickUpdate = () => {
     if (location.pathname) {
@@ -57,23 +76,38 @@ const UserHeader = ({setQrCodeModal}) => {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        // dispatch(setAvatarImage(reader?.result));
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append("userId",cardId);
+      formData.append("img",file);
+      Axios.post(`user/update-profile-img`).then(res => {
+        console.log('res', res)
+      }).catch(err => {
+        const msg = err?.response?.data?.message || "Profil Resmi Değiştirilemedi"
+        toast.error(msg);
+      })
     }
   };
 
   useEffect(() => {
+    if(isPublicProfile && id){
+      setCardId(id);
+    }
+  },[isPublicProfile,id]);
+
+  useEffect(() => {
+    if (isPublicProfile && !userCardId) return;
     const controller = new AbortController();
 
-    dispatch(getProfileData({ cardId, signal: controller.signal }));
+    if(isPublicProfile){
+      dispatch(getOtherProfileData({ cardId:userCardId, signal: controller.signal }));
+    }else{
+      dispatch(getProfileData({ cardId, signal: controller.signal }));
+    }
 
     return () => {
       controller.abort();
     };
-  }, [cardId, dispatch]);
+  }, [cardId, dispatch,userCardId,isPublicProfile]);
 
   const handleUpdateData = async () => {
     if(location?.pathname === "/profile"){
@@ -108,7 +142,7 @@ const UserHeader = ({setQrCodeModal}) => {
     <div className="user_header">
       <div className="user_profile_info">
         <div className="avatar">
-          <img src={defaultAvatar} alt="" className="avatar_img" />
+          <img src={userImagesState?.profileImg ?? defaultAvatar} alt="" className="avatar_img" />
           {isUpdated && (
             <>
               <div className="avatar_overlay">

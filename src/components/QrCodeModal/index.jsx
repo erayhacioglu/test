@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import ColorWheel from "@uiw/react-color-wheel";
@@ -10,11 +10,14 @@ import downloadIcon from "../../assets/img/icons/download.svg";
 import colorPaletteIcon from "../../assets/img/icons/color_palette.svg";
 import qrCodeIcon from "../../assets/img/icons/qr_code.svg";
 import avatar from "../../assets/img/avatar.png";
+import { useSelector } from "react-redux";
+import useImageAsDataUrl from "../../hooks/useImageAsDataUrl";
 
 const QrCodeModal = ({ qrCodeModal, setQrCodeModal }) => {
   const [showColorWheel, setShowColorWheel] = useState(false);
   const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 });
   const [selectedHsva, setSelectedHsva] = useState(false);
+  const userImagesState = useSelector(state => state.userImages);
 
   const toggleColorWheel = () => {
     setShowColorWheel(!showColorWheel);
@@ -34,27 +37,8 @@ const QrCodeModal = ({ qrCodeModal, setQrCodeModal }) => {
     link.click();
   };
 
-  const useImageToDataUrl = (imageUrl) => {
-  const [dataUrl, setDataUrl] = useState(null);
-
-  useEffect(() => {
-    fetch(imageUrl)
-      .then(res => res.blob())
-      .then(blob => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setDataUrl(reader.result);
-        };
-        reader.readAsDataURL(blob);
-      })
-      .catch((err) => console.error("Görsel base64'e çevrilemedi:", err));
-  }, [imageUrl]);
-
-  return dataUrl;
-};
-
-const avatarBase64 = useImageToDataUrl("https://mahal.s3.eu-central-1.amazonaws.com/26026.jpg");
-
+const avatarUrl = userImagesState?.profileImg;
+const avatarDataUrl = useImageAsDataUrl(avatarUrl);
 
 
   return (
@@ -71,10 +55,8 @@ const avatarBase64 = useImageToDataUrl("https://mahal.s3.eu-central-1.amazonaws.
         <div className="qr_code_modal_body">
           <div className="user_container">
             <div className="user_avatar">
-              {/* <img src={avatar} alt="" className="user_avatar_img" /> */}
-              {avatarBase64 && (
-                <img src={avatarBase64} alt="avatar" className="user_avatar_img" />
-              )}
+              <img src={avatarDataUrl ?? avatarUrl ?? avatar}
+   alt="" className="user_avatar_img" crossOrigin="anonymous"/>
             </div>
             <div className="user_info">
               <h2 className="user_info_fullname">Eray Hacıoğlu</h2>

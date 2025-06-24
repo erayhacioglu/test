@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { updatePageChecker } from "../../helpers";
 import { useTranslation } from "react-i18next";
 import SEO from "../../SEO";
 import CompanyInfo from "./components/CompanyInfo";
 import BankInfo from "./components/BankInfo";
 import "./company.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { getCompanyData, resetCompany, updateCompanyData } from "../../redux/slices/CompanySlice";
+import { getCompanyData, resetCompany, updateCompanyData,getOtherCompanyData } from "../../redux/slices/CompanySlice";
 import { setUpdatedPage } from "../../redux/slices/UpdatePageSlice";
 
 const Company = () => {
@@ -21,16 +21,32 @@ const Company = () => {
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
   const cardId = "1";
+  
+  const isPublicProfile = location.pathname.startsWith("/user/");
+  const [userCardId,setCardId] = useState(null);
+
+  const {id} = useParams();
 
   useEffect(() => {
+    if(isPublicProfile && id){
+      setCardId(id);
+    }
+  },[isPublicProfile,id]);
+
+  useEffect(() => {
+    if (isPublicProfile && !userCardId) return;
     const controller = new AbortController();
 
-    dispatch(getCompanyData({ cardId, signal: controller.signal }));
+    if(isPublicProfile){
+      dispatch(getOtherCompanyData({ cardId:userCardId, signal: controller.signal }));
+    }else{
+      dispatch(getCompanyData({ cardId, signal: controller.signal }));
+    }
 
     return () => {
       controller.abort();
     };
-  }, [cardId, dispatch]);
+  }, [cardId, dispatch,userCardId,isPublicProfile]);
 
   const handleCompanyDataUpdate = async (cardId,updatedData) => {
       const res = await dispatch(updateCompanyData({cardId,updatedData}))
