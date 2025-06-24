@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
+import html2canvas from "html2canvas";
 import ColorWheel from "@uiw/react-color-wheel";
 import ShadeSlider from "@uiw/react-color-shade-slider";
 import { hsvaToHex } from "@uiw/color-convert";
@@ -13,10 +14,48 @@ import avatar from "../../assets/img/avatar.png";
 const QrCodeModal = ({ qrCodeModal, setQrCodeModal }) => {
   const [showColorWheel, setShowColorWheel] = useState(false);
   const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 });
+  const [selectedHsva, setSelectedHsva] = useState(false);
 
   const toggleColorWheel = () => {
     setShowColorWheel(!showColorWheel);
   };
+
+  const bodyRef = useRef(null);
+
+  const handleDownload = async () => {
+    if (!bodyRef.current) return;
+
+    const canvas = await html2canvas(bodyRef.current);
+    const image = canvas.toDataURL("image/png");
+
+    const link = document.createElement("a");
+    link.href = image;
+    link.download = "modal-body-screenshot.png";
+    link.click();
+  };
+
+  const useImageToDataUrl = (imageUrl) => {
+  const [dataUrl, setDataUrl] = useState(null);
+
+  useEffect(() => {
+    fetch(imageUrl)
+      .then(res => res.blob())
+      .then(blob => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setDataUrl(reader.result);
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch((err) => console.error("Görsel base64'e çevrilemedi:", err));
+  }, [imageUrl]);
+
+  return dataUrl;
+};
+
+const avatarBase64 = useImageToDataUrl("https://mahal.s3.eu-central-1.amazonaws.com/26026.jpg");
+
+
 
   return (
     <Modal
@@ -26,11 +65,16 @@ const QrCodeModal = ({ qrCodeModal, setQrCodeModal }) => {
       className="qr_code_modal"
     >
       <ModalHeader closeButton />
-      <ModalBody>
+      <ModalBody style={{
+    "--selectedColor": selectedHsva ? selectedHsva : undefined,
+  }} ref={bodyRef}>
         <div className="qr_code_modal_body">
           <div className="user_container">
             <div className="user_avatar">
-              <img src={avatar} alt="" className="user_avatar_img" />
+              {/* <img src={avatar} alt="" className="user_avatar_img" /> */}
+              {avatarBase64 && (
+                <img src={avatarBase64} alt="avatar" className="user_avatar_img" />
+              )}
             </div>
             <div className="user_info">
               <h2 className="user_info_fullname">Eray Hacıoğlu</h2>
@@ -59,7 +103,10 @@ const QrCodeModal = ({ qrCodeModal, setQrCodeModal }) => {
                 </div>
               <div className="color_wheel_footer">
                 <div className="color_wheel_color">{hsvaToHex(hsva)}</div>
-                <button className="color_wheel_btn" onClick={() => setShowColorWheel(false)}>Save</button>
+                <button className="color_wheel_btn" onClick={() => {
+                  setShowColorWheel(false)
+                  setSelectedHsva(hsvaToHex(hsva));
+                }}>Save</button>
               </div>
             </div>
           )}
@@ -70,8 +117,8 @@ const QrCodeModal = ({ qrCodeModal, setQrCodeModal }) => {
         <button onClick={toggleColorWheel}>
           <img src={colorPaletteIcon} alt="Color Palette" />
         </button>
-        <button>
-          <img src={downloadIcon} alt="Download" />
+        <button onClick={handleDownload}>
+          <img src={downloadIcon} alt="Download"/>
         </button>
       </ModalFooter>
     </Modal>

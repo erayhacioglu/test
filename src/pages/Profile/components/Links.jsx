@@ -48,6 +48,18 @@ const Links = ({isUpdated}) => {
   );
 };
 
+const handleInputChange = (idx, newValue) => {
+  const updatedLinks = [...(data?.links || [])].map((link, index) =>
+    index === idx ? { ...link, value: newValue } : link
+  );
+
+  dispatch(setProfileData({
+    ...data,
+    links: updatedLinks
+  }));
+};
+
+
 
   const sortLinksByPosition = (links = []) =>
   [...links].sort((a, b) => a.position - b.position);
@@ -67,7 +79,7 @@ const Links = ({isUpdated}) => {
                             <div className="form_group_with_delete" key={idx}>
                               <div className="form_group">
                               <img src={link} alt={item?.value} className="form_icon" />
-                              <input type="text" className="form_input" value={item?.value}/>
+                              <input type="text" className="form_input" value={item?.value} onChange={(e) => handleInputChange(idx, e.target.value)}/>
                               </div>
                               <button className="form_group_delete_btn" onClick={() => handleClickDeleteItem(item?.id)}><img src={trash} alt="" /></button>
                             </div>
