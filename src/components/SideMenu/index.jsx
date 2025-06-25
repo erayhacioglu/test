@@ -5,10 +5,10 @@ import logo from "../../assets/img/kavio_logo.png";
 import avatar from "../../assets/img/avatar.png";
 import menuData from "./menuData";
 import { FaChevronDown, FaChevronRight, FaChevronUp } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { setTheme } from "../../redux/slices/ThemeSlice";
+import { getAllThemes, setTheme } from "../../redux/slices/ThemeSlice";
 
 const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
   const swipeHandlers = useSwipeable({
@@ -29,8 +29,10 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
   });
 
   const dispatch = useDispatch();
-  const { theme } = useSelector((state) => state.theme);
+  const { themes } = useSelector((state) => state.theme);
   const [activeMenu, setActiveMenu] = useState([]);
+
+  console.log('themes', themes)
 
   const handleClickDropdownMenu = (item) => {
     if (item?.hasChildren) {
@@ -41,6 +43,14 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
       }
     }
   };
+
+  useEffect(() => {
+    const controller = new AbortController();
+    dispatch(getAllThemes({signal: controller.signal }));
+    return () => {
+      controller.abort();
+    };
+  },[dispatch]);
 
   return (
     <div {...swipeHandlers}>
@@ -93,23 +103,16 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
                 {item?.hasChildren && activeMenu === item?.key && (
                   <div className="menu_children">
                     {item?.key === "themes"
-                      ? item?.children?.map((el, key) => (
+                      ? themes && themes?.length > 0 && themes?.map((el, key) => (
                           <div
-                            className={`theme_option ${
-                              el.value.toLowerCase() === theme.toLowerCase()
-                                ? "selected"
-                                : ""
-                            }`}
+                            className={`theme_option`}
                             key={key}
-                            onClick={() =>
-                              dispatch(setTheme(el.value.toLowerCase()))
-                            }
                           >
                             <div
                               className="color_circle"
-                              style={{ backgroundColor: el.color }}
+                              style={{ backgroundColor: el?.primaryColor }}
                             ></div>
-                            <span>{el?.label}</span>
+                            <span style={{textTransform:"capitalize"}}>{el?.name}</span>
                           </div>
                         ))
                       : item?.children?.map((el, key) => (

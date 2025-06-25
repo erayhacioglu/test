@@ -1,6 +1,8 @@
 export function applyTheme(theme) {
   const root = document.documentElement;
 
+  console.log('theme', theme)
+
   if(!theme) return;
 
   root.style.setProperty('--primaryColor', theme.primaryColor);

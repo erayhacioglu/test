@@ -10,60 +10,69 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatePageChecker } from "../../helpers";
 import MarketingAssetModal from "./components/MarketingAssetModal";
 import useWindowSize from "../../hooks/useWindow";
-import { getMarketingAssetsData, getOtherMarketingAssetsData, resetMarketingAssets } from "../../redux/slices/MarketingAssetsSlice";
+import {
+  getMarketingAssetsData,
+  getOtherMarketingAssetsData,
+  resetMarketingAssets,
+} from "../../redux/slices/MarketingAssetsSlice";
 import toast from "react-hot-toast";
 
 const MarketingAssests = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const location = useLocation();
-   const { updatedPage } = useSelector((state) => state.updatePage);
-   const { isLoading,isSuccess,isError,message,data } = useSelector((state) => state.marketingAssets);
-
-   console.log('data', data)
+  const { updatedPage } = useSelector((state) => state.updatePage);
+  const { isLoading, isSuccess, isError, message, data } = useSelector(
+    (state) => state.marketingAssets
+  );
 
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
-  const [showModal,setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const windowSize = useWindowSize();
 
   const cardId = "1";
 
   const isPublicProfile = location.pathname.startsWith("/user/");
-  const [userCardId,setCardId] = useState(null);
+  const [userCardId, setCardId] = useState(null);
 
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
-    if(isPublicProfile && id){
+    if (isPublicProfile && id) {
       setCardId(id);
     }
-  },[isPublicProfile,id]);
+  }, [isPublicProfile, id]);
 
   useEffect(() => {
-      if (isPublicProfile && !userCardId) return;
-      const controller = new AbortController();
-  
-      if(isPublicProfile){
-        dispatch(getOtherMarketingAssetsData({ cardId:userCardId, signal: controller.signal }));
-      }else{
-        dispatch(getMarketingAssetsData({ cardId, signal: controller.signal }));
-      }
-  
-      return () => {
-        controller.abort();
-      };
-    }, [cardId, dispatch,userCardId,isPublicProfile]);
+    if (isPublicProfile && !userCardId) return;
+    const controller = new AbortController();
 
-    useEffect(() => {
-    if(isSuccess && message){
+    if (isPublicProfile) {
+      dispatch(
+        getOtherMarketingAssetsData({
+          cardId: userCardId,
+          signal: controller.signal,
+        })
+      );
+    } else {
+      dispatch(getMarketingAssetsData({ cardId, signal: controller.signal }));
+    }
+
+    return () => {
+      controller.abort();
+    };
+  }, [cardId, dispatch, userCardId, isPublicProfile]);
+
+  useEffect(() => {
+    if (isSuccess && message) {
       toast.success(message);
     }
-    if(isError && message){
+    if (isError && message) {
       toast.error(message);
     }
-    return () => dispatch(resetMarketingAssets)
-  },[dispatch,isSuccess,isError,message]);
+    return () => dispatch(resetMarketingAssets());
+  }, [dispatch, isSuccess, isError, message]);
 
   return (
     <>
@@ -74,30 +83,39 @@ const MarketingAssests = () => {
       />
       <div className="page_container">
         <PageTitle title={t("marketingAssetsPage.pageTitle")} />
-        <div className="section_container" style={{paddingRight:`${windowSize?.width > 768 ? 0 : "35px"}`}}>
+        <div
+          className="section_container"
+          style={{ paddingRight: `${windowSize?.width > 768 ? 0 : "35px"}` }}
+        >
           <div className="marketing_assets_container">
-            {
-              data && data?.length > 0 && data?.map((item,idx) => (
+            {data &&
+              data?.length > 0 &&
+              data?.map((item, idx) => (
                 <Fragment key={idx}>
-                  <MarketingAssetCard isUpdated={isUpdated} data={item}/>
+                  <MarketingAssetCard isUpdated={isUpdated} data={item} />
                 </Fragment>
-              ))
-            }
+              ))}
           </div>
-          {
-            isUpdated && 
-          <div className="marketing_assets_button" onClick={() => setShowModal(true)}>
-            <div className="marketing_assets_circle">
-              <img src={plus} alt="" className="marketing_assets_circle_img"/>
+          {isUpdated && (
+            <div
+              className="marketing_assets_button"
+              onClick={() => setShowModal(true)}
+            >
+              <div className="marketing_assets_circle">
+                <img
+                  src={plus}
+                  alt=""
+                  className="marketing_assets_circle_img"
+                />
+              </div>
+              <span className="marketing_assets_text">
+                {t("marketingAssetsPage.addMarketingAssetsButton")}
+              </span>
             </div>
-            <span className="marketing_assets_text">
-              {t("marketingAssetsPage.addMarketingAssetsButton")}
-            </span>
-          </div>
-          }
+          )}
         </div>
       </div>
-      <MarketingAssetModal showModal={showModal} setShowModal={setShowModal}/>
+      <MarketingAssetModal showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Modal,
   ModalBody,
@@ -9,8 +9,7 @@ import {
 import { useTranslation } from "react-i18next";
 import plus from "../../../assets/img/icons/plus.svg";
 import cardBackground from "../../../assets/img/marketing_assets_background.jpg";
-import { useDispatch, useSelector } from "react-redux";
-// import { setMarketingAssetsData } from "../../../redux/slices/MarketingAssetsSlice";
+import { useDispatch } from "react-redux";
 import useWindowSize from "../../../hooks/useWindow";
 import { FaCheck } from "react-icons/fa6";
 import toast from "react-hot-toast";
@@ -43,26 +42,28 @@ const MarketingAssetModal = ({ showModal, setShowModal }) => {
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append("name",modalData?.name);
-      formData.append("url",modalData?.url);
-      formData.append("coverPhoto",modalData?.coverPhoto);
-      formData.append("cardId",cardId);
-      const res = await Axios.post(`/catalogs`,formData,{
-        headers:{
-          "Content-Type":"multipart/form-data"
-        }
-      })
-      if(res?.status === 200){
+      formData.append("name", modalData?.name);
+      formData.append("url", modalData?.url);
+      formData.append("coverPhoto", modalData?.coverPhoto);
+      formData.append("cardId", cardId);
+      const res = await Axios.post(`/catalogs`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (res?.status === 200) {
+        toast.success("Katalog oluşturuldu");
         setModalData({
-    coverPhoto: null,
-    url: null,
-    name: `${i18n.language === "tr" ? "Örnek Başlık" : "Sample Title"}`,
-  });
+          coverPhoto: null,
+          url: null,
+          name: `${i18n.language === "tr" ? "Örnek Başlık" : "Sample Title"}`,
+        });
         setShowModal(false);
         dispatch(getMarketingAssetsData({ cardId }));
       }
     } catch (error) {
-      const msg = error?.response?.data?.message || "Katalog oluşturulurken hata oluştu";
+      const msg =
+        error?.response?.data?.message || "Katalog oluşturulurken hata oluştu";
       toast.error(msg);
     }
   };

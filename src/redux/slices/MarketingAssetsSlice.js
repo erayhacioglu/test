@@ -118,7 +118,7 @@ const MarketingAssestsSlice = createSlice({
       .addCase(deleteMarketingAssetsData.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        action.message = action.payload;
+        action.message = "Katalog silindi"
       })
       .addCase(deleteMarketingAssetsData.rejected, (state, action) => {
         state.isLoading = false;

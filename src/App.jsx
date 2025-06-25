@@ -9,25 +9,29 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {applyTheme} from "./hooks/applyTheme";
-import {  useSelector } from 'react-redux';
-import themesData from "./constants/themes";
+import {  useDispatch, useSelector } from 'react-redux';
+// import themesData from "./constants/themes";
 import ProfileLayout from './layouts/ProfileLayout';
 
 import Login from "./pages/Auth/Login";
+import { getTheme } from './redux/slices/ThemeSlice';
 
 const App = () => {
-  const {theme} = useSelector(state => state.theme);
+  const dispatch = useDispatch();
+  const {themeDetail} = useSelector(state => state.theme);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    dispatch(getTheme({id:"2" ,signal: controller.signal }));
+    return () => controller.abort();
+  },[dispatch]);
   
 
   useEffect(() => {
-    
-    const selectedTheme = themesData[theme];
-
-    if (selectedTheme) {
-      applyTheme(selectedTheme);
-      localStorage.setItem("theme", theme);
+    if (themeDetail) {
+      applyTheme(themeDetail);
     } 
-  }, [theme]);
+  }, [themeDetail]);
 
 
   const {i18n} = useTranslation();
