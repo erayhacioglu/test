@@ -1,3 +1,5 @@
+
+
 .user_background {
   width: 100%;
   height: 245px;
@@ -53,3 +55,48 @@
     height: 221px;
   }
 }
+
+
+
+/*Skeleton Loading*/
+.user_background_skeleton {
+  width: 100%;
+  height: 245px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8px;
+  background-color: #e0e0e0; /* sabit açık gri */
+  isolation: isolate;
+}
+
+.user_background_skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  height: 100%;
+  width: 60%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .user_background_skeleton {
+    height: 221px;
+  }
+}
+
