@@ -10,6 +10,8 @@
   background-color: var(--primaryColor);
   z-index: 1100;
   transition: transform 0.3s ease-in-out;
+  display: flex;          /* yeni */
+  flex-direction: column; /* yeni */
 
   &.hidden {
     transform: translateX(-100%);
@@ -69,14 +71,20 @@
   }
 
   .side_menu_content {
-    padding: 0 35px 0 22px;
-    margin-top: 48px;
-    flex: 1; 
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
+    // padding: 0 35px 0 22px;
+    // margin-top: 48px;
+    // flex: 1; 
+    // overflow-y: auto;
+    // display: flex;
+    // flex-direction: column;
+    flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  padding: 0 35px 0 22px;
     .menu_item {
-      
       .menu_label_container {
         display: flex;
         align-items: center;
