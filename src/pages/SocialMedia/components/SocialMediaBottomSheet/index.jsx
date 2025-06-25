@@ -48,6 +48,7 @@ const SocialMediaBottomSheet = ({
       snapPoints={({ maxHeight }) => [maxHeight / 2, maxHeight]} // Yarı ve tam ekran arasında geçiş
     >
       <div
+        data-body-scroll-lock-ignore
         style={{
           padding: "1rem",
           display: "flex",
@@ -55,6 +56,7 @@ const SocialMediaBottomSheet = ({
           justifyContent: "center",
           alignItems: "center",
           overflow: "hidden",
+          height: "100%",
         }}
       >
         {selectedSocialMedia ? (
