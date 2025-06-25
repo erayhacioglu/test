@@ -24,6 +24,29 @@ export const getUserImages = createAsyncThunk(
   }
 );
 
+export const getOtherUserImages = createAsyncThunk(
+  "other-profile-management/user-images/${cardId}",
+  async ({ cardId, signal }, { rejectWithValue }) => {
+    try {
+      const response = await Axios.get(
+        `/other-profile-management/user-images/${cardId}`,
+        {
+          signal,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.code === "ERR_CANCELED" || error.name === "CanceledError") {
+        return rejectWithValue("İstek iptal edildi");
+      }
+
+      if (!error.response) throw error;
+
+      return rejectWithValue(error.response.data?.message || "Bir hata oluştu");
+    }
+  }
+);
+
 const initialState = {
   isLoading:false,
   isSuccess:false,
@@ -57,6 +80,22 @@ const UserImageSlice = createSlice({
             state.profileImg = action.payload.profileImg;
           })
           .addCase(getUserImages.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = false;
+            state.isError = true;
+            state.message = action.payload || "Beklenmeyen Bir Hata Oluştu";
+            state.data = null;
+          })
+    .addCase(getOtherUserImages.pending, (state) => {
+            state.isLoading = true;
+          })
+          .addCase(getOtherUserImages.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.bannerImg = action.payload.bannerImg;
+            state.profileImg = action.payload.profileImg;
+          })
+          .addCase(getOtherUserImages.rejected, (state, action) => {
             state.isLoading = false;
             state.isSuccess = false;
             state.isError = true;

@@ -12,7 +12,7 @@ import { resetProfile,updateProfileData,getProfileData, getOtherProfileData } fr
 import { resetCompany,updateCompanyData,getCompanyData } from "../../../redux/slices/CompanySlice";
 import { resetSocialMedia,updateSocialMedia,getSocialMediaPlatformsData,getSocialMediaData } from "../../../redux/slices/SocialMediaSlice";
 import { useTranslation } from "react-i18next";
-import { getUserImages } from "../../../redux/slices/UserImagesSlice";
+import { getUserImages,getOtherUserImages } from "../../../redux/slices/UserImagesSlice";
 import Axios from "../../../api/axiosInstance";
 import toast from "react-hot-toast";
 
@@ -25,8 +25,6 @@ const UserHeader = ({setQrCodeModal}) => {
   const socialMediaState = useSelector(state => state.socialMedia);
   const userImagesState = useSelector(state => state.userImages);
 
-  console.log('userImagesState', userImagesState)
-
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
   const fileInputRef = useRef(null);
@@ -35,16 +33,6 @@ const UserHeader = ({setQrCodeModal}) => {
 
   const cardId = "1";
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    dispatch(getUserImages({ cardId, signal: controller.signal }));
-
-    return () => {
-      controller.abort();
-    };
-  },[dispatch,cardId]);
-  
   const isPublicProfile = location.pathname.startsWith("/user/");
   const [userCardId,setCardId] = useState(null);
 
@@ -100,8 +88,10 @@ const UserHeader = ({setQrCodeModal}) => {
 
     if(isPublicProfile){
       dispatch(getOtherProfileData({ cardId:userCardId, signal: controller.signal }));
+      dispatch(getOtherUserImages({ cardId:userCardId, signal: controller.signal }));
     }else{
       dispatch(getProfileData({ cardId, signal: controller.signal }));
+      dispatch(getUserImages({ cardId, signal: controller.signal }));
     }
 
     return () => {
