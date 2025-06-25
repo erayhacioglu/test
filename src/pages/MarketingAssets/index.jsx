@@ -1,26 +1,69 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import "./marketing_assets.scss";
 import { useTranslation } from "react-i18next";
 import SEO from "../../SEO";
 import PageTitle from "../../components/PageTitle";
 import MarketingAssetCard from "./components/MarketingAssetCard";
 import plus from "../../assets/img/icons/plus.svg";
-import { useLocation } from "react-router";
-import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 import { updatePageChecker } from "../../helpers";
 import MarketingAssetModal from "./components/MarketingAssetModal";
 import useWindowSize from "../../hooks/useWindow";
+import { getMarketingAssetsData, getOtherMarketingAssetsData, resetMarketingAssets } from "../../redux/slices/MarketingAssetsSlice";
+import toast from "react-hot-toast";
 
 const MarketingAssests = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const location = useLocation();
    const { updatedPage } = useSelector((state) => state.updatePage);
-   const { marketingAssetsData } = useSelector((state) => state.marketingAssets);
+   const { isLoading,isSuccess,isError,message,data } = useSelector((state) => state.marketingAssets);
+
+   console.log('data', data)
 
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
   const [showModal,setShowModal] = useState(false);
   const windowSize = useWindowSize();
+
+  const cardId = "1";
+
+  const isPublicProfile = location.pathname.startsWith("/user/");
+  const [userCardId,setCardId] = useState(null);
+
+  const {id} = useParams();
+
+  useEffect(() => {
+    if(isPublicProfile && id){
+      setCardId(id);
+    }
+  },[isPublicProfile,id]);
+
+  useEffect(() => {
+      if (isPublicProfile && !userCardId) return;
+      const controller = new AbortController();
+  
+      if(isPublicProfile){
+        dispatch(getOtherMarketingAssetsData({ cardId:userCardId, signal: controller.signal }));
+      }else{
+        dispatch(getMarketingAssetsData({ cardId, signal: controller.signal }));
+      }
+  
+      return () => {
+        controller.abort();
+      };
+    }, [cardId, dispatch,userCardId,isPublicProfile]);
+
+    useEffect(() => {
+    if(isSuccess && message){
+      toast.success(message);
+    }
+    if(isError && message){
+      toast.error(message);
+    }
+    return () => dispatch(resetMarketingAssets)
+  },[dispatch,isSuccess,isError,message]);
 
   return (
     <>
@@ -34,7 +77,7 @@ const MarketingAssests = () => {
         <div className="section_container" style={{paddingRight:`${windowSize?.width > 768 ? 0 : "35px"}`}}>
           <div className="marketing_assets_container">
             {
-              marketingAssetsData && marketingAssetsData?.length > 0 && marketingAssetsData?.map((item,idx) => (
+              data && data?.length > 0 && data?.map((item,idx) => (
                 <Fragment key={idx}>
                   <MarketingAssetCard isUpdated={isUpdated} data={item}/>
                 </Fragment>
