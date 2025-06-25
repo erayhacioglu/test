@@ -93,7 +93,7 @@ const Profile = () => {
               <button className="user_action_submit_button mobile me-3" onClick={() => handleProfileDataUpdate(data)}>
                 Kaydet
               </button>
-              <button className="user_action_submit_button cancel mobile">
+              <button className="user_action_submit_button cancel mobile" onClick={() => dispatch(setUpdatedPage(null))}>
                 İptal
               </button>
             </div>

@@ -67,8 +67,15 @@ const UserHeader = ({setQrCodeModal}) => {
       const formData = new FormData();
       formData.append("userId",cardId);
       formData.append("img",file);
-      Axios.post(`user/update-profile-img`).then(res => {
-        console.log('res', res)
+      Axios.post(`user/update-profile-img`,formData,{
+        headers:{
+          "Content-Type":"multipart/form-data"
+        }
+      }).then(res => {
+        if(res?.status === 200){
+          toast.success(res?.data);
+          dispatch(getUserImages({ cardId }));
+        }
       }).catch(err => {
         const msg = err?.response?.data?.message || "Profil Resmi Değiştirilemedi"
         toast.error(msg);

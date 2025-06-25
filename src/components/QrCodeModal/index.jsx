@@ -1,4 +1,4 @@
-import {  useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "react-bootstrap";
 import html2canvas from "html2canvas";
 import ColorWheel from "@uiw/react-color-wheel";
@@ -11,7 +11,7 @@ import colorPaletteIcon from "../../assets/img/icons/color_palette.svg";
 import qrCodeIcon from "../../assets/img/icons/qr_code.svg";
 import avatar from "../../assets/img/avatar.png";
 import { useSelector } from "react-redux";
-import useImageAsDataUrl from "../../hooks/useImageAsDataUrl";
+import Axios from "../../api/axiosInstance";
 
 const QrCodeModal = ({ qrCodeModal, setQrCodeModal }) => {
   const [showColorWheel, setShowColorWheel] = useState(false);
@@ -37,8 +37,32 @@ const QrCodeModal = ({ qrCodeModal, setQrCodeModal }) => {
     link.click();
   };
 
-const avatarUrl = userImagesState?.profileImg;
-const avatarDataUrl = useImageAsDataUrl(avatarUrl);
+  const imgToBase64 = async (imgUrl) => {
+    try {
+      const res = await Axios.get('/user/base64', {
+      params: {
+        fileUrl: imgUrl
+      }
+    });
+    if(res?.data){
+      return `data:image/jpeg;base64,${res?.data}`
+    }
+    } catch (error) {
+      console.error("Error : ",error)
+    }
+  }
+
+  const [profileImgSrc, setProfileImgSrc] = useState(avatar);
+
+useEffect(() => {
+  const fetchBase64 = async () => {
+    if (userImagesState?.profileImg) {
+      const base64 = await imgToBase64(userImagesState.profileImg);
+      if (base64) setProfileImgSrc(base64);
+    }
+  };
+  fetchBase64();
+}, [userImagesState?.profileImg]);
 
 
   return (
@@ -55,8 +79,8 @@ const avatarDataUrl = useImageAsDataUrl(avatarUrl);
         <div className="qr_code_modal_body">
           <div className="user_container">
             <div className="user_avatar">
-              <img src={avatarDataUrl ?? avatarUrl ?? avatar}
-   alt="" className="user_avatar_img" crossOrigin="anonymous"/>
+              <img src={profileImgSrc}
+   alt="" className="user_avatar_img" />
             </div>
             <div className="user_info">
               <h2 className="user_info_fullname">Eray Hacıoğlu</h2>

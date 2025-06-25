@@ -1,14 +1,16 @@
 import "./user_background.scss";
 import defaultBackground from "../../../assets/img/kavio_background.jpg";
 import { FaImage } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updatePageChecker } from "../../../helpers";
 import { useLocation } from "react-router";
 import Axios from "../../../api/axiosInstance";
 import toast from "react-hot-toast";
 import UserBackgroundSkeleton from "./UserBackgroundSkeleton";
+import { getUserImages } from "../../../redux/slices/UserImagesSlice";
 
 const UserBackground = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const { updatedPage } = useSelector((state) => state.updatePage);
 
@@ -23,9 +25,16 @@ const UserBackground = () => {
       const formData = new FormData();
       formData.append("userId", cardId);
       formData.append("img", file);
-      Axios.post(`/user/update-banner-img`)
+      Axios.post(`/user/update-banner-img`,formData,{
+        headers:{
+          "Content-Type":"multipart/form-data"
+        }
+      })
         .then((res) => {
-          console.log("res", res);
+          if(res?.status === 200){
+          toast.success(res?.data);
+          dispatch(getUserImages({ cardId }));
+        }
         })
         .catch((err) => {
           const msg =
