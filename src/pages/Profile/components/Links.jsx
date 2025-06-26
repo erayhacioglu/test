@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {  useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { setProfileData } from "../../../redux/slices/ProfileSlice";
+import CopiedLineSkeleton from "../../../components/SkeletonLoading/CopiedLineSkeleton";
+import FormFieldSkeleton from "../../../components/SkeletonLoading/FormFieldSkeleton";
 
 const Links = ({isUpdated}) => {
   const dispatch = useDispatch();
@@ -63,6 +65,17 @@ const handleInputChange = (idx, newValue) => {
 
   const sortLinksByPosition = (links = []) =>
   [...links].sort((a, b) => a.position - b.position);
+
+  if(isLoading){
+    return(
+      <div className="section_container right">
+        {
+          isUpdated ? <FormFieldSkeleton type="withDelete" count={3} showAddItems={true} addItemCount={1}/> : 
+       <CopiedLineSkeleton copied={3}/>
+        }
+      </div>
+    );
+  }
   
 
   return (

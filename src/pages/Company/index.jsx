@@ -67,6 +67,7 @@ const Company = () => {
     return () => dispatch(resetCompany)
   },[dispatch,isSuccess,isError,message]);
 
+
   return (
     <>
       <SEO

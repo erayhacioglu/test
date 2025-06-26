@@ -1,0 +1,118 @@
+@mixin shimmer {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.25);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.2s infinite;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.user_header_skeleton {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-left: 61px;
+  margin-bottom: 35px;
+
+  .user_profile_info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .avatar_wrapper {
+      position: absolute;
+      width: 136px;
+      height: 136px;
+      padding: 7.5px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      border: 1px solid var(--backgroundColor);
+      background-color: var(--backgroundColor);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        @include shimmer;
+      }
+    }
+
+    .user_info {
+      color: var(--textColor);
+      margin-top: 80px;
+
+      .fullname,
+      .job {
+        height: 16px;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        @include shimmer;
+      }
+
+      .fullname {
+        width: 220px;
+      }
+
+      .job {
+        width: 140px;
+      }
+    }
+  }
+
+  .user_actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .action_btn {
+      width: 149px;
+      height: 36px;
+      border-radius: 5px;
+      margin: 10px 0;
+      @include shimmer;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .user_header_skeleton {
+    padding-left: 45px;
+
+    .user_actions {
+      flex-direction: row;
+      gap: 10px;
+      padding-right: 15px;
+
+      .action_btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin: 0;
+      }
+    }
+  }
+}

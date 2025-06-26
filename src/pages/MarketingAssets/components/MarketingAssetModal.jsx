@@ -5,6 +5,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalTitle,
+  Spinner,
 } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import plus from "../../../assets/img/icons/plus.svg";
@@ -19,6 +20,7 @@ import { getMarketingAssetsData } from "../../../redux/slices/MarketingAssetsSli
 const MarketingAssetModal = ({ showModal, setShowModal }) => {
   const { t, i18n } = useTranslation();
   const { width } = useWindowSize();
+  const [loading,setLoading] = useState(false);
 
   const cardId = "1";
 
@@ -40,6 +42,7 @@ const MarketingAssetModal = ({ showModal, setShowModal }) => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("name", modalData?.name);
@@ -65,6 +68,8 @@ const MarketingAssetModal = ({ showModal, setShowModal }) => {
       const msg =
         error?.response?.data?.message || "Katalog oluşturulurken hata oluştu";
       toast.error(msg);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -214,11 +219,15 @@ const MarketingAssetModal = ({ showModal, setShowModal }) => {
               }`,
             });
           }}
+          disabled={loading}
         >
           {t("buttons.cancelButtonText")}
         </button>
-        <button className="marketing_asset_submit_btn" onClick={handleSubmit}>
-          {t("buttons.submitButtonText")}
+        <button className="marketing_asset_submit_btn" onClick={handleSubmit} disabled={loading}>
+          {
+            loading ? <Spinner /> : 
+          t("buttons.submitButtonText")
+          }
         </button>
       </ModalFooter>
     </Modal>

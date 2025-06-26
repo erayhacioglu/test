@@ -7,6 +7,7 @@ import { FaCheck } from "react-icons/fa6";
 import plus from "../../../assets/img/icons/plus.svg";
 import trash from "../../../assets/img/icons/trash.svg";
 import { setCompanyData } from "../../../redux/slices/CompanySlice";
+import CopiedLineSkeleton from "../../../components/SkeletonLoading/CopiedLineSkeleton";
 
 const BankInfo = ({ isUpdated }) => {
   const dispatch = useDispatch();
@@ -55,6 +56,14 @@ const handleBankInfoChange = (idx, field, value) => {
       })
     );
   };
+
+  if(isLoading){
+    return(
+      <div className="section_container">
+       <CopiedLineSkeleton copied={3}/>
+      </div>
+    )
+  }
 
   return (
     <>

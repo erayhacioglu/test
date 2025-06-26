@@ -16,6 +16,7 @@ import {
   resetMarketingAssets,
 } from "../../redux/slices/MarketingAssetsSlice";
 import toast from "react-hot-toast";
+import MarketingAssetsSkeleton from "./components/MarketingAssetsSkeleton";
 
 const MarketingAssests = () => {
   const dispatch = useDispatch();
@@ -73,6 +74,21 @@ const MarketingAssests = () => {
     }
     return () => dispatch(resetMarketingAssets());
   }, [dispatch, isSuccess, isError, message]);
+
+  if(isLoading){
+    return(
+      <div className="page_container">
+        <div className="section_container" style={{ paddingRight: `${windowSize?.width > 768 ? 0 : "35px"}` }}>
+          <div className="marketing_assets_container">
+            <MarketingAssetsSkeleton />
+            <MarketingAssetsSkeleton />
+            <MarketingAssetsSkeleton />
+            <MarketingAssetsSkeleton />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

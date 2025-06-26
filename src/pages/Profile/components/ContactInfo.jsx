@@ -5,6 +5,7 @@ import { generateProfileIcon, linkData } from "../../../helpers";
 import trash from "../../../assets/img/icons/trash.svg";
 import plus from "../../../assets/img/icons/plus.svg";
 import { setProfileData } from "../../../redux/slices/ProfileSlice";
+import FormFieldSkeleton from "../../../components/SkeletonLoading/FormFieldSkeleton";
 
 const ContactInfo = () => {
   const dispatch = useDispatch();
@@ -51,7 +52,13 @@ const handleClickDeleteItem = (index) => {
 };
 
 
-
+if(isLoading){
+    return(
+      <div className="section_container right">
+        <FormFieldSkeleton type="withDelete" count={3} showAddItems={true} addItemCount={5}/> 
+      </div>
+    );
+  }
 
 
   return (

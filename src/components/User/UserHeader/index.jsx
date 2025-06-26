@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { getUserImages,getOtherUserImages } from "../../../redux/slices/UserImagesSlice";
 import Axios from "../../../api/axiosInstance";
 import toast from "react-hot-toast";
+import UserHeaderSkeleton from "./components/UserHeaderSkeleton";
 
 const UserHeader = ({setQrCodeModal}) => {
   const dispatch = useDispatch();
@@ -133,6 +134,10 @@ const UserHeader = ({setQrCodeModal}) => {
       dispatch(resetSocialMedia());
     }
     }
+  }
+
+  if(userImagesState?.isLoading){
+    return <UserHeaderSkeleton />
   }
 
   return (

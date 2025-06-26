@@ -6,6 +6,8 @@ import copy from "../../../assets/img/icons/copy.svg";
 import {FaCheck} from "react-icons/fa6"
 import { useState } from "react";
 import { setProfileData } from "../../../redux/slices/ProfileSlice";
+import CopiedLineSkeleton from "../../../components/SkeletonLoading/CopiedLineSkeleton";
+import FormFieldSkeleton from "../../../components/SkeletonLoading/FormFieldSkeleton";
 
 const PersonalInfo = ({ isUpdated }) => {
   const dispatch = useDispatch();
@@ -30,6 +32,17 @@ const PersonalInfo = ({ isUpdated }) => {
       ...data,
       userInfo:{...data.userInfo,[name]:value}
     }));
+  }
+
+  if(isLoading){
+    return(
+      <div className="section_container">
+        {
+          isUpdated ? <FormFieldSkeleton type="basic" count={3}/> : 
+       <CopiedLineSkeleton copied={3}/>
+        }
+      </div>
+    )
   }
 
   return(

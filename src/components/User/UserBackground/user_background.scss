@@ -65,7 +65,8 @@
   overflow: hidden;
   position: relative;
   border-radius: 8px;
-  background-color: #e0e0e0; /* sabit açık gri */
+  background-color: rgba(255, 255, 255, 0.3);
+  display: inline-block;
   isolation: isolate;
 }
 
@@ -73,24 +74,23 @@
   content: "";
   position: absolute;
   top: 0;
-  left: -60%;
-  height: 100%;
-  width: 60%;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  transform: translateX(-100%);
   background: linear-gradient(
     90deg,
-    transparent,
     rgba(255, 255, 255, 0.3),
-    transparent
+    rgba(255, 255, 255, 0.3) 25%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.3)
   );
   animation: shimmer 1.2s infinite;
 }
 
 @keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
   100% {
-    transform: translateX(200%);
+    transform: translateX(100%);
   }
 }
 

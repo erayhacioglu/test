@@ -1,0 +1,178 @@
+/*Profile Skeleton*/
+
+@mixin shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.2);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.2s infinite;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.copied_line_container_skeleton {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .copied_line_group {
+    display: flex;
+    align-items: center;
+
+    .skeleton_icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      margin-right: 10px;
+      @include shimmer;
+    }
+
+    .skeleton_text {
+      width: 200px;
+      height: 14px;
+      border-radius: 4px;
+      @include shimmer;
+    }
+  }
+
+  .skeleton_button {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    @include shimmer;
+  }
+}
+
+
+@mixin shimmer {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.2);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.2s infinite;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Basic form field skeleton
+.form_group_skeleton {
+  display: flex;
+  height: 33px;
+  max-width: 362px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--linkBackgroundColor);
+  margin-bottom: 5px;
+  overflow: hidden;
+
+  .form_label_skeleton {
+    width: 100px;
+    height: 100%;
+    @include shimmer;
+    border-right: 1px solid var(--linkBackgroundColor);
+  }
+
+  .form_input_skeleton {
+    flex: 1;
+    height: 100%;
+    @include shimmer;
+  }
+}
+
+// With delete button version
+.form_group_with_delete_skeleton {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+
+  .form_group {
+    height: 33px;
+    border-radius: 5px;
+    border: 1px solid var(--linkBackgroundColor);
+    display: flex;
+    align-items: center;
+    max-width: 362px;
+    width: 100%;
+    overflow: hidden;
+
+    .form_icon_skeleton {
+      width: 15px;
+      height: 15px;
+      margin-left: 10px;
+      border-radius: 3px;
+      @include shimmer;
+    }
+
+    .form_input_skeleton {
+      flex: 1;
+      height: 100%;
+      margin-left: 10px;
+      @include shimmer;
+    }
+  }
+
+  .form_delete_skeleton {
+    width: 33px;
+    height: 33px;
+    margin-left: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--linkBackgroundColor);
+    @include shimmer;
+  }
+}
+
+
+.add_form_item_container_skeleton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 35px;
+
+  .add_form_item_skeleton {
+    height: 33px;
+    border-radius: 5px;
+    background-color: var(--linkBackgroundColor);
+    width: 90px;
+    @include shimmer;
+  }
+}
