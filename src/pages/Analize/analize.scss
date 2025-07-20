@@ -1,0 +1,88 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.chart-box {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-title {
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #444;
+}
+
+
+
+.interaction-list {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+
+  .chart-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .interaction-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .interaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f7fa;
+    padding: 10px 16px;
+    border-radius: 8px;
+
+    .ip {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .counts {
+      display: flex;
+      gap: 12px;
+      font-size: 13px;
+
+      .view {
+        color: #1e88e5;
+      }
+
+      .download {
+        color: #43a047;
+      }
+    }
+  }
+}

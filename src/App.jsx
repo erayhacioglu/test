@@ -15,6 +15,7 @@ import ProfileLayout from './layouts/ProfileLayout';
 
 import Login from "./pages/Auth/Login";
 import { getTheme } from './redux/slices/ThemeSlice';
+import DashboardPage from './pages/Analize';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,9 @@ const App = () => {
 
   return (
     <Routes>
+      <Route path="charts" element={<DashboardPage />} />
       <Route path="/" element={<UserLayout />}>
+
         <Route index element={<Navigate to="profile" replace />} />
         <Route path="profile" element={<Profile />} />
         <Route path="social-media" element={<SocialMedia />} />

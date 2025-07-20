@@ -6,6 +6,8 @@ import socialMediaReducer from "./slices/SocialMediaSlice";
 import marketingAssetsReducer from "./slices/MarketingAssetsSlice";
 import themeReducer from "./slices/ThemeSlice";
 import userImagesReducer from "./slices/UserImagesSlice";
+import analizeSliceReducer from "./slices/AnalizeSlice";
+
 
 const store = configureStore({
   reducer: {
@@ -15,7 +17,9 @@ const store = configureStore({
     socialMedia:socialMediaReducer,
     marketingAssets:marketingAssetsReducer,
     theme:themeReducer,
-    userImages:userImagesReducer
+    userImages:userImagesReducer,
+    analize: analizeSliceReducer
+
   },
 })
 
