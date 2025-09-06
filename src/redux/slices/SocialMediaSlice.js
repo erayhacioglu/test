@@ -112,9 +112,6 @@ const SocialMediaSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
       state.message = "";
-      state.data = null;
-      state.socialMediaPlatforms = null;
-      state.addedSocialMediaPlatforms = [];
     },
   },
   extraReducers: (builder) => {

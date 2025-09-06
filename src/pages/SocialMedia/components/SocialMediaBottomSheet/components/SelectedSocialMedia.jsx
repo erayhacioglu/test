@@ -30,8 +30,9 @@ const SelectedSocialMedia = ({
   const [updateSocialMedia2, setUpdateSocialMedia2] = useState(false);
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.socialMedia);
+  const {user} = useSelector(state => state.user);
 
-  const cardId = "1";
+  const cardId = user?.cardId;
 
   const handleAddSocialMedia = (addedSocialMedia) => {
     if (isUpdated && addedSocialMedia) {

@@ -8,67 +8,75 @@ import { useLocation, useParams } from "react-router";
 import { updatePageChecker } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getProfileData, resetProfile, updateProfileData,getOtherProfileData } from "../../redux/slices/ProfileSlice";
+import {
+  getProfileData,
+  resetProfile,
+  updateProfileData,
+  getOtherProfileData,
+} from "../../redux/slices/ProfileSlice";
 import toast from "react-hot-toast";
 import { setUpdatedPage } from "../../redux/slices/UpdatePageSlice";
-
 
 const Profile = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { updatedPage } = useSelector((state) => state.updatePage);
-  const { isSuccess,isError,message,data } = useSelector((state) => state.profile);
+  const { isSuccess, isError, message, data } = useSelector(
+    (state) => state.profile
+  );
+  const { user } = useSelector((state) => state.user);
 
-  
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
-  
-  const cardId = "1";
-  
-  const isPublicProfile = location.pathname.startsWith("/user/");
-  const [userCardId,setCardId] = useState(null);
 
-  const {id} = useParams();
+  const cardId = user?.cardId;
+
+  const isPublicProfile = location.pathname.startsWith("/user/");
+  const [userCardId, setCardId] = useState(null);
+
+  const { id } = useParams();
 
   useEffect(() => {
-    if(isPublicProfile && id){
+    if (isPublicProfile && id) {
       setCardId(id);
     }
-  },[isPublicProfile,id]);
+  }, [isPublicProfile, id]);
 
   useEffect(() => {
     if (isPublicProfile && !userCardId) return;
     const controller = new AbortController();
 
-    if(isPublicProfile){
-      dispatch(getOtherProfileData({ cardId:userCardId, signal: controller.signal }));
-    }else{
+    if (isPublicProfile) {
+      dispatch(
+        getOtherProfileData({ cardId: userCardId, signal: controller.signal })
+      );
+    } else {
       dispatch(getProfileData({ cardId, signal: controller.signal }));
     }
 
     return () => {
       controller.abort();
     };
-  }, [cardId, dispatch,userCardId,isPublicProfile]);
+  }, [cardId, dispatch, userCardId, isPublicProfile]);
 
   const handleProfileDataUpdate = async (updatedData) => {
-    const res = await dispatch(updateProfileData(updatedData))
-    if(res?.meta?.requestStatus === "fulfilled"){
+    const res = await dispatch(updateProfileData(updatedData));
+    if (res?.meta?.requestStatus === "fulfilled") {
       dispatch(getProfileData({ cardId }));
       dispatch(setUpdatedPage(null));
-      dispatch(resetProfile)
+      dispatch(resetProfile);
     }
-  }
+  };
 
   useEffect(() => {
-    if(isSuccess && message){
+    if (isSuccess && message) {
       toast.success(message);
     }
-    if(isError && message){
+    if (isError && message) {
       toast.error(message);
     }
-    return () => dispatch(resetProfile)
-  },[dispatch,isSuccess,isError,message]);
+    return () => dispatch(resetProfile);
+  }, [dispatch, isSuccess, isError, message]);
 
   return (
     <>
@@ -90,10 +98,16 @@ const Profile = () => {
         {isUpdated && (
           <div className="section_container">
             <div className="d-flex align-items-center">
-              <button className="user_action_submit_button mobile me-3" onClick={() => handleProfileDataUpdate(data)}>
+              <button
+                className="user_action_submit_button mobile me-3"
+                onClick={() => handleProfileDataUpdate(data)}
+              >
                 Kaydet
               </button>
-              <button className="user_action_submit_button cancel mobile" onClick={() => dispatch(setUpdatedPage(null))}>
+              <button
+                className="user_action_submit_button cancel mobile"
+                onClick={() => dispatch(setUpdatedPage(null))}
+              >
                 İptal
               </button>
             </div>

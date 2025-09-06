@@ -25,6 +25,7 @@ const UserHeader = ({setQrCodeModal}) => {
   const companyState = useSelector(state => state.company);
   const socialMediaState = useSelector(state => state.socialMedia);
   const userImagesState = useSelector(state => state.userImages);
+  const {user} = useSelector(state => state.user);
 
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
@@ -32,7 +33,7 @@ const UserHeader = ({setQrCodeModal}) => {
 
   const {t} = useTranslation();
 
-  const cardId = "1";
+  const cardId = user?.cardId;
 
   const isPublicProfile = location.pathname.startsWith("/user/");
   const [userCardId,setCardId] = useState(null);
@@ -170,10 +171,12 @@ const UserHeader = ({setQrCodeModal}) => {
       <div className="user_actions">
         {
           isPublicProfile ? <>
-             <button className="user_action_button">
+             {user && user?.card?.company?.showConnect &&
+              <button className="user_action_button">
               <img src={editIcon} alt="Düzenle ikon" />
               <span className="user_action_button_text">Bağlantı</span>
             </button>
+             }
             <button className="user_action_button">
               <img src={qrIcon} alt="QR ikon" />
               <span className="user_action_button_text">İndir</span>
@@ -191,10 +194,13 @@ const UserHeader = ({setQrCodeModal}) => {
           </>
         ) : (
           <>
+          {
+            user && user?.card?.company?.editableUser &&
             <button className="user_action_button" onClick={handleClickUpdate}>
               <img src={editIcon} alt="Düzenle ikon" />
               <span className="user_action_button_text">{t("buttons.editButtonText")}</span>
             </button>
+          }
             <button className="user_action_button" onClick={() => setQrCodeModal(true)}>
               <img src={qrIcon} alt="QR ikon" />
               <span className="user_action_button_text">{t("buttons.createQrButtonText")}</span>

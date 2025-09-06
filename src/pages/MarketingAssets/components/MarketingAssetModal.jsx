@@ -10,7 +10,7 @@ import {
 import { useTranslation } from "react-i18next";
 import plus from "../../../assets/img/icons/plus.svg";
 import cardBackground from "../../../assets/img/marketing_assets_background.jpg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useWindowSize from "../../../hooks/useWindow";
 import { FaCheck } from "react-icons/fa6";
 import toast from "react-hot-toast";
@@ -22,7 +22,9 @@ const MarketingAssetModal = ({ showModal, setShowModal }) => {
   const { width } = useWindowSize();
   const [loading,setLoading] = useState(false);
 
-  const cardId = "1";
+  const {user} = useSelector(state => state.user);
+
+  const cardId = user?.cardId;
 
   const dispatch = useDispatch();
   const [modalData, setModalData] = useState({

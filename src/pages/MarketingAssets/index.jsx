@@ -27,12 +27,14 @@ const MarketingAssests = () => {
     (state) => state.marketingAssets
   );
 
+  const {user} = useSelector(state => state.user);
+
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
   const [showModal, setShowModal] = useState(false);
   const windowSize = useWindowSize();
 
-  const cardId = "1";
+  const cardId = user?.cardId;
 
   const isPublicProfile = location.pathname.startsWith("/user/");
   const [userCardId, setCardId] = useState(null);

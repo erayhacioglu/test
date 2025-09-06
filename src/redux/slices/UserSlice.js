@@ -26,7 +26,7 @@ export const hydrateAuth = createAsyncThunk("auth/hydrate", async () => {
   const token = localStorage.getItem("accessToken");
   if (!token) return null;
   try {
-    const res = await Axios.get("/company-admin");
+    const res = await Axios.get("/user/info");
     if (res?.status === 200 && res?.data?.id) {
       return res?.data;
     }
@@ -37,10 +37,10 @@ export const hydrateAuth = createAsyncThunk("auth/hydrate", async () => {
 });
 
 export const getUserInfo = createAsyncThunk(
-  "/company-admin",
+  "/user/info",
   async (_, thunkAPI) => {
     try {
-      const res = await Axios.get(`/company-admin`);
+      const res = await Axios.get(`/user/info`);
       if (res?.status === 200 && res?.data?.id) {
         return res?.data;
       }

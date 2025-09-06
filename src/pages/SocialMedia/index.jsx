@@ -19,6 +19,7 @@ import {
 } from "../../redux/slices/SocialMediaSlice";
 import toast from "react-hot-toast";
 import { setUpdatedPage } from "../../redux/slices/UpdatePageSlice";
+import SocialMediaSkeleton from "./components/SocialMediaSkeleton";
 
 const SocialMedia = () => {
   const { t } = useTranslation();
@@ -30,12 +31,16 @@ const SocialMedia = () => {
   const dispatch = useDispatch();
   const { updatedPage } = useSelector((state) => state.updatePage);
 
-  const { isSuccess, isError, message, data, addedSocialMediaPlatforms } =
+  const { isLoading,isSuccess, isError, message, data, addedSocialMediaPlatforms } =
     useSelector((state) => state.socialMedia);
+
+    console.log('isLoading', isLoading)
+
+  const {user} = useSelector(state => state.user); 
 
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
-  const cardId = "1";
+  const cardId = user?.cardId
   
   const isPublicProfile = location.pathname.startsWith("/user/");
   const [userCardId,setCardId] = useState(null);
@@ -83,8 +88,23 @@ const SocialMedia = () => {
     if (isError && message) {
       toast.error(message);
     }
-    return () => dispatch(resetSocialMedia);
+    return () => dispatch(resetSocialMedia());
   }, [dispatch, isSuccess, isError, message]);
+
+  if(isLoading){
+    console.log('BURASI')
+    return(
+      <div className="page_container">
+        <PageTitle title={t("socialMediaPage.pageTitle")} />
+        <div
+          className="section_container"
+          style={{ paddingRight: `${width > 768 ? 0 : "35px"}` }}
+        >
+          <SocialMediaSkeleton count={8}/> 
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

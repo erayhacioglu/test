@@ -1,11 +1,12 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import trash from "../../../assets/img/icons/trash.svg";
 import cardBackground from "../../../assets/img/marketing_assets_background.jpg";
 import { deleteMarketingAssetsData, getMarketingAssetsData } from "../../../redux/slices/MarketingAssetsSlice";
 
 const MarketingAssetCard = ({isUpdated,data}) => {
   const dispatch = useDispatch();
-  const cardId = "1"
+  const {user} = useSelector(state => state.user);
+  const cardId = user?.cardId;
 
   const handleDeleteItem = async (id) => {
     const res = await dispatch(deleteMarketingAssetsData({catalogId:id}));

@@ -17,10 +17,11 @@ const Company = () => {
   const dispatch = useDispatch();
   const { updatedPage } = useSelector((state) => state.updatePage);
   const { isSuccess,isError,message,data } = useSelector((state) => state.company);
+  const { user } = useSelector((state) => state.user);
 
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
-  const cardId = "1";
+  const cardId = user?.cardId;
   
   const isPublicProfile = location.pathname.startsWith("/user/");
   const [userCardId,setCardId] = useState(null);

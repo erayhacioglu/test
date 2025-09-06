@@ -13,11 +13,12 @@ const UserBackground = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { updatedPage } = useSelector((state) => state.updatePage);
+  const { user } = useSelector((state) => state.user);
 
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
   const userImagesState = useSelector((state) => state.userImages);
 
-  const cardId = "1";
+  const cardId = user?.cardId;
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];

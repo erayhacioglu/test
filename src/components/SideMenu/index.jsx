@@ -30,6 +30,7 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
 
   const dispatch = useDispatch();
   const { themes } = useSelector((state) => state.theme);
+  const { user } = useSelector((state) => state.user);
   const [activeMenu, setActiveMenu] = useState([]);
 
   console.log('themes', themes)
@@ -64,7 +65,9 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
         <div className="side_menu_logo">
           <img src={logo} alt="" className="logo_img" />
         </div>
-        <div className="side_menu_user">
+        {
+          user ? <>
+          <div className="side_menu_user">
           <div className="side_menu_avatar">
             <img src={avatar} alt="" className="side_menu_avatar_img" />
           </div>
@@ -129,6 +132,9 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
               </div>
             ))}
         </div>
+          
+          </>:"BURASI"
+        }
         <div
           className="side_menu_mobile_button"
           onClick={() => setShowSideMenu((prev) => !prev)}
