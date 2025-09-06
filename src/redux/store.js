@@ -1,4 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./slices/UserSlice";
 import updatePageReducer from "./slices/UpdatePageSlice";
 import profileReducer from "./slices/ProfileSlice";
 import companyReducer from "./slices/CompanySlice";
@@ -8,19 +9,18 @@ import themeReducer from "./slices/ThemeSlice";
 import userImagesReducer from "./slices/UserImagesSlice";
 import analizeSliceReducer from "./slices/AnalizeSlice";
 
-
 const store = configureStore({
   reducer: {
-    updatePage:updatePageReducer,
-    profile:profileReducer,
-    company:companyReducer,
-    socialMedia:socialMediaReducer,
-    marketingAssets:marketingAssetsReducer,
-    theme:themeReducer,
-    userImages:userImagesReducer,
-    analize: analizeSliceReducer
-
+    user: userReducer,
+    updatePage: updatePageReducer,
+    profile: profileReducer,
+    company: companyReducer,
+    socialMedia: socialMediaReducer,
+    marketingAssets: marketingAssetsReducer,
+    theme: themeReducer,
+    userImages: userImagesReducer,
+    analize: analizeSliceReducer,
   },
-})
+});
 
 export default store;
