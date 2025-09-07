@@ -22,6 +22,18 @@ export const login = createAsyncThunk(
   }
 );
 
+export const register = createAsyncThunk(
+  "/user/register-setup-card/${id}",
+  async ({registerData,uniqueId}, thunkAPI) => {
+    try {
+      const res = await axios.post(`${baseURL}/user/register-setup-card/${uniqueId}`, registerData);
+      return res?.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(generateMessage(error, "Login Error"));
+    }
+  }
+);
+
 export const hydrateAuth = createAsyncThunk("auth/hydrate", async () => {
   const token = localStorage.getItem("accessToken");
   if (!token) return null;
@@ -89,6 +101,19 @@ const UserSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action?.payload;
+      })
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(register.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

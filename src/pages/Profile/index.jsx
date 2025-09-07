@@ -4,7 +4,7 @@ import ContactInfo from "./components/ContactInfo";
 import Links from "./components/Links";
 import SEO from "../../SEO";
 import { useTranslation } from "react-i18next";
-import { useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { updatePageChecker } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ const Profile = () => {
   const location = useLocation();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { updatedPage } = useSelector((state) => state.updatePage);
   const { isSuccess, isError, message, data } = useSelector(
     (state) => state.profile
@@ -37,6 +38,15 @@ const Profile = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    if(isPublicProfile && data){
+      if(data?.userInfo?.status === "SETUP"){
+        navigate(`/auth/register/${id}`);
+      }
+    }
+  },[navigate,isPublicProfile,data,id]);
+
+
+  useEffect(() => {
     if (isPublicProfile && id) {
       setCardId(id);
     }
@@ -44,19 +54,15 @@ const Profile = () => {
 
   useEffect(() => {
     if (isPublicProfile && !userCardId) return;
-    const controller = new AbortController();
 
     if (isPublicProfile) {
       dispatch(
-        getOtherProfileData({ cardId: userCardId, signal: controller.signal })
+        getOtherProfileData({ cardId: userCardId })
       );
     } else {
-      dispatch(getProfileData({ cardId, signal: controller.signal }));
+      
+      dispatch(getProfileData({ cardId }));
     }
-
-    return () => {
-      controller.abort();
-    };
   }, [cardId, dispatch, userCardId, isPublicProfile]);
 
   const handleProfileDataUpdate = async (updatedData) => {

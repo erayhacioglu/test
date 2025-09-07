@@ -26,20 +26,13 @@ export const getProfileData = createAsyncThunk(
 
 export const getOtherProfileData = createAsyncThunk(
   "other-profile-management/get-profile/${cardId}",
-  async ({ cardId, signal }, { rejectWithValue }) => {
+  async ({ cardId }, { rejectWithValue }) => {
     try {
       const response = await Axios.get(
-        `/other-profile-management/get-profile/${cardId}`,
-        {
-          signal,
-        }
+        `/other-profile-management/get-profile/${cardId}`
       );
       return response.data;
     } catch (error) {
-      if (error.code === "ERR_CANCELED" || error.name === "CanceledError") {
-        return rejectWithValue("İstek iptal edildi");
-      }
-
       if (!error.response) throw error;
 
       return rejectWithValue(error.response.data?.message || "Bir hata oluştu");
@@ -49,11 +42,11 @@ export const getOtherProfileData = createAsyncThunk(
 
 export const updateProfileData = createAsyncThunk(
   "profile-management/update-personel-information",
-  async (updatedData , { rejectWithValue }) => {
+  async (updatedData, { rejectWithValue }) => {
     try {
       const response = await Axios.post(
         `/profile-management/update-personel-information`,
-        updatedData,
+        updatedData
       );
       return response.data;
     } catch (error) {
@@ -69,14 +62,14 @@ const initialState = {
   isSuccess: false,
   isError: false,
   message: "",
-  data: null
+  data: null,
 };
 
 const ProfileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    setProfileData(state,action){
+    setProfileData(state, action) {
       state.data = action.payload;
     },
     resetProfile(state) {
@@ -122,7 +115,7 @@ const ProfileSlice = createSlice({
       .addCase(updateProfileData.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateProfileData.fulfilled, (state,action) => {
+      .addCase(updateProfileData.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.message = action.payload;
@@ -133,9 +126,9 @@ const ProfileSlice = createSlice({
         state.isError = true;
         state.message = action.payload || "Beklenmeyen Bir Hata Oluştu";
         state.data = null;
-      })
+      });
   },
 });
 
-export const { setProfileData,resetProfile } = ProfileSlice.actions;
+export const { setProfileData, resetProfile } = ProfileSlice.actions;
 export default ProfileSlice.reducer;

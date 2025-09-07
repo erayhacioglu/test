@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 
 import ProtectedRoute from "./guards/ProtectedRoute";
 import GuestRoute from "./guards/GuestRoute";
+import Register from "../pages/Auth/Register";
 
 // Fallback Loader
 // import PageLoader from "./components/PageLoader";
@@ -31,6 +32,7 @@ const AppRouter = () => {
           {/* Auth Sayfaları */}
           <Route path="/auth" element={<AuthLayout />}>
             <Route path="login" element={<Login />} />
+            <Route path="register/:uniqueId" element={<Register />} />
           </Route>
         </Route>
 
