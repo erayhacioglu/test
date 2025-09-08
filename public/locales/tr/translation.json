@@ -1,68 +1,99 @@
 {
-    "profilePage":{
-        "metaTitle":"Profil",
-        "metaDescription":"Profil Test",
-        "metaKeywords":"test1 test2 test3",
-        "personalInfo":{
-            "pageTitle":"Kişisel Bilgiler",
-            "name":"Ad",
-            "surname":"Soyad",
-            "title":"Ünvan"
-        },
-        "contactInfo":{
-            "pageTitle":"İletişim Bilgileri"
-        },
-        "links":{
-            "pageTitle":"Linkler"
-        }
+  "profilePage": {
+    "metaTitle": "Profil",
+    "metaDescription": "Profil Test",
+    "metaKeywords": "test1 test2 test3",
+    "personalInfo": {
+      "pageTitle": "Kişisel Bilgiler",
+      "name": "Ad",
+      "surname": "Soyad",
+      "title": "Ünvan"
     },
-    "socialMediaPage":{
-        "metaTitle":"Sosyal Medya",
-        "metaDescription":"Sosyal Medya Test",
-        "metaKeywords":"test1 test2 test3",
-        "pageTitle":"Sosyal Medya"
+    "contactInfo": {
+      "pageTitle": "İletişim Bilgileri"
     },
-    "companyPage":{
-        "metaTitle":"Şirket",
-        "metaDescription":"Şirket Test",
-        "metaKeywords":"test1 test2 test3",
-        "companyInfo":{
-            "pageTitle":"Şirket Bilgileri",
-            "name":"Şirket Adı",
-            "taxNo":"Vergi Numarası",
-            "taxBody":"Vergi Adresi",
-            "address":"Adres",
-            "addCompanyInfoButton":"Şirket Ekle"
-        },
-        "bankInfo":{
-            "pageTitle":"Banka Bilgileri",
-            "bankName":"Banka Adı",
-            "iban":"İban",
-            "accountHolder":"Hesap Sahibi",
-            "addBankInfoButton":"Banka Ekle"
-        }
-    },
-    "marketingAssetsPage":{
-        "metaTitle":"Kataloglar",
-        "metaDescription":"Kataloglar Test",
-        "metaKeywords":"test1 test2 test3",
-        "pageTitle":"Kataloglar",
-        "addMarketingAssetsButton":"Döküman Ekle",
-        "marketingAssetsModalCoverPhotoButtonText":"Kapak Fotoğrafı Ekle",
-        "marketingAssetsModalPdfButtonText":"Pdf Ekle",
-        "marketingAssetsModalTitle":"Döküman Oluşturmak İçin Bilgileri Giriniz",
-        "marketingAssetsModalLabel":"Başlık"
-    },
-    "menu":{
-        "profile":"Profil",
-        "socialMedia":"Sosyal Medya",
-        "company":"Şirket",
-        "marketingAssets":"Katalog"
-    },
-    "buttons":{
-        "editButtonText":"Düzenle",
-        "createQrButtonText":"QR Oluştur",
-        "submitButtonText":"Kaydet",
-        "cancelButtonText":"İptal"
+    "links": {
+      "pageTitle": "Linkler"
     }
+  },
+  "socialMediaPage": {
+    "metaTitle": "Sosyal Medya",
+    "metaDescription": "Sosyal Medya Test",
+    "metaKeywords": "test1 test2 test3",
+    "pageTitle": "Sosyal Medya"
+  },
+  "companyPage": {
+    "metaTitle": "Şirket",
+    "metaDescription": "Şirket Test",
+    "metaKeywords": "test1 test2 test3",
+    "companyInfo": {
+      "pageTitle": "Şirket Bilgileri",
+      "name": "Şirket Adı",
+      "taxNo": "Vergi Numarası",
+      "taxBody": "Vergi Adresi",
+      "address": "Adres",
+      "addCompanyInfoButton": "Şirket Ekle"
+    },
+    "bankInfo": {
+      "pageTitle": "Banka Bilgileri",
+      "bankName": "Banka Adı",
+      "iban": "İban",
+      "accountHolder": "Hesap Sahibi",
+      "addBankInfoButton": "Banka Ekle"
+    }
+  },
+  "marketingAssetsPage": {
+    "metaTitle": "Kataloglar",
+    "metaDescription": "Kataloglar Test",
+    "metaKeywords": "test1 test2 test3",
+    "pageTitle": "Kataloglar",
+    "addMarketingAssetsButton": "Döküman Ekle",
+    "marketingAssetsModalCoverPhotoButtonText": "Kapak Fotoğrafı Ekle",
+    "marketingAssetsModalPdfButtonText": "Pdf Ekle",
+    "marketingAssetsModalTitle": "Döküman Oluşturmak İçin Bilgileri Giriniz",
+    "marketingAssetsModalLabel": "Başlık"
+  },
+  "menu": {
+    "profile": "Profil",
+    "socialMedia": "Sosyal Medya",
+    "company": "Şirket",
+    "marketingAssets": "Katalog"
+  },
+  "buttons": {
+    "editButtonText": "Düzenle",
+    "createQrButtonText": "QR Oluştur",
+    "submitButtonText": "Kaydet",
+    "cancelButtonText": "İptal"
+  },
+  "auth": {
+    "login": {
+      "title": "Giriş Yap",
+      "subtitle": "NFC Dijital Kart Paneline Hoşgeldiniz",
+      "emailLabel": "E-Posta",
+      "passwordLabel": "Şifre",
+      "forgotPasswordText": "Şifremi Unuttum?",
+      "submitText": "Giriş Yap",
+      "validation": {
+        "required_email": "E-Posta alanı boş bırakılamaz",
+        "invalid_email": "Geçersiz e-posta",
+        "required_password": "Şifre alanı boş bırakılamaz"
+      }
+    },
+    "register": {
+      "title": "Kayıt Ol",
+      "nameLabel": "Ad",
+      "surnameLabel": "Soyad",
+      "emailLabel": "E-Posta",
+      "passwordLabel": "Şifre",
+      "submitText": "Kayıt Ol",
+      "successMessage":"Kart tanımlama işleminiz başarıyla tamamlanmıştır. Artık hesabınıza giriş yapabilirsiniz.",
+      "validation": {
+        "required_name": "Ad alanı boş bırakılamaz",
+        "required_surname": "Soyad alanı boş bırakılamaz",
+        "required_email": "E-Posta alanı boş bırakılamaz",
+        "invalid_email": "Geçersiz e-posta",
+        "required_password": "Şifre alanı boş bırakılamaz"
+      }
+    }
+  }
 }

@@ -25,7 +25,7 @@ const MarketingAssets = lazy(() => import("../pages/MarketingAssets"));
 
 const AppRouter = () => {
   return (
-    <Suspense fallback={<div>Yükleniyor...</div>}>
+    <Suspense>
       <Routes>
         {/* GUEST ROUTES */}
         <Route element={<GuestRoute />}>

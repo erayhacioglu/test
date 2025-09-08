@@ -1,69 +1,100 @@
 {
-    "profilePage":{
-        "metaTitle":"Profile",
-        "metaDescription":"Profile Test",
-        "metaKeywords":"test1 test2 test3",
-        "personalInfo":{
-            "pageTitle":"Personal Info",
-            "name":"Name",
-            "surname":"Surname",
-            "title":"Title"
-        },
-        "contactInfo":{
-            "pageTitle":"Contact Info"
-        },
-        "links":{
-            "pageTitle":"Links"
-        }
+  "profilePage": {
+    "metaTitle": "Profile",
+    "metaDescription": "Profile Test",
+    "metaKeywords": "test1 test2 test3",
+    "personalInfo": {
+      "pageTitle": "Personal Info",
+      "name": "Name",
+      "surname": "Surname",
+      "title": "Title"
     },
-    "socialMediaPage":{
-        "metaTitle":"Social Media",
-        "metaDescription":"Social Media Test",
-        "metaKeywords":"test1 test2 test3",
-        "pageTitle":"Social Media"
+    "contactInfo": {
+      "pageTitle": "Contact Info"
     },
-    "companyPage":{
-        "metaTitle":"Company",
-        "metaDescription":"Company Test",
-        "metaKeywords":"test1 test2 test3",
-        "companyInfo":{
-            "pageTitle":"Company Info",
-            "name":"Company Name",
-            "taxNo":"Tax No",
-            "taxBody":"Tax Address",
-            "address":"Address",
-            "addCompanyInfoButton":"Add Company"
-        },
-        "bankInfo":{
-            "pageTitle":"Bank Info",
-            "bankName":"Bank Name",
-            "iban":"Iban",
-            "accountHolder":"Account Holder",
-            "addBankInfoButton":"Add Bank"
-        }
-    },
-    "marketingAssetsPage":{
-        "metaTitle":"Marketing Assets",
-        "metaDescription":"Marketing Assets Test",
-        "metaKeywords":"test1 test2 test3",
-        "pageTitle":"Marketing Assets",
-        "addMarketingAssetsButton":"Add Document",
-        "marketingAssetsModalCoverPhotoButtonText":"Add Cover Photo",
-        "marketingAssetsModalPdfButtonText":"Add Pdf",
-        "marketingAssetsModalTitle":"Enter the information to create a document",
-        "marketingAssetsModalLabel":"Title"
-    },
-    "menu":{
-        "profile":"Profile",
-        "socialMedia":"Social Media",
-        "company":"Company",
-        "marketingAssets":"Marketing Assets",
-        "pageTitle":"Marketing Assets"
-    },
-    "buttons":{
-        "editButtonText":"Edit",
-        "createQrButtonText":"Create QR",
-        "submitButtonText":"Save",
-        "cancelButtonText":"Cancel"
+    "links": {
+      "pageTitle": "Links"
     }
+  },
+  "socialMediaPage": {
+    "metaTitle": "Social Media",
+    "metaDescription": "Social Media Test",
+    "metaKeywords": "test1 test2 test3",
+    "pageTitle": "Social Media"
+  },
+  "companyPage": {
+    "metaTitle": "Company",
+    "metaDescription": "Company Test",
+    "metaKeywords": "test1 test2 test3",
+    "companyInfo": {
+      "pageTitle": "Company Info",
+      "name": "Company Name",
+      "taxNo": "Tax No",
+      "taxBody": "Tax Address",
+      "address": "Address",
+      "addCompanyInfoButton": "Add Company"
+    },
+    "bankInfo": {
+      "pageTitle": "Bank Info",
+      "bankName": "Bank Name",
+      "iban": "Iban",
+      "accountHolder": "Account Holder",
+      "addBankInfoButton": "Add Bank"
+    }
+  },
+  "marketingAssetsPage": {
+    "metaTitle": "Marketing Assets",
+    "metaDescription": "Marketing Assets Test",
+    "metaKeywords": "test1 test2 test3",
+    "pageTitle": "Marketing Assets",
+    "addMarketingAssetsButton": "Add Document",
+    "marketingAssetsModalCoverPhotoButtonText": "Add Cover Photo",
+    "marketingAssetsModalPdfButtonText": "Add Pdf",
+    "marketingAssetsModalTitle": "Enter the information to create a document",
+    "marketingAssetsModalLabel": "Title"
+  },
+  "menu": {
+    "profile": "Profile",
+    "socialMedia": "Social Media",
+    "company": "Company",
+    "marketingAssets": "Marketing Assets",
+    "pageTitle": "Marketing Assets"
+  },
+  "buttons": {
+    "editButtonText": "Edit",
+    "createQrButtonText": "Create QR",
+    "submitButtonText": "Save",
+    "cancelButtonText": "Cancel"
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Welcome to the NFC Digital Card Panel",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "forgotPasswordText": "Forgot Password?",
+      "submitText": "Login",
+      "validation": {
+        "required_email": "Email field cannot be empty",
+        "invalid_email": "Invalid email",
+        "required_password": "Password field cannot be empty"
+      }
+    },
+    "register": {
+      "title": "Sign Up",
+      "nameLabel": "First Name",
+      "surnameLabel": "Last Name",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submitText": "Sign Up",
+      "successMessage":"Your card registration has been successfully completed. You may now access your account.",
+      "validation": {
+        "required_name": "First name cannot be empty",
+        "required_surname": "Last name cannot be empty",
+        "required_email": "Email field cannot be empty",
+        "invalid_email": "Invalid email",
+        "required_password": "Password field cannot be empty"
+      }
+    }
+  }
 }
