@@ -118,11 +118,11 @@ const UserHeader = ({ setQrCodeModal }) => {
     if (isPublicProfile) {
       dispatch(
         // getOtherProfileData({ cardId: userCardId, signal: controller.signal })
-        getOtherProfileData({ cardId: userCardId})
+        getOtherProfileData({ cardId: userCardId })
       );
       dispatch(
         // getOtherUserImages({ cardId: userCardId, signal: controller.signal })
-        getOtherUserImages({ cardId: userCardId})
+        getOtherUserImages({ cardId: userCardId })
       );
     } else {
       // dispatch(getProfileData({ cardId, signal: controller.signal }));
@@ -207,10 +207,11 @@ const UserHeader = ({ setQrCodeModal }) => {
         </div>
         <div className="user_info">
           <h2 className="fullname">
-            {profileState?.data?.userInfo?.firstName +
-              " " +
-              profileState?.data?.userInfo?.lastName}
+            {`${profileState?.data?.userInfo?.firstName ?? ""} ${
+              profileState?.data?.userInfo?.lastName ?? ""
+            }`.trim()}
           </h2>
+
           <p className="job">{profileState?.data?.userInfo?.bio}</p>
         </div>
       </div>

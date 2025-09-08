@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllThemes, setTheme } from "../../redux/slices/ThemeSlice";
+import { LogOut } from "lucide-react";
 
 const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
   const swipeHandlers = useSwipeable({
@@ -33,7 +34,7 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
   const { user } = useSelector((state) => state.user);
   const [activeMenu, setActiveMenu] = useState([]);
 
-  console.log('themes', themes)
+  console.log("themes", themes);
 
   const handleClickDropdownMenu = (item) => {
     if (item?.hasChildren) {
@@ -47,11 +48,16 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
 
   useEffect(() => {
     const controller = new AbortController();
-    dispatch(getAllThemes({signal: controller.signal }));
+    dispatch(getAllThemes({ signal: controller.signal }));
     return () => {
       controller.abort();
     };
-  },[dispatch]);
+  }, [dispatch]);
+
+  const handleLogout = () => {
+    localStorage.clear()
+    window.location.reload();
+  }
 
   return (
     <div {...swipeHandlers}>
@@ -65,76 +71,96 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
         <div className="side_menu_logo">
           <img src={logo} alt="" className="logo_img" />
         </div>
-        {
-          user ? <>
-          <div className="side_menu_user">
-          <div className="side_menu_avatar">
-            <img src={avatar} alt="" className="side_menu_avatar_img" />
-          </div>
-          <div className="side_menu_info">
-            <h2 className="side_menu_info_fullname">Eray Hacıoğlu</h2>
-            <h5 className="side_menu_info_title">Frontend Developer</h5>
-          </div>
-        </div>
-        <div className="side_menu_content">
-          {menuData &&
-            menuData?.map((item, idx) => (
-              <div className="menu_item" key={idx}>
-                <div
-                  className="menu_label_container"
-                  onClick={() => handleClickDropdownMenu(item)}
-                >
-                  <div className="menu_label">
-                    <img src={item?.icon} alt="" className="menu_item_icon" />
-                    <span className="menu_label_text">{item?.label}</span>
-                  </div>
-                  <div className="menu_item_arrow">
-                    {item?.hasChildren ? (
-                      <>
-                        {activeMenu === item?.key ? (
-                          <FaChevronUp size={16} />
+        {user ? (
+          <>
+            <div className="side_menu_user">
+              <div className="side_menu_avatar">
+                <img src={avatar} alt="" className="side_menu_avatar_img" />
+              </div>
+              <div className="side_menu_info">
+                <h2 className="side_menu_info_fullname">Eray Hacıoğlu</h2>
+                <h5 className="side_menu_info_title">Frontend Developer</h5>
+              </div>
+            </div>
+            <div className="side_menu_content">
+              {menuData &&
+                menuData?.map((item, idx) => (
+                  <div className="menu_item" key={idx}>
+                    <div
+                      className="menu_label_container"
+                      onClick={() => handleClickDropdownMenu(item)}
+                    >
+                      <div className="menu_label">
+                        <img
+                          src={item?.icon}
+                          alt=""
+                          className="menu_item_icon"
+                        />
+                        <span className="menu_label_text">{item?.label}</span>
+                      </div>
+                      <div className="menu_item_arrow">
+                        {item?.hasChildren ? (
+                          <>
+                            {activeMenu === item?.key ? (
+                              <FaChevronUp size={16} />
+                            ) : (
+                              <FaChevronDown size={16} />
+                            )}
+                          </>
                         ) : (
-                          <FaChevronDown size={16} />
+                          <FaChevronRight size={16} />
                         )}
-                      </>
-                    ) : (
-                      <FaChevronRight size={16} />
+                      </div>
+                    </div>
+
+                    {item?.hasChildren && activeMenu === item?.key && (
+                      <div className="menu_children">
+                        {item?.key === "themes"
+                          ? themes &&
+                            themes?.length > 0 &&
+                            themes?.map((el, key) => (
+                              <div className={`theme_option`} key={key}>
+                                <div
+                                  className="color_circle"
+                                  style={{ backgroundColor: el?.primaryColor }}
+                                ></div>
+                                <span style={{ textTransform: "capitalize" }}>
+                                  {el?.name}
+                                </span>
+                              </div>
+                            ))
+                          : item?.children?.map((el, key) => (
+                              <Link
+                                to={el?.path}
+                                key={key}
+                                className="menu_children_link"
+                              >
+                                {el?.label}
+                              </Link>
+                            ))}
+                      </div>
                     )}
                   </div>
-                </div>
+                ))}
+            </div>
+          </>
+        ) : (
+          "BURASI"
+        )}
 
-                {item?.hasChildren && activeMenu === item?.key && (
-                  <div className="menu_children">
-                    {item?.key === "themes"
-                      ? themes && themes?.length > 0 && themes?.map((el, key) => (
-                          <div
-                            className={`theme_option`}
-                            key={key}
-                          >
-                            <div
-                              className="color_circle"
-                              style={{ backgroundColor: el?.primaryColor }}
-                            ></div>
-                            <span style={{textTransform:"capitalize"}}>{el?.name}</span>
-                          </div>
-                        ))
-                      : item?.children?.map((el, key) => (
-                          <Link
-                            to={el?.path}
-                            key={key}
-                            className="menu_children_link"
-                          >
-                            {el?.label}
-                          </Link>
-                        ))}
-                  </div>
-                )}
-              </div>
-            ))}
-        </div>
-          
-          </>:"BURASI"
-        }
+        {user && (
+          <div className="side_menu_footer">
+            <button
+              type="button"
+              className="footer_action danger"
+              onClick={handleLogout}
+            >
+              <LogOut size={16} />
+              <span>Çıkış Yap</span>
+            </button>
+          </div>
+        )}
+
         <div
           className="side_menu_mobile_button"
           onClick={() => setShowSideMenu((prev) => !prev)}

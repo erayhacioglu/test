@@ -31,36 +31,45 @@ const SocialMedia = () => {
   const dispatch = useDispatch();
   const { updatedPage } = useSelector((state) => state.updatePage);
 
-  const { isLoading,isSuccess, isError, message, data, addedSocialMediaPlatforms } =
-    useSelector((state) => state.socialMedia);
+  const {
+    isLoading,
+    isSuccess,
+    isError,
+    message,
+    data,
+    addedSocialMediaPlatforms,
+  } = useSelector((state) => state.socialMedia);
 
-    console.log('isLoading', isLoading)
-
-  const {user} = useSelector(state => state.user); 
+  const { user } = useSelector((state) => state.user);
 
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
 
-  const cardId = user?.cardId
-  
-  const isPublicProfile = location.pathname.startsWith("/user/");
-  const [userCardId,setCardId] = useState(null);
+  const cardId = user?.cardId;
 
-  const {id} = useParams();
+  const isPublicProfile = location.pathname.startsWith("/user/");
+  const [userCardId, setCardId] = useState(null);
+
+  const { id } = useParams();
 
   useEffect(() => {
-    if(isPublicProfile && id){
+    if (isPublicProfile && id) {
       setCardId(id);
     }
-  },[isPublicProfile,id]);
+  }, [isPublicProfile, id]);
 
   useEffect(() => {
     if (isPublicProfile && !userCardId) return;
     const controller = new AbortController();
 
-    if(isPublicProfile){
+    if (isPublicProfile) {
       dispatch(getSocialMediaPlatformsData({ signal: controller.signal }));
-      dispatch(getOtherSocialMediaData({ cardId:userCardId, signal: controller.signal }));
-    }else{
+      dispatch(
+        getOtherSocialMediaData({
+          cardId: userCardId,
+          signal: controller.signal,
+        })
+      );
+    } else {
       dispatch(getSocialMediaData({ cardId, signal: controller.signal }));
       dispatch(getSocialMediaPlatformsData({ signal: controller.signal }));
     }
@@ -68,11 +77,12 @@ const SocialMedia = () => {
     return () => {
       controller.abort();
     };
-  }, [cardId, dispatch,userCardId,isPublicProfile]);
+  }, [cardId, dispatch, userCardId, isPublicProfile]);
 
   const handleUpdateSocialMedia = async (cardId, updatedData, draftData) => {
     const mergedData = [...updatedData, ...draftData];
-    const res = await dispatch(updateSocialMedia({ cardId, mergedData }));
+    const res = await dispatch(updateSocialMedia({ cardId, updatedData: mergedData }));
+    // const res = await dispatch(updateSocialMedia({ cardId, mergedData }));
     if (res?.meta?.requestStatus === "fulfilled") {
       dispatch(getSocialMediaData({ cardId }));
       dispatch(getSocialMediaPlatformsData({ cardId }));
@@ -91,16 +101,15 @@ const SocialMedia = () => {
     return () => dispatch(resetSocialMedia());
   }, [dispatch, isSuccess, isError, message]);
 
-  if(isLoading){
-    console.log('BURASI')
-    return(
+  if (isLoading) {
+    return (
       <div className="page_container">
         <PageTitle title={t("socialMediaPage.pageTitle")} />
         <div
           className="section_container"
           style={{ paddingRight: `${width > 768 ? 0 : "35px"}` }}
         >
-          <SocialMediaSkeleton count={8}/> 
+          <SocialMediaSkeleton count={8} />
         </div>
       </div>
     );

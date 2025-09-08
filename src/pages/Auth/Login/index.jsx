@@ -30,9 +30,11 @@ const customLoginMessage = {
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { isLoading, isSuccess, isError, message, user } = useSelector(
+  const { isLoading, isError, message } = useSelector(
     (state) => state.user
   );
+
+
   const location = useLocation;
 
   const from = location.state?.from?.pathname || "/";
@@ -48,13 +50,15 @@ const Login = () => {
 
   const { errors, values, handleSubmit, touched, handleBlur, handleChange } =
     useFormik({
+      enableReinitialize: true,
       initialValues: {
         email: emailFromUrl || "",
         password: "",
       },
       validationSchema: getValidationSchema,
       onSubmit: async (values) => {
-        if (values?.email && values?.password) {
+        
+          if (values?.email && values?.password) {
           const loginRes = await dispatch(login(values)).unwrap();
           if (loginRes?.accessToken) {
             toast.success(
@@ -71,10 +75,14 @@ const Login = () => {
     if (isError && message) {
       toast.error(message);
     }
+  }, [isError, message]);
+
+  useEffect(() => {
     return () => {
       dispatch(userSliceReset());
     };
-  }, [dispatch, isSuccess, isError, message, navigate, i18n?.language, user]);
+  }, [dispatch]);
+
 
   return (
     <div className="auth_container">

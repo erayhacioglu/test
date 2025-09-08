@@ -3,6 +3,7 @@ import saves from "../../assets/img/icons/saves.svg";
 import visitors from "../../assets/img/icons/visitors.svg";
 import themes from "../../assets/img/icons/themes.svg";
 import settings from "../../assets/img/icons/settings.svg";
+import {LogOut} from "lucide-react";
 
 const menuData = [
   {
@@ -87,7 +88,7 @@ const menuData = [
     icon: settings,
     label: "Settings",
     hasChildren: false,
-  },
+  }
 ];
 
 export default menuData;

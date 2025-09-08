@@ -89,6 +89,7 @@ export const updateSocialMedia = createAsyncThunk(
 
 const initialState = {
   isLoading: false,
+  loadingCount: 0,
   isSuccess: false,
   isError: false,
   message: "",
@@ -118,14 +119,17 @@ const SocialMediaSlice = createSlice({
     builder
       .addCase(getSocialMediaData.pending, (state) => {
         state.isLoading = true;
+        state.loadingCount += 1;
       })
       .addCase(getSocialMediaData.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.loadingCount = Math.max(0, state.loadingCount - 1);
+        state.isLoading = state.loadingCount > 0;
         state.isSuccess = true;
         state.data = action.payload;
       })
       .addCase(getSocialMediaData.rejected, (state, action) => {
-        state.isLoading = false;
+        state.loadingCount = Math.max(0, state.loadingCount - 1);
+        state.isLoading = state.loadingCount > 0;
         state.isSuccess = false;
         state.isError = true;
         state.message = action.payload || "Beklenmeyen Bir Hata Oluştu";
@@ -148,14 +152,17 @@ const SocialMediaSlice = createSlice({
       })
       .addCase(getSocialMediaPlatformsData.pending, (state) => {
         state.isLoading = true;
+        state.loadingCount += 1;
       })
       .addCase(getSocialMediaPlatformsData.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.loadingCount = Math.max(0, state.loadingCount - 1);
+        state.isLoading = state.loadingCount > 0;
         state.isSuccess = true;
         state.socialMediaPlatforms = action.payload;
       })
       .addCase(getSocialMediaPlatformsData.rejected, (state, action) => {
-        state.isLoading = false;
+        state.loadingCount = Math.max(0, state.loadingCount - 1);
+        state.isLoading = state.loadingCount > 0;
         state.isSuccess = false;
         state.isError = true;
         state.message = action.payload || "Beklenmeyen Bir Hata Oluştu";
