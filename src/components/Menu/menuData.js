@@ -21,6 +21,19 @@ export const userMenuData = [
   }
 ];
 
+export const interactionData = [
+  {
+    path: "/connections",
+    iconName: "UserSvg",
+    label: "Bağlantılar"
+  },
+  {
+    path: "/contact",
+    iconName: "SocialMediaSvg",
+    label: "İletişim"
+  }
+];
+
 
 export const profileMenuData = [
   {

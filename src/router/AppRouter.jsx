@@ -4,6 +4,8 @@ import { Suspense, lazy } from "react";
 import ProtectedRoute from "./guards/ProtectedRoute";
 import GuestRoute from "./guards/GuestRoute";
 import Register from "../pages/Auth/Register";
+import Contact from "../pages/Interaction/Contact";
+import Connections from "../pages/Interaction/Connections";
 
 // Fallback Loader
 // import PageLoader from "./components/PageLoader";
@@ -57,6 +59,9 @@ const AppRouter = () => {
             <Route path="social-media" element={<SocialMedia />} />
             <Route path="company" element={<Company />} />
             <Route path="marketing-assets" element={<MarketingAssets />} />
+
+            <Route path="connections" element={<Connections />} />
+            <Route path="contact" element={<Contact />} />
 
             {/* <Route path="forbidden" element={<Forbidden />} /> */}
           </Route>

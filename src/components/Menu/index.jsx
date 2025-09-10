@@ -1,6 +1,6 @@
 import { Link, useLocation, useParams } from "react-router";
 import "./menu.scss";
-import { userMenuData, profileMenuData } from "./menuData";
+// import { userMenuData, profileMenuData } from "./menuData";
 
 import UserSvg from "../Icons/UserSvg";
 import SocialMediaSvg from "../Icons/SocialMediaSvg";
@@ -15,7 +15,7 @@ const iconData = {
   MarketingAssetsSvg,
 };
 
-const Menu = () => {
+const Menu = ({userMenuData,profileMenuData}) => {
   const location = useLocation();
   const params = useParams();
   const { t } = useTranslation();
