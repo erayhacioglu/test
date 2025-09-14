@@ -24,11 +24,8 @@ const menuData = [
     hasChildren: true,
     key: "visitors",
     children: [
-      { label: "Visitors 1",path:"/" },
-      { label: "Visitors 2",path:"/" },
-      { label: "Visitors 3" ,path:"/"},
-      { label: "Visitors 4",path:"/" },
-      { label: "Visitors 5",path:"/" },
+      { label: "Bağlantılar",path:"/connections" },
+      { label: "İletişim",path:"/contact" }
     ],
   },
   {

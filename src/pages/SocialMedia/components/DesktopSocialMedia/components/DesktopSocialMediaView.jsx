@@ -2,11 +2,13 @@ import { useState, useRef, useEffect } from "react";
 import { FaChevronDown, FaUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { generateSocialMediaIcon } from "../../../../../helpers";
+import SocialMediaModal from "../../SocialMediaModal";
 
 const DesktopSocialMediaView = () => {
   const [openDropdownMenu, setOpenDropdownMenu] = useState("");
+  const [socialMediaModal,setSocialMediaModal] = useState(false);
   const dropdownRefs = useRef({});
-  const {isLoading,data,socialMediaPlatforms} = useSelector(state => state.socialMedia);
+  const {data,socialMediaPlatforms} = useSelector(state => state.socialMedia);
 
   const handleToggleDropdownMenu = (item) => {
     setOpenDropdownMenu((prev) => (prev === item ? "" : item));
@@ -33,13 +35,15 @@ const DesktopSocialMediaView = () => {
 );
 
   return (
-    <div className="social_media_view_container">
+    <>
+    <div className="social_media_view_container bg-danger">
       {filteredPlatforms &&
         filteredPlatforms.map((item, idx) => (
           <div
-            className="social_media_view_item"
+            className="social_media_view_item bg-success"
             key={idx}
             ref={(el) => (dropdownRefs.current[item?.displayName] = el)}
+            onClick={() => setSocialMediaModal(true)}
           >
             <div
               className="social_media_view_label"
@@ -80,6 +84,8 @@ const DesktopSocialMediaView = () => {
           </div>
         ))}
     </div>
+    <SocialMediaModal socialMediaModal={socialMediaModal} setSocialMediaModal={setSocialMediaModal}/>
+    </>
   );
 };
 

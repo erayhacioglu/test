@@ -1,0 +1,37 @@
+/* social_media_modal.scss */
+
+/* Bu sınıf Modal'ın .modal-content elemanına basılıyor */
+.social_media_modal {
+  background: var(--primaryColor) !important;
+  color: var(--textColor) !important;
+
+  .modal-header {
+    border-color: var(--borderColor) !important;
+    padding-bottom: 7.5px !important;
+
+    .btn-close {
+      padding: 0 !important;
+    }
+  }
+
+  .modal-body {
+    padding: 20px 10px !important;
+  }
+
+  .modal-footer {
+    border-color: var(--borderColor) !important;
+    padding: 5px 10px !important;
+  }
+
+  .modal_footer_button_groups {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+  }
+}
+
+/* (Opsiyonel) dialog/backdrop’a sınıf verdiysen onları da özelleştirebilirsin
+.social_media_dialog { max-width: 600px; }
+.social_media_backdrop { backdrop-filter: blur(2px); }
+*/

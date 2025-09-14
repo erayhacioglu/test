@@ -1,6 +1,6 @@
 import { Link, useLocation, useParams } from "react-router";
 import "./menu.scss";
-// import { userMenuData, profileMenuData } from "./menuData";
+import { profileMenuData } from "./menuData";
 
 import UserSvg from "../Icons/UserSvg";
 import SocialMediaSvg from "../Icons/SocialMediaSvg";
@@ -15,7 +15,7 @@ const iconData = {
   MarketingAssetsSvg,
 };
 
-const Menu = ({userMenuData,profileMenuData}) => {
+const Menu = ({userMenuData=[]}) => {
   const location = useLocation();
   const params = useParams();
   const { t } = useTranslation();
@@ -24,9 +24,13 @@ const Menu = ({userMenuData,profileMenuData}) => {
 
   const isActive = (fullPath) => location.pathname === fullPath ? "active" : "";
 
+  const menuItems = isPublicProfile
+    ? (profileMenuData.length ? profileMenuData : userMenuData)
+    : userMenuData;
+
   return (
     <nav className="menu_container">
-      {(isPublicProfile ? profileMenuData : userMenuData).map(({ path, iconName, label }) => {
+      {menuItems?.map(({ path, iconName, label }) => {
         const IconComponent = iconData[iconName];
 
         // Public profilde dinamik path oluştur

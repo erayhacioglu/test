@@ -7,7 +7,7 @@ import Menu from "../../components/Menu";
 import SideMenu from "../../components/SideMenu";
 import QrCodeModal from "../../components/QrCodeModal";
 import { useEffect, useMemo, useState } from "react";
-import { userMenuData, interactionData, profileMenuData } from "../../components/Menu/menuData";
+import { userMenuData, interactionData } from "../../components/Menu/menuData";
 
 const UserLayout = () => {
   const [showSideMenu, setShowSideMenu] = useState(false);
@@ -61,7 +61,7 @@ const UserLayout = () => {
       <div className="user_layout_container">
         <UserBackground />
         <UserHeader setQrCodeModal={setQrCodeModal} />
-        <Menu userMenuData={selectedMenuData} profileMenuData={profileMenuData} />
+        <Menu userMenuData={selectedMenuData} />
         <Outlet />
       </div>
       <QrCodeModal qrCodeModal={qrCodeModal} setQrCodeModal={setQrCodeModal} />
