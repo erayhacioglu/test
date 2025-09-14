@@ -1,90 +1,58 @@
-import { useState, useRef, useEffect } from "react";
-import { FaChevronDown, FaUser } from "react-icons/fa6";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { generateSocialMediaIcon } from "../../../../../helpers";
 import SocialMediaModal from "../../SocialMediaModal";
+import { Share2 } from "lucide-react";
 
 const DesktopSocialMediaView = () => {
-  const [openDropdownMenu, setOpenDropdownMenu] = useState("");
-  const [socialMediaModal,setSocialMediaModal] = useState(false);
-  const dropdownRefs = useRef({});
-  const {data,socialMediaPlatforms} = useSelector(state => state.socialMedia);
+  const [socialMediaModal, setSocialMediaModal] = useState(false);
+  const [selectedSocialMedia, setSelectedSocialMedia] = useState(false);
+  const { data, socialMediaPlatforms } = useSelector(
+    (state) => state.socialMedia
+  );
 
-  const handleToggleDropdownMenu = (item) => {
-    setOpenDropdownMenu((prev) => (prev === item ? "" : item));
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const isInsideAnyDropdown = Object.values(dropdownRefs.current).some(
-        (ref) => ref && ref.contains(event.target)
-      );
-      if (!isInsideAnyDropdown) {
-        setOpenDropdownMenu("");
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const filteredPlatforms = data && socialMediaPlatforms && socialMediaPlatforms.filter((item) =>
-  data?.some((d) => d.platform === item.name)
-);
+  const filteredPlatforms =
+    data &&
+    socialMediaPlatforms &&
+    socialMediaPlatforms.filter((item) =>
+      data?.some((d) => d.platform === item.name)
+    );
 
   return (
     <>
-    <div className="social_media_view_container bg-danger">
-      {filteredPlatforms &&
-        filteredPlatforms.map((item, idx) => (
-          <div
-            className="social_media_view_item bg-success"
-            key={idx}
-            ref={(el) => (dropdownRefs.current[item?.displayName] = el)}
-            onClick={() => setSocialMediaModal(true)}
-          >
+      <div className="social_media_view_container">
+        {filteredPlatforms &&
+          filteredPlatforms.map((item, idx) => (
             <div
-              className="social_media_view_label"
-              onClick={() => handleToggleDropdownMenu(item?.displayName)}
+              className="social_media_view_item"
+              key={idx}
+              onClick={() => {
+                setSocialMediaModal(true);
+                setSelectedSocialMedia(item);
+              }}
             >
-              <img
-                src={generateSocialMediaIcon(item?.name?.toLowerCase())}
-                alt={item?.displayName}
-                className="social_media_view_icon"
-              />
-              <span className="social_media_view_text">{item?.displayName}</span>
-            </div>
+              <div className="social_media_view_label">
+                <img
+                  src={generateSocialMediaIcon(item?.name?.toLowerCase())}
+                  alt={item?.displayName}
+                  className="social_media_view_icon"
+                />
+                <span className="social_media_view_text">
+                  {item?.displayName}
+                </span>
+              </div>
               <span className="d-flex align-items-center">
-                <FaChevronDown />
+                <Share2 size={20} />
               </span>
-
-            <div
-              className={`social_media_dropdown_menu ${
-                openDropdownMenu === item?.displayName ? "open" : ""
-              }`}
-            >
-              {
-                data && data?.filter(el => el.platform === item?.name)?.map((el,i) => (
-                  <a href={el?.usernameOrUrl} target="_blank" className="social_media_dropdown_menu_item" key={i}>
-                  <div className="social_media_dropdown_menu_label">
-                    <FaUser />
-                    <span className="social_media_dropdown_menu_text">
-                      {el?.usernameOrUrl}
-                    </span>
-                  </div>
-                  <span className="d-flex align-items-center">
-                    <FaChevronDown />
-                  </span>
-                </a>
-                ))
-              }
             </div>
-          </div>
-        ))}
-    </div>
-    <SocialMediaModal socialMediaModal={socialMediaModal} setSocialMediaModal={setSocialMediaModal}/>
+          ))}
+      </div>
+      <SocialMediaModal
+        socialMediaModal={socialMediaModal}
+        setSocialMediaModal={setSocialMediaModal}
+        selectedSocialMedia={selectedSocialMedia}
+        data={data}
+      />
     </>
   );
 };

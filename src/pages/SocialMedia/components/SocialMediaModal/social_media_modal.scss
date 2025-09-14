@@ -1,21 +1,36 @@
-/* social_media_modal.scss */
-
-/* Bu sınıf Modal'ın .modal-content elemanına basılıyor */
 .social_media_modal {
-  background: var(--primaryColor) !important;
+  background: var(--backgroundColor) !important;
   color: var(--textColor) !important;
+  border-radius: 10px;
 
   .modal-header {
     border-color: var(--borderColor) !important;
-    padding-bottom: 7.5px !important;
+    padding: 10px 15px !important; 
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    border-bottom: none;
+
+    .modal-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--textColor);
+    }
 
     .btn-close {
-      padding: 0 !important;
+      filter: invert(1);
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 
   .modal-body {
-    padding: 20px 10px !important;
+    padding: 16px 12px !important;
+    font-size: 0.95rem;
   }
 
   .modal-footer {
@@ -31,7 +46,35 @@
   }
 }
 
-/* (Opsiyonel) dialog/backdrop’a sınıf verdiysen onları da özelleştirebilirsin
-.social_media_dialog { max-width: 600px; }
-.social_media_backdrop { backdrop-filter: blur(2px); }
-*/
+
+.social_media_modal_item_container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .social_media_modal_item{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--primaryColor);
+        border-radius: 8px;
+        padding: 0 10px;
+        min-height: 50px;
+        .social_media_modal_item_text{
+            font-size: var(--textColor);
+            font-weight: 500;
+        }
+        .social_media_modal_item_controls{
+            display: flex;
+            gap: 15px;
+            .social_media_modal_item_btn{
+                background-color: var(--borderColor);
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--textColor);
+                cursor: pointer;
+            }
+        }
+    }
+}
