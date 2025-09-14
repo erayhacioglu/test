@@ -34,7 +34,7 @@ import Axios from "../../../api/axiosInstance";
 import toast from "react-hot-toast";
 import UserHeaderSkeleton from "./components/UserHeaderSkeleton";
 
-const UserHeader = ({ setQrCodeModal }) => {
+const UserHeader = ({ setQrCodeModal, setContactModal }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { updatedPage } = useSelector((state) => state.updatePage);
@@ -220,7 +220,10 @@ const UserHeader = ({ setQrCodeModal }) => {
           <>
             {(!user?.card?.company ||
               (user?.card?.company && user?.card?.company?.showConnect)) && (
-              <button className="user_action_button">
+              <button
+                className="user_action_button"
+                onClick={() => setContactModal(true)}
+              >
                 <img src={editIcon} alt="Düzenle ikon" />
                 <span className="user_action_button_text">Bağlantı</span>
               </button>

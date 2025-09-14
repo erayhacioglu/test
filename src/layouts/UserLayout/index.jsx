@@ -60,11 +60,11 @@ const UserLayout = () => {
       <Header setShowSideMenu={setShowSideMenu} />
       <div className="user_layout_container">
         <UserBackground />
-        <UserHeader setQrCodeModal={setQrCodeModal} />
+        <UserHeader setQrCodeModal={setQrCodeModal}/>
         <Menu userMenuData={selectedMenuData} />
         <Outlet />
       </div>
-      <QrCodeModal qrCodeModal={qrCodeModal} setQrCodeModal={setQrCodeModal} />
+      <QrCodeModal qrCodeModal={qrCodeModal} setQrCodeModal={setQrCodeModal} />  
     </>
   );
 };
