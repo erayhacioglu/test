@@ -4,6 +4,7 @@ import Axios from '../../api/axiosInstance';
 export const getUserImages = createAsyncThunk(
   "card/user-images/${cardId}",
   async ({ cardId, signal }, { rejectWithValue }) => {
+    console.log('userId', cardId)
     try {
       const response = await Axios.get(
         `/card/user-images/${cardId}`,
@@ -35,6 +36,41 @@ export const getOtherUserImages = createAsyncThunk(
         }
       );
       return response.data;
+    } catch (error) {
+      if (error.code === "ERR_CANCELED" || error.name === "CanceledError") {
+        return rejectWithValue("İstek iptal edildi");
+      }
+
+      if (!error.response) throw error;
+
+      return rejectWithValue(error.response.data?.message || "Bir hata oluştu");
+    }
+  }
+);
+
+export const getDownloadOtherProfilesVCF = createAsyncThunk(
+  "/other-profile-management/download-vcf/${cardId}",
+  async ({ cardId, signal }, { rejectWithValue }) => {
+    try {
+      const response = await Axios.get(
+        `/other-profile-management/download-vcf/${cardId}`,
+        {
+          responseType: "blob", // ✅ önemli: dosya indirme
+          signal,
+        }
+      );
+
+      // ✅ Tarayıcıda indirme işlemi
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `kavio-contact-${cardId}.vcf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+
+      return { success: true };
     } catch (error) {
       if (error.code === "ERR_CANCELED" || error.name === "CanceledError") {
         return rejectWithValue("İstek iptal edildi");
@@ -102,6 +138,20 @@ const UserImageSlice = createSlice({
             state.message = action.payload || "Beklenmeyen Bir Hata Oluştu";
             state.data = null;
           })
+          .addCase(getDownloadOtherProfilesVCF.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getDownloadOtherProfilesVCF.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = "VCF dosyası indirildi";
+      })
+      .addCase(getDownloadOtherProfilesVCF.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.payload || "Beklenmeyen Bir Hata Oluştu";
+      })
   }
 })
 

@@ -29,6 +29,7 @@ import { useTranslation } from "react-i18next";
 import {
   getUserImages,
   getOtherUserImages,
+  getDownloadOtherProfilesVCF,
 } from "../../../redux/slices/UserImagesSlice";
 import Axios from "../../../api/axiosInstance";
 import toast from "react-hot-toast";
@@ -50,10 +51,14 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
 
   const { t } = useTranslation();
 
-  const cardId = user?.cardId;
+  const userId = user && user?.id;
+  const cardId = user && user?.cardId;
+
 
   const isPublicProfile = location.pathname.startsWith("/user/");
   const [userCardId, setCardId] = useState(null);
+
+  console.log('userCardId', userCardId)
 
   const { id } = useParams();
 
@@ -84,7 +89,7 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
     const file = e.target.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append("userId", cardId);
+      formData.append("userId", userId);
       formData.append("img", file);
       Axios.post(`user/update-profile-img`, formData, {
         headers: {
@@ -228,7 +233,7 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
                 <span className="user_action_button_text">Bağlantı</span>
               </button>
             )}
-            <button className="user_action_button">
+            <button className="user_action_button" onClick={() => dispatch(getDownloadOtherProfilesVCF({cardId:userCardId}))}>
               <img src={qrIcon} alt="QR ikon" />
               <span className="user_action_button_text">İndir</span>
             </button>

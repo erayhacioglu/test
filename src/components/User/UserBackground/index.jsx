@@ -18,13 +18,15 @@ const UserBackground = () => {
   const isUpdated = updatePageChecker(location.pathname, updatedPage);
   const userImagesState = useSelector((state) => state.userImages);
 
-  const cardId = user?.cardId;
+  const userId = user && user?.id;
+  const cardId = user && user?.cardId;
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append("userId", cardId);
+      formData.append("userId", userId);
       formData.append("img", file);
       Axios.post(`/user/update-banner-img`,formData,{
         headers:{
