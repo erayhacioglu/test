@@ -8,29 +8,29 @@ import {LogOut} from "lucide-react";
 const menuData = [
   {
     icon: notice,
-    label: "Notice",
+    label: "Bildirimler",
     hasChildren: false,
   },
   {
     icon: saves,
-    label: "Saves",
+    label: "Kaydedilenler",
     hasChildren: true,
     key: "saves",
-    children: [{ label: "Saves 1" ,path:"/"}, { label: "Saves 2",path:"/" }],
+    children: [{ label: "Kaydedilen 1" ,path:"/"}, { label: "Kaydedilen 2",path:"/" }],
   },
   {
     icon: visitors,
-    label: "Visitors",
+    label: "Etkileşimler",
     hasChildren: true,
     key: "visitors",
     children: [
-      { label: "Bağlantılar",path:"/connections" },
-      { label: "İletişim",path:"/contact" }
+      { label: "Bağlantılarım",path:"/connections" },
+      { label: "İletişim Talepleri",path:"/contact" }
     ],
   },
   {
     icon: themes,
-    label: "Themes",
+    label: "Temalar",
     hasChildren: true,
     key: "themes",
     children: [
@@ -83,7 +83,7 @@ const menuData = [
   },
   {
     icon: settings,
-    label: "Settings",
+    label: "Ayarlar",
     hasChildren: false,
   }
 ];

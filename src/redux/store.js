@@ -8,6 +8,7 @@ import marketingAssetsReducer from "./slices/MarketingAssetsSlice";
 import themeReducer from "./slices/ThemeSlice";
 import userImagesReducer from "./slices/UserImagesSlice";
 import analizeSliceReducer from "./slices/AnalizeSlice";
+import connectionReducer from "./slices/ConnectionSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     theme: themeReducer,
     userImages: userImagesReducer,
     analize: analizeSliceReducer,
+    connection: connectionReducer,
   },
 });
 

@@ -67,6 +67,9 @@ const ThemeSlice = createSlice({
       state.isSuccess = false,
       state.isError = false,
       state.message = ""
+    },
+    setTheme(state, action) {
+      state.themeDetail = action.payload;
     }
   },
   extraReducers:(builder) => {
@@ -100,5 +103,5 @@ const ThemeSlice = createSlice({
   }
 })
 
-export const {setTheme,resetThemes} = ThemeSlice.actions
+export const {resetThemes, setTheme} = ThemeSlice.actions
 export default ThemeSlice.reducer

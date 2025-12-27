@@ -8,7 +8,7 @@ import { FaChevronDown, FaChevronRight, FaChevronUp } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllThemes, setTheme } from "../../redux/slices/ThemeSlice";
+import { getAllThemes, getTheme } from "../../redux/slices/ThemeSlice";
 import { LogOut } from "lucide-react";
 
 const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
@@ -34,7 +34,9 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
   const { user } = useSelector((state) => state.user);
   const [activeMenu, setActiveMenu] = useState([]);
 
-  console.log("themes", themes);
+  const handleThemeSelect = (themeId) => {
+    dispatch(getTheme({ id: themeId, signal: new AbortController().signal }));
+  };
 
   const handleClickDropdownMenu = (item) => {
     if (item?.hasChildren) {
@@ -119,7 +121,12 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
                           ? themes &&
                             themes?.length > 0 &&
                             themes?.map((el, key) => (
-                              <div className={`theme_option`} key={key}>
+                              <div 
+                                className={`theme_option`} 
+                                key={key}
+                                onClick={() => handleThemeSelect(el?.id)}
+                                style={{ cursor: 'pointer' }}
+                              >
                                 <div
                                   className="color_circle"
                                   style={{ backgroundColor: el?.primaryColor }}
@@ -134,6 +141,7 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
                                 to={el?.path}
                                 key={key}
                                 className="menu_children_link"
+                                onClick={() => setShowSideMenu(false)}
                               >
                                 {el?.label}
                               </Link>
