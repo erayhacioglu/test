@@ -12,7 +12,8 @@ import NoRecord from "../../../components/NoRecord";
 const Contact = () => {
   const windowSize = useWindowSize();
   const [contactDataLoading, setContactDataLoading] = useState(false);
-  const [contactData, setContactData] = useState([]);
+  const [allContactData, setAllContactData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -23,7 +24,7 @@ const Contact = () => {
       const res = await Axios.delete(`/guest-contact/${id}`);
       if (res?.status === 200) {
         toast.success("Mesaj silindi");
-        fetchContactData(selectedDate);
+        fetchAllContactData();
       }
     } catch (error) {
       const msg = error?.response?.data?.detail || "Beklenmeyen Bir Hata Oluştu";
@@ -31,26 +32,15 @@ const Contact = () => {
     }
   };
 
-  const fetchContactData = async (startDate = null) => {
+  const fetchAllContactData = async () => {
     try {
       setContactDataLoading(true);
-
-      let url = `/guest-contact/card/${user?.cardId}`;
+      const res = await Axios.get(`/guest-contact/card/${user?.cardId}`);
       
-      if (startDate) {
-        const start = new Date(startDate);
-        start.setHours(0, 0, 0, 0);
-        
-        const end = new Date();
-        end.setHours(23, 59, 59, 999);
-
-        url += `?startDate=${start.toISOString()}&endDate=${end.toISOString()}`;
-      }
-
-      const res = await Axios.get(url);
       if (res?.status === 200) {
         const data = Array.isArray(res?.data) ? res?.data : (res?.data?.PENDING || []);
-        setContactData(data);
+        setAllContactData(data);
+        applyDateFilter(data, selectedDate);
       }
     } catch (error) {
       const msg = error?.response?.data?.detail || "Beklenmeyen Bir Hata Oluştu";
@@ -60,16 +50,36 @@ const Contact = () => {
     }
   };
 
+  const applyDateFilter = (data, startDate) => {
+    if (!startDate) {
+      setFilteredData(data);
+      return;
+    }
+
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+    
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+
+    const filtered = data.filter(item => {
+      const createdDate = new Date(item.createdAt);
+      return createdDate >= start && createdDate <= end;
+    });
+
+    setFilteredData(filtered);
+  };
+
   const handleDateChange = (e) => {
     const date = e.target.value;
     setSelectedDate(date);
-    fetchContactData(date);
+    applyDateFilter(allContactData, date);
     setShowDatePicker(false);
   };
 
   const handleClearDate = () => {
     setSelectedDate(null);
-    fetchContactData(null);
+    applyDateFilter(allContactData, null);
     setShowDatePicker(false);
   };
 
@@ -96,7 +106,7 @@ const Contact = () => {
 
   useEffect(() => {
     if (user?.cardId) {
-      fetchContactData(null);
+      fetchAllContactData();
     }
   }, [user?.cardId]);
 
@@ -265,11 +275,11 @@ const Contact = () => {
         className="section_container"
         style={{ paddingRight: `${windowSize?.width > 768 ? 0 : "35px"}` }}
       >
-        {contactData && contactData?.length === 0 ? (
+        {filteredData && filteredData?.length === 0 ? (
           <NoRecord />
         ) : (
           <div className="interaction_container">
-            {contactData?.map((item, idx) => {
+            {filteredData?.map((item, idx) => {
               const createdDate = new Date(item.createdAt);
               const formattedDate = createdDate.toLocaleDateString('tr-TR', {
                 day: '2-digit',
