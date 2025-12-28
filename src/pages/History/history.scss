@@ -1,0 +1,29 @@
+.history {
+    width: 100%;
+    min-height: 100vh;
+    padding: 1.5rem;
+    background: var(--backgroundColor, #141e22);
+
+    &__container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding-top: 1rem;
+    }
+
+    &__error {
+        text-align: center;
+        padding: 2rem;
+        color: #EF4444;
+        
+        p {
+            margin: 0;
+            font-size: 1rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .history {
+        padding: 1rem;
+    }
+}

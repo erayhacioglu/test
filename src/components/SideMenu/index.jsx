@@ -33,6 +33,9 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
   const { themes } = useSelector((state) => state.theme);
   const { user } = useSelector((state) => state.user);
   const [activeMenu, setActiveMenu] = useState([]);
+  
+  // Get cardId from user card object
+  const cardId = user?.card?.id;
 
   const handleThemeSelect = (themeId) => {
     dispatch(getTheme({ id: themeId, signal: new AbortController().signal }));
@@ -136,16 +139,21 @@ const SideMenu = ({ showSideMenu, setShowSideMenu }) => {
                                 </span>
                               </div>
                             ))
-                          : item?.children?.map((el, key) => (
-                              <Link
-                                to={el?.path}
-                                key={key}
-                                className="menu_children_link"
-                                onClick={() => setShowSideMenu(false)}
-                              >
-                                {el?.label}
-                              </Link>
-                            ))}
+                          : item?.children?.map((el, key) => {
+                              const path = el?.requiresCardId 
+                                ? `${el.path}/${cardId}` 
+                                : el.path;
+                              return (
+                                <Link
+                                  to={path}
+                                  key={key}
+                                  className="menu_children_link"
+                                  onClick={() => setShowSideMenu(false)}
+                                >
+                                  {el?.label}
+                                </Link>
+                              );
+                            })}
                       </div>
                     )}
                   </div>

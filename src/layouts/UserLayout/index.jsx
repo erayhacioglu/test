@@ -32,6 +32,7 @@ const UserLayout = () => {
     () => [
       "/connections",
       "/contact",
+      "/history",
     ],
     []
   );

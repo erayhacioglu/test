@@ -31,6 +31,11 @@ export const interactionData = [
     path: "/contact",
     iconName: "SocialMediaSvg",
     label: "İletişim"
+  },
+  {
+    path: "/history",
+    iconName: "CompanySvg",
+    label: "Geçmiş"
   }
 ];
 

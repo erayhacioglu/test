@@ -9,6 +9,7 @@ import themeReducer from "./slices/ThemeSlice";
 import userImagesReducer from "./slices/UserImagesSlice";
 import analizeSliceReducer from "./slices/AnalizeSlice";
 import connectionReducer from "./slices/ConnectionSlice";
+import historyReducer from "./slices/HistorySlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     userImages: userImagesReducer,
     analize: analizeSliceReducer,
     connection: connectionReducer,
+    history: historyReducer,
   },
 });
 

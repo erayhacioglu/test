@@ -22,6 +22,7 @@ const Profile = lazy(() => import("../pages/Profile"));
 const SocialMedia = lazy(() => import("../pages/SocialMedia"));
 const Company = lazy(() => import("../pages/Company"));
 const MarketingAssets = lazy(() => import("../pages/MarketingAssets"));
+const History = lazy(() => import("../pages/History"));
 // const Forbidden = lazy(() => import("./pages/Forbidden"));
 // const NotFound = lazy(() => import("./pages/NotFound"));
 
@@ -62,6 +63,8 @@ const AppRouter = () => {
 
             <Route path="connections" element={<Connections />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="history" element={<History />} />
+            <Route path="history/:cardId" element={<History />} />
 
             {/* <Route path="forbidden" element={<Forbidden />} /> */}
           </Route>

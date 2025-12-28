@@ -25,7 +25,8 @@ const menuData = [
     key: "visitors",
     children: [
       { label: "Bağlantılarım",path:"/connections" },
-      { label: "İletişim Talepleri",path:"/contact" }
+      { label: "İletişim Talepleri",path:"/contact" },
+      { label: "Geçmiş",path:"/history", requiresCardId: true }
     ],
   },
   {

@@ -1,0 +1,57 @@
+.history-timeline {
+    position: relative;
+    
+    &__group {
+        margin-bottom: 32px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__date-header {
+        margin-bottom: 16px;
+        padding-left: 104px; // Align with content (60px time + 32px icon + 12px gap)
+        
+        time {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--textColor, #FFFFFF);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    &__events {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__empty {
+        text-align: center;
+        padding: 4rem 1rem;
+        color: var(--labelColor, #8E8E8E);
+
+        p {
+            margin: 0;
+            font-size: 1rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .history-timeline {
+        &__date-header {
+            padding-left: 86px; // 50px + 28px + 8px
+            margin-bottom: 12px;
+
+            time {
+                font-size: 0.8125rem;
+            }
+        }
+
+        &__group {
+            margin-bottom: 24px;
+        }
+    }
+}
