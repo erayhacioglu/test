@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { getTheme } from "./redux/slices/ThemeSlice";
+import { getCardTheme } from "./redux/slices/ThemeSlice";
 import { applyTheme } from "./hooks/applyTheme";
 import { hydrateAuth } from "./redux/slices/UserSlice";
 import AppRouter from "./router/AppRouter";
@@ -15,11 +15,11 @@ const App = () => {
 
   // Tema çekme
   useEffect(() => {
-    if(!user) return
+    if(!user?.cardId) return;
     const controller = new AbortController();
-    dispatch(getTheme({ id: "1", signal: controller.signal }));
+    dispatch(getCardTheme({ cardId: user.cardId, signal: controller.signal }));
     return () => controller.abort();
-  }, [dispatch,user]);
+  }, [dispatch, user?.cardId]);
 
   // Tema uygula
   useEffect(() => {

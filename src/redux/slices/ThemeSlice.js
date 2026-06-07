@@ -49,6 +49,25 @@ export const getTheme = createAsyncThunk(
   }
 );
 
+export const getCardTheme = createAsyncThunk(
+  "themes/card",
+  async ({ cardId, signal }, { rejectWithValue }) => {
+    try {
+      const response = await Axios.get(
+        `/card/theme/${cardId}`,
+        { signal }
+      );
+      return response.data;
+    } catch (error) {
+      if (error.code === "ERR_CANCELED" || error.name === "CanceledError") {
+        return rejectWithValue("İstek iptal edildi");
+      }
+      if (!error.response) throw error;
+      return rejectWithValue(error.response.data?.message || "Bir hata oluştu");
+    }
+  }
+);
+
 const initialState = {
   isLoading:false,
   isSuccess:false,
@@ -98,6 +117,19 @@ const ThemeSlice = createSlice({
       state.isSuccess = false;
       state.isError = false;
       state.message = action.payload || "Beklenmeyen bir hata oluştu." 
+      state.themeDetail = null;
+    })
+    .addCase(getCardTheme.pending,(state) => {
+      state.isLoading = true
+    }).addCase(getCardTheme.fulfilled,(state,action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.themeDetail = action.payload;
+    }).addCase(getCardTheme.rejected,(state,action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.isError = true;
+      state.message = action.payload || "Beklenmeyen bir hata oluştu."
       state.themeDetail = null;
     })
   }
