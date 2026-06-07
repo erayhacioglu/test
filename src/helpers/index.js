@@ -1,6 +1,10 @@
+const editablePaths = ["/profile", "/social-media", "/company", "/marketing-assets"];
+
 export const updatePageChecker = (pathname, updatedPage) => {
-    return pathname === updatedPage;
+    return !!updatedPage && editablePaths.includes(pathname);
 }
+
+export { editablePaths };
 
 import phoneIcon from "../assets/img/icons/phone.svg";
 import emailIcon from "../assets/img/icons/email.svg";

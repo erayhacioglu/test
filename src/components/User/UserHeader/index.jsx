@@ -6,7 +6,7 @@ import { useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { setUpdatedPage } from "../../../redux/slices/UpdatePageSlice";
 import { useEffect, useRef, useState } from "react";
-import { updatePageChecker } from "../../../helpers";
+import { updatePageChecker, editablePaths } from "../../../helpers";
 import { FaCamera } from "react-icons/fa6";
 import {
   resetProfile,
@@ -66,13 +66,11 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
   const canEditPhoto = !isPublicProfile && !!user;
 
   const handleClickUpdate = () => {
-    if (location.pathname) {
-      dispatch(setUpdatedPage(location.pathname));
-    }
+    dispatch(setUpdatedPage(true));
   };
 
   useEffect(() => {
-    if (location.pathname !== updatedPage) {
+    if (updatedPage && !editablePaths.includes(location.pathname)) {
       dispatch(setUpdatedPage(null));
     }
   }, [location.pathname, updatedPage, dispatch]);
