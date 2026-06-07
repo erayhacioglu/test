@@ -1,34 +1,47 @@
 import { toast } from "react-hot-toast";
 
+let isRedirecting = false;
+
 export default function handleErrors(error) {
   const status = error?.response?.status;
 
   switch (status) {
     case 401:
-      toast.warning("Oturum süresi doldu • Lütfen tekrar giriş yapın", {
-        icon: "🔒",
-      });
+      if (!isRedirecting) {
+        isRedirecting = true;
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        toast.error("Oturum süresi doldu, giriş sayfasına yönlendiriliyorsunuz.");
+        setTimeout(() => {
+          window.location.href = "/auth/login";
+        }, 1000);
+      }
       break;
 
     case 403:
-      toast.error("Yetkisiz • Bu işlemi yapmaya yetkiniz yok", {
-        icon: "⛔",
-      });
+      if (!isRedirecting) {
+        isRedirecting = true;
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        toast.error("Yetkiniz bulunmuyor, giriş sayfasına yönlendiriliyorsunuz.");
+        setTimeout(() => {
+          window.location.href = "/auth/login";
+        }, 1000);
+      }
       break;
 
     case 500:
-      toast.error("Sunucu hatası • Lütfen daha sonra deneyin", {
-        icon: "💥",
-      });
+      toast.error("Sunucu hatası, lütfen daha sonra tekrar deneyin.");
       break;
 
     default:
-      // ağ hatası (örn. fetch failed)
       if (!error.response) {
-        toast.error("Bağlantı hatası • Sunucuya ulaşılamadı", {
-          icon: "📡",
-        });
+        toast.error("Bağlantı hatası, sunucuya ulaşılamadı.");
       }
       break;
   }
+}
+
+export function resetRedirectFlag() {
+  isRedirecting = false;
 }
