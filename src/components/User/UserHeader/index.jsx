@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUpdatedPage } from "../../../redux/slices/UpdatePageSlice";
 import { useEffect, useRef, useState } from "react";
 import { updatePageChecker } from "../../../helpers";
-import { FaImage } from "react-icons/fa6";
+import { FaCamera } from "react-icons/fa6";
 import {
   resetProfile,
   updateProfileData,
@@ -34,6 +34,7 @@ import {
 import Axios from "../../../api/axiosInstance";
 import toast from "react-hot-toast";
 import UserHeaderSkeleton from "./components/UserHeaderSkeleton";
+import ImageCropModal from "../../ImageCropModal";
 
 const UserHeader = ({ setQrCodeModal, setContactModal }) => {
   const dispatch = useDispatch();
@@ -54,13 +55,19 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
   const userId = user && user?.id;
   const cardId = user && user?.cardId;
 
-
   const isPublicProfile = location.pathname.startsWith("/user/");
   const [userCardId, setCardId] = useState(null);
 
-  console.log('userCardId', userCardId)
+  const [cropModalOpen, setCropModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const { id } = useParams();
+
+  const canEditPhoto =
+    !isPublicProfile &&
+    user &&
+    (!user?.card?.company ||
+      (user?.card?.company && user?.card?.company?.editablePhoto));
 
   const handleClickUpdate = () => {
     if (location.pathname) {
@@ -81,33 +88,43 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
 
   const handleAvatarClick = () => {
     if (fileInputRef.current) {
+      fileInputRef.current.value = "";
       fileInputRef.current.click();
     }
   };
 
-  const handleAvatarChange = (e) => {
+  const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const formData = new FormData();
-      formData.append("userId", userId);
-      formData.append("img", file);
-      Axios.post(`user/update-profile-img`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-        .then((res) => {
-          if (res?.status === 200) {
-            toast.success(res?.data);
-            dispatch(getUserImages({ cardId }));
-          }
-        })
-        .catch((err) => {
-          const msg =
-            err?.response?.data?.message || "Profil Resmi Değiştirilemedi";
-          toast.error(msg);
-        });
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result);
+        setCropModalOpen(true);
+      };
+      reader.readAsDataURL(file);
     }
+  };
+
+  const handleCropComplete = (croppedBlob) => {
+    const formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("img", croppedBlob, "profile.jpg");
+    Axios.post(`user/update-profile-img`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        if (res?.status === 200) {
+          toast.success(res?.data);
+          dispatch(getUserImages({ cardId }));
+        }
+      })
+      .catch((err) => {
+        const msg =
+          err?.response?.data?.message || "Profil Resmi Değiştirilemedi";
+        toast.error(msg);
+      });
   };
 
   useEffect(() => {
@@ -118,27 +135,14 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
 
   useEffect(() => {
     if (isPublicProfile && !userCardId) return;
-    // const controller = new AbortController();
 
     if (isPublicProfile) {
-      dispatch(
-        // getOtherProfileData({ cardId: userCardId, signal: controller.signal })
-        getOtherProfileData({ cardId: userCardId })
-      );
-      dispatch(
-        // getOtherUserImages({ cardId: userCardId, signal: controller.signal })
-        getOtherUserImages({ cardId: userCardId })
-      );
+      dispatch(getOtherProfileData({ cardId: userCardId }));
+      dispatch(getOtherUserImages({ cardId: userCardId }));
     } else {
-      // dispatch(getProfileData({ cardId, signal: controller.signal }));
-      // dispatch(getUserImages({ cardId, signal: controller.signal }));
       dispatch(getProfileData({ cardId }));
       dispatch(getUserImages({ cardId }));
     }
-
-    // return () => {
-    //   controller.abort();
-    // };
   }, [cardId, dispatch, userCardId, isPublicProfile]);
 
   const handleUpdateData = async () => {
@@ -188,27 +192,25 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
             alt=""
             className="avatar_img"
           />
-          {isUpdated &&
-            (!user?.card?.company ||
-              (user?.card?.company && user?.card?.company?.editablePhoto)) && (
-              <>
-                <div className="avatar_overlay">
-                  <button
-                    className="change_avatar_button"
-                    onClick={handleAvatarClick}
-                  >
-                    <FaImage />
-                  </button>
-                </div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  style={{ display: "none" }}
-                  onChange={handleAvatarChange}
-                />
-              </>
-            )}
+          {isUpdated && canEditPhoto && (
+            <>
+              <div className="avatar_overlay">
+                <button
+                  className="change_avatar_button"
+                  onClick={handleAvatarClick}
+                >
+                  <FaCamera />
+                </button>
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileSelect}
+              />
+            </>
+          )}
         </div>
         <div className="user_info">
           <h2 className="fullname">
@@ -279,6 +281,15 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
           </>
         )}
       </div>
+
+      <ImageCropModal
+        show={cropModalOpen}
+        onHide={() => setCropModalOpen(false)}
+        imageSrc={selectedImage}
+        aspect={1}
+        cropShape="round"
+        onCropComplete={handleCropComplete}
+      />
     </div>
   );
 };

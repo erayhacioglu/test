@@ -8,6 +8,8 @@ import Axios from "../../../api/axiosInstance";
 import toast from "react-hot-toast";
 import UserBackgroundSkeleton from "./UserBackgroundSkeleton";
 import { getUserImages } from "../../../redux/slices/UserImagesSlice";
+import { useRef, useState } from "react";
+import ImageCropModal from "../../ImageCropModal";
 
 const UserBackground = () => {
   const dispatch = useDispatch();
@@ -21,30 +23,43 @@ const UserBackground = () => {
   const userId = user && user?.id;
   const cardId = user && user?.cardId;
 
+  const fileInputRef = useRef(null);
+  const [cropModalOpen, setCropModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleFileChange = (event) => {
+  const handleFileSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const formData = new FormData();
-      formData.append("userId", userId);
-      formData.append("img", file);
-      Axios.post(`/user/update-banner-img`,formData,{
-        headers:{
-          "Content-Type":"multipart/form-data"
-        }
-      })
-        .then((res) => {
-          if(res?.status === 200){
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result);
+        setCropModalOpen(true);
+      };
+      reader.readAsDataURL(file);
+    }
+    event.target.value = "";
+  };
+
+  const handleCropComplete = (croppedBlob) => {
+    const formData = new FormData();
+    formData.append("userId", userId);
+    formData.append("img", croppedBlob, "banner.jpg");
+    Axios.post(`/user/update-banner-img`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        if (res?.status === 200) {
           toast.success(res?.data);
           dispatch(getUserImages({ cardId }));
         }
-        })
-        .catch((err) => {
-          const msg =
-            err?.response?.data?.message || "Arka Plan Resmi Değiştirilemedi";
-          toast.error(msg);
-        });
-    }
+      })
+      .catch((err) => {
+        const msg =
+          err?.response?.data?.message || "Arka Plan Resmi Değiştirilemedi";
+        toast.error(msg);
+      });
   };
 
   if (userImagesState?.isLoading) {
@@ -65,12 +80,22 @@ const UserBackground = () => {
             <input
               type="file"
               accept="image/*"
-              onChange={handleFileChange}
+              onChange={handleFileSelect}
+              ref={fileInputRef}
               hidden
             />
           </label>
         </div>
       )}
+
+      <ImageCropModal
+        show={cropModalOpen}
+        onHide={() => setCropModalOpen(false)}
+        imageSrc={selectedImage}
+        aspect={16 / 5}
+        cropShape="rect"
+        onCropComplete={handleCropComplete}
+      />
     </div>
   );
 };
