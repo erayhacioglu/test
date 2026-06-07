@@ -65,6 +65,13 @@
     "submitButtonText": "Kaydet",
     "cancelButtonText": "İptal"
   },
+  "imageCrop": {
+    "profileTitle": "Profil Fotoğrafı",
+    "bannerTitle": "Kapak Fotoğrafı",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "processing": "İşleniyor..."
+  },
   "auth": {
     "login": {
       "title": "Giriş Yap",

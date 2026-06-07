@@ -52,8 +52,8 @@ const ImageCropModal = ({ show, onHide, imageSrc, aspect, cropShape, onCropCompl
       <Modal.Header closeButton>
         <Modal.Title className="crop_modal_title">
           {cropShape === "round"
-            ? (t("imageCrop.profileTitle") || "Profil Fotoğrafını Kırp")
-            : (t("imageCrop.bannerTitle") || "Kapak Fotoğrafını Kırp")}
+            ? t("imageCrop.profileTitle")
+            : t("imageCrop.bannerTitle")}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="crop_modal_body">
@@ -86,12 +86,12 @@ const ImageCropModal = ({ show, onHide, imageSrc, aspect, cropShape, onCropCompl
       </Modal.Body>
       <Modal.Footer className="crop_modal_footer">
         <button className="crop_cancel_btn" onClick={handleClose} disabled={isProcessing}>
-          {t("buttons.cancelButtonText") || "İptal"}
+          {t("buttons.cancelButtonText")}
         </button>
         <button className="crop_save_btn" onClick={handleSave} disabled={isProcessing}>
           {isProcessing
-            ? (t("imageCrop.processing") || "İşleniyor...")
-            : (t("imageCrop.save") || "Kaydet")}
+            ? t("imageCrop.processing")
+            : t("imageCrop.save")}
         </button>
       </Modal.Footer>
     </Modal>

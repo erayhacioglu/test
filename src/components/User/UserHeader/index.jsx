@@ -63,11 +63,7 @@ const UserHeader = ({ setQrCodeModal, setContactModal }) => {
 
   const { id } = useParams();
 
-  const canEditPhoto =
-    !isPublicProfile &&
-    user &&
-    (!user?.card?.company ||
-      (user?.card?.company && user?.card?.company?.editablePhoto));
+  const canEditPhoto = !isPublicProfile && !!user;
 
   const handleClickUpdate = () => {
     if (location.pathname) {

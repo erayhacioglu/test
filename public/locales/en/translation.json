@@ -66,6 +66,13 @@
     "submitButtonText": "Save",
     "cancelButtonText": "Cancel"
   },
+  "imageCrop": {
+    "profileTitle": "Profile Photo",
+    "bannerTitle": "Cover Photo",
+    "save": "Save",
+    "cancel": "Cancel",
+    "processing": "Processing..."
+  },
   "auth": {
     "login": {
       "title": "Login",

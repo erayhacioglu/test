@@ -1,23 +1,28 @@
 .image_crop_modal {
   .modal-content {
-    background-color: #1a1a2e;
-    border: none;
+    background-color: var(--backgroundColor);
+    border: 1px solid var(--linkBackgroundColor);
     border-radius: 12px;
     overflow: hidden;
   }
 
   .modal-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 16px 20px;
+    border-bottom: 1px solid var(--linkBackgroundColor);
+    padding: 14px 20px;
 
     .btn-close {
       filter: invert(1);
+      opacity: 0.6;
+
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 
   .crop_modal_title {
-    color: #fff;
-    font-size: 16px;
+    color: var(--textColor);
+    font-size: 15px;
     font-weight: 600;
   }
 
@@ -26,26 +31,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: var(--menuBackgroundColor);
   }
 
   .crop_container {
     position: relative;
     width: 100%;
     height: 400px;
-    background-color: #111;
+    background-color: var(--activeMenuBackgroundColor);
   }
 
   .zoom_control {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px 24px;
+    padding: 14px 24px;
     width: 100%;
-    max-width: 360px;
+    max-width: 340px;
 
     .zoom_label {
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 18px;
+      color: var(--labelColor);
+      font-size: 16px;
       font-weight: 600;
       user-select: none;
     }
@@ -55,16 +61,16 @@
       -webkit-appearance: none;
       appearance: none;
       height: 4px;
-      background: rgba(255, 255, 255, 0.2);
+      background: var(--linkBackgroundColor);
       border-radius: 2px;
       outline: none;
 
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 18px;
-        height: 18px;
-        background: #fff;
+        width: 16px;
+        height: 16px;
+        background: var(--textColor);
         border-radius: 50%;
         cursor: pointer;
         transition: transform 0.15s ease;
@@ -75,9 +81,9 @@
       }
 
       &::-moz-range-thumb {
-        width: 18px;
-        height: 18px;
-        background: #fff;
+        width: 16px;
+        height: 16px;
+        background: var(--textColor);
         border-radius: 50%;
         cursor: pointer;
         border: none;
@@ -86,25 +92,26 @@
   }
 
   .crop_modal_footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--linkBackgroundColor);
     padding: 12px 20px;
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    background-color: var(--backgroundColor);
   }
 
   .crop_cancel_btn {
-    padding: 8px 20px;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 7px 18px;
+    border-radius: 5px;
+    border: 1px solid var(--linkBackgroundColor);
     background: transparent;
-    color: #fff;
-    font-size: 14px;
+    color: var(--textColor);
+    font-size: 13px;
     cursor: pointer;
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: var(--titleBackground);
     }
 
     &:disabled {
@@ -114,18 +121,18 @@
   }
 
   .crop_save_btn {
-    padding: 8px 24px;
-    border-radius: 6px;
+    padding: 7px 22px;
+    border-radius: 5px;
     border: none;
-    background: #4f46e5;
-    color: #fff;
-    font-size: 14px;
+    background: var(--submitButtonBackgroundColor);
+    color: var(--textColor);
+    font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: opacity 0.2s ease;
 
     &:hover {
-      background: #4338ca;
+      opacity: 0.85;
     }
 
     &:disabled {
@@ -138,7 +145,7 @@
 @media only screen and (max-width: 768px) {
   .image_crop_modal {
     .crop_container {
-      height: 300px;
+      height: 280px;
     }
   }
 }
